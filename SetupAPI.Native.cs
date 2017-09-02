@@ -68,10 +68,6 @@ namespace ViGEmClient
         private static extern IntPtr CreateFile(string lpFileName, uint dwDesiredAccess, uint dwShareMode,
             IntPtr lpSecurityAttributes, uint dwCreationDisposition, uint dwFlagsAndAttributes, uint hTemplateFile);
 
-        [DllImport("advapi32.dll", SetLastError = true)]
-        private static extern IntPtr RegisterServiceCtrlHandlerEx(string ServiceName, ServiceControlHandlerEx Callback,
-            IntPtr Context);
-
         [DllImport("kernel32.dll", SetLastError = true)]
         private static extern bool DeviceIoControl(IntPtr DeviceHandle, int IoControlCode, byte[] InBuffer,
             int InBufferSize, byte[] OutBuffer, int OutBufferSize, ref int BytesReturned, IntPtr Overlapped);
