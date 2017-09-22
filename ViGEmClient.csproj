@@ -7,7 +7,7 @@
     <ProjectGuid>{AA18EBCF-7E9D-4BC5-8760-E8C6E9A773E5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ViGEmClient</RootNamespace>
+    <RootNamespace>Nefarius.ViGEm.Client</RootNamespace>
     <AssemblyName>ViGEmClient</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -40,9 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SetupAPI.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SetupAPI.Native.cs" />
+    <Compile Include="ViGEmClient.cs" />
+    <Compile Include="ViGEmClient.Native.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
