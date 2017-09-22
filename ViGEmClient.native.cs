@@ -11,7 +11,7 @@ namespace Nefarius.ViGEm.Client
 
     partial class ViGEmClient
     {
-        enum VIGEM_ERROR : UInt32
+        internal enum VIGEM_ERROR : UInt32
         {
             VIGEM_ERROR_NONE = 0x20000000,
             VIGEM_ERROR_BUS_NOT_FOUND = 0xE0000001,
@@ -29,7 +29,7 @@ namespace Nefarius.ViGEm.Client
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        struct XUSB_REPORT
+        internal struct XUSB_REPORT
         {
             public ushort wButtons;
             public byte bLeftTrigger;
@@ -41,7 +41,7 @@ namespace Nefarius.ViGEm.Client
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        struct DS4_REPORT
+        internal struct DS4_REPORT
         {
             byte bThumbLX;
             byte bThumbLY;
@@ -53,7 +53,7 @@ namespace Nefarius.ViGEm.Client
             byte bTriggerR;
         }
 
-        enum VIGEM_TARGET_TYPE : UInt32
+        internal enum VIGEM_TARGET_TYPE : UInt32
         {
             // 
             // Microsoft Xbox 360 Controller (wired)
@@ -82,22 +82,22 @@ namespace Nefarius.ViGEm.Client
         static extern void vigem_disconnect(PVIGEM_CLIENT vigem);
 
         [DllImport("ViGEmClient.dll", CallingConvention = CallingConvention.StdCall, ExactSpelling = true)]
-        static extern PVIGEM_TARGET vigem_target_x360_alloc();
+        internal static extern PVIGEM_TARGET vigem_target_x360_alloc();
 
         [DllImport("ViGEmClient.dll", CallingConvention = CallingConvention.StdCall, ExactSpelling = true)]
-        static extern PVIGEM_TARGET vigem_target_ds4_alloc();
+        internal static extern PVIGEM_TARGET vigem_target_ds4_alloc();
 
         [DllImport("ViGEmClient.dll", CallingConvention = CallingConvention.StdCall, ExactSpelling = true)]
-        static extern void vigem_target_free(PVIGEM_TARGET target);
+        internal static extern void vigem_target_free(PVIGEM_TARGET target);
 
         [DllImport("ViGEmClient.dll", CallingConvention = CallingConvention.StdCall, ExactSpelling = true)]
-        static extern VIGEM_ERROR vigem_target_add(PVIGEM_CLIENT vigem, PVIGEM_TARGET target);
+        internal static extern VIGEM_ERROR vigem_target_add(PVIGEM_CLIENT vigem, PVIGEM_TARGET target);
 
         [DllImport("ViGEmClient.dll", CallingConvention = CallingConvention.StdCall, ExactSpelling = true)]
         static extern VIGEM_ERROR vigem_target_add_async(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, PVIGEM_TARGET_ADD_RESULT result);
 
         [DllImport("ViGEmClient.dll", CallingConvention = CallingConvention.StdCall, ExactSpelling = true)]
-        static extern VIGEM_ERROR vigem_target_remove(PVIGEM_CLIENT vigem, PVIGEM_TARGET target);
+        internal static extern VIGEM_ERROR vigem_target_remove(PVIGEM_CLIENT vigem, PVIGEM_TARGET target);
 
         [DllImport("ViGEmClient.dll", CallingConvention = CallingConvention.StdCall, ExactSpelling = true)]
         static extern VIGEM_ERROR vigem_target_x360_register_notification(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, PVIGEM_X360_NOTIFICATION notification);
@@ -124,10 +124,10 @@ namespace Nefarius.ViGEm.Client
         static extern ushort vigem_target_get_pid(PVIGEM_TARGET target);
 
         [DllImport("ViGEmClient.dll", CallingConvention = CallingConvention.StdCall, ExactSpelling = true)]
-        static extern VIGEM_ERROR vigem_target_x360_update(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, XUSB_REPORT report);
+        internal static extern VIGEM_ERROR vigem_target_x360_update(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, XUSB_REPORT report);
 
         [DllImport("ViGEmClient.dll", CallingConvention = CallingConvention.StdCall, ExactSpelling = true)]
-        static extern VIGEM_ERROR vigem_target_ds4_update(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, DS4_REPORT report);
+        internal static extern VIGEM_ERROR vigem_target_ds4_update(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, DS4_REPORT report);
 
         [DllImport("ViGEmClient.dll", CallingConvention = CallingConvention.StdCall, ExactSpelling = true)]
         static extern uint vigem_target_get_index(PVIGEM_TARGET target);

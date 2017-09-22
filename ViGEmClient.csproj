@@ -58,8 +58,15 @@
     <Compile Include="Exceptions\VigemTargetNotPluggedInException.cs" />
     <Compile Include="Exceptions\VigemTargetUninitializedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Targets\DualShock4Controller.cs" />
+    <Compile Include="Targets\DualShock4\DualShock4FeedbackReceivedEventArgs.cs" />
+    <Compile Include="Targets\DualShock4\LightbarColor.cs" />
+    <Compile Include="Targets\Xbox360Controller.cs" />
+    <Compile Include="Targets\Xbox360\Xbox360FeedbackReceivedEventArgs.cs" />
+    <Compile Include="Targets\Xbox360\Xbox360Report.cs" />
     <Compile Include="ViGEmClient.cs" />
     <Compile Include="ViGEmClient.Native.cs" />
+    <Compile Include="ViGEmTarget.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="costura64\ViGEmClient.dll" />
