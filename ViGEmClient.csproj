@@ -46,6 +46,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\VigemAlreadyConnectedException.cs" />
+    <Compile Include="Exceptions\VigemBusAccessFailedException.cs" />
+    <Compile Include="Exceptions\VigemBusNotFoundException.cs" />
+    <Compile Include="Exceptions\VigemBusVersionMismatchException.cs" />
+    <Compile Include="Exceptions\VigemCallbackAlreadyRegisteredException.cs" />
+    <Compile Include="Exceptions\VigemCallbackNotFoundException.cs" />
+    <Compile Include="Exceptions\VigemInvalidTargetException.cs" />
+    <Compile Include="Exceptions\VigemNoFreeSlotException.cs" />
+    <Compile Include="Exceptions\VigemRemovalFailedException.cs" />
+    <Compile Include="Exceptions\VigemTargetNotPluggedInException.cs" />
+    <Compile Include="Exceptions\VigemTargetUninitializedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViGEmClient.cs" />
     <Compile Include="ViGEmClient.Native.cs" />
