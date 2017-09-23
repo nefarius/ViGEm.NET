@@ -6,8 +6,6 @@ namespace Nefarius.ViGEm.Client
     using PVIGEM_CLIENT = IntPtr;
     using PVIGEM_TARGET = IntPtr;
     using PVIGEM_TARGET_ADD_RESULT = IntPtr;
-    using PVIGEM_X360_NOTIFICATION = IntPtr;
-    using PVIGEM_DS4_NOTIFICATION = IntPtr;
 
     partial class ViGEmClient
     {
@@ -69,6 +67,27 @@ namespace Nefarius.ViGEm.Client
             DualShock4Wired
         }
 
+        internal struct DS4_LIGHTBAR_COLOR
+        {
+            public byte Red;
+            public byte Green;
+            public byte Blue;
+        }
+
+        internal delegate void PVIGEM_X360_NOTIFICATION(
+            PVIGEM_CLIENT Client,
+            PVIGEM_TARGET Target,
+            byte LargeMotor,
+            byte SmallMotor,
+            byte LedNumber);
+
+        internal delegate void PVIGEM_DS4_NOTIFICATION(
+            PVIGEM_CLIENT Client,
+            PVIGEM_TARGET Target,
+            byte LargeMotor,
+            byte SmallMotor,
+            DS4_LIGHTBAR_COLOR LightbarColor);
+
         [DllImport("vigemclient.dll", ExactSpelling = true)]
         static extern PVIGEM_CLIENT vigem_alloc();
 
@@ -100,16 +119,16 @@ namespace Nefarius.ViGEm.Client
         internal static extern VIGEM_ERROR vigem_target_remove(PVIGEM_CLIENT vigem, PVIGEM_TARGET target);
 
         [DllImport("vigemclient.dll", ExactSpelling = true)]
-        static extern VIGEM_ERROR vigem_target_x360_register_notification(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, PVIGEM_X360_NOTIFICATION notification);
+        internal static extern VIGEM_ERROR vigem_target_x360_register_notification(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, PVIGEM_X360_NOTIFICATION notification);
 
         [DllImport("vigemclient.dll", ExactSpelling = true)]
-        static extern VIGEM_ERROR vigem_target_ds4_register_notification(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, PVIGEM_DS4_NOTIFICATION notification);
+        internal static extern VIGEM_ERROR vigem_target_ds4_register_notification(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, PVIGEM_DS4_NOTIFICATION notification);
 
         [DllImport("vigemclient.dll", ExactSpelling = true)]
-        static extern void vigem_target_x360_unregister_notification(PVIGEM_TARGET target);
+        internal static extern void vigem_target_x360_unregister_notification(PVIGEM_TARGET target);
 
         [DllImport("vigemclient.dll", ExactSpelling = true)]
-        static extern void vigem_target_ds4_unregister_notification(PVIGEM_TARGET target);
+        internal static extern void vigem_target_ds4_unregister_notification(PVIGEM_TARGET target);
 
         [DllImport("vigemclient.dll", ExactSpelling = true)]
         static extern void vigem_target_set_vid(PVIGEM_TARGET target, ushort vid);

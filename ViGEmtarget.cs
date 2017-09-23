@@ -20,12 +20,12 @@ namespace Nefarius.ViGEm.Client
             ViGEmClient.vigem_target_free(NativeHandle);
         }
 
-        public void Connect()
+        public virtual void Connect()
         {
             var error = ViGEmClient.vigem_target_add(Client.NativeHandle, NativeHandle);
         }
 
-        public void Disconnect()
+        public virtual void Disconnect()
         {
             var error = ViGEmClient.vigem_target_remove(Client.NativeHandle, NativeHandle);
         }
