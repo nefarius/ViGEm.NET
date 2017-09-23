@@ -41,14 +41,14 @@ namespace Nefarius.ViGEm.Client
         [StructLayout(LayoutKind.Sequential)]
         internal struct DS4_REPORT
         {
-            byte bThumbLX;
-            byte bThumbLY;
-            byte bThumbRX;
-            byte bThumbRY;
-            ushort wButtons;
-            byte bSpecial;
-            byte bTriggerL;
-            byte bTriggerR;
+            public byte bThumbLX;
+            public byte bThumbLY;
+            public byte bThumbRX;
+            public byte bThumbRY;
+            public ushort wButtons;
+            public byte bSpecial;
+            public byte bTriggerL;
+            public byte bTriggerR;
         }
 
         internal enum VIGEM_TARGET_TYPE : UInt32

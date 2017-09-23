@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Nefarius.ViGEm.Client.Targets.DualShock4
 {
@@ -50,13 +46,13 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
 
         public byte RightTrigger { get; private set; }
 
-        public short LeftThumbX { get; private set; }
+        public byte LeftThumbX { get; private set; }
 
-        public short LeftThumbY { get; private set; }
+        public byte LeftThumbY { get; private set; }
 
-        public short RightThumbX { get; private set; }
+        public byte RightThumbX { get; private set; }
 
-        public short RightThumbY { get; private set; }
+        public byte RightThumbY { get; private set; }
 
         public void SetButtons(params DualShock4Buttons[] buttons)
         {
@@ -74,15 +70,15 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
             }
         }
 
-        public void SetAxis(DualShock4Axes axis, short value)
+        public void SetAxis(DualShock4Axes axis, byte value)
         {
             switch (axis)
             {
                 case DualShock4Axes.LeftTrigger:
-                    LeftTrigger = (byte)value;
+                    LeftTrigger = value;
                     break;
                 case DualShock4Axes.RightTrigger:
-                    RightTrigger = (byte)value;
+                    RightTrigger = value;
                     break;
                 case DualShock4Axes.LeftThumbX:
                     LeftThumbX = value;
