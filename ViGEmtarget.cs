@@ -11,6 +11,10 @@ namespace Nefarius.ViGEm.Client
 
         protected PVIGEM_TARGET NativeHandle { get; set; }
 
+        public ushort VendorId { get; protected set; }
+
+        public ushort ProductId { get; protected set; }
+
         protected ViGEmTarget(ViGEmClient client)
         {
             Client = client;
@@ -23,6 +27,12 @@ namespace Nefarius.ViGEm.Client
 
         public virtual void Connect()
         {
+            if (VendorId > 0 && ProductId > 0)
+            {
+                ViGEmClient.vigem_target_set_vid(NativeHandle, VendorId);
+                ViGEmClient.vigem_target_set_pid(NativeHandle, ProductId);
+            }
+
             var error = ViGEmClient.vigem_target_add(Client.NativeHandle, NativeHandle);
 
             switch (error)

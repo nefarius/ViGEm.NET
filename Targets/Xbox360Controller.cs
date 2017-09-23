@@ -12,6 +12,12 @@ namespace Nefarius.ViGEm.Client.Targets
             NativeHandle = ViGEmClient.vigem_target_x360_alloc();
         }
 
+        public Xbox360Controller(ViGEmClient client, ushort vendorId, ushort productId) : this(client)
+        {
+            VendorId = vendorId;
+            ProductId = productId;
+        }
+
         public void SendReport(Xbox360Report report)
         {
             var submit = new ViGEmClient.XUSB_REPORT

@@ -131,10 +131,10 @@ namespace Nefarius.ViGEm.Client
         internal static extern void vigem_target_ds4_unregister_notification(PVIGEM_TARGET target);
 
         [DllImport("vigemclient.dll", ExactSpelling = true)]
-        static extern void vigem_target_set_vid(PVIGEM_TARGET target, ushort vid);
+        internal static extern void vigem_target_set_vid(PVIGEM_TARGET target, ushort vid);
 
         [DllImport("vigemclient.dll", ExactSpelling = true)]
-        static extern void vigem_target_set_pid(PVIGEM_TARGET target, ushort pid);
+        internal static extern void vigem_target_set_pid(PVIGEM_TARGET target, ushort pid);
 
         [DllImport("vigemclient.dll", ExactSpelling = true)]
         static extern ushort vigem_target_get_vid(PVIGEM_TARGET target);
