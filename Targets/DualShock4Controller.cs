@@ -20,7 +20,7 @@ namespace Nefarius.ViGEm.Client.Targets
 
         public void SendReport(DualShock4Report report)
         {
-            var submit = new ViGEmClient.DS4_REPORT()
+            var submit = new ViGEmClient.DS4_REPORT
             {
                 wButtons = report.Buttons,
                 bSpecial = report.SpecialButtons,
@@ -33,6 +33,14 @@ namespace Nefarius.ViGEm.Client.Targets
             };
 
             var error = ViGEmClient.vigem_target_ds4_update(Client.NativeHandle, NativeHandle, submit);
+
+            switch (error)
+            {
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
+                    throw new VigemBusNotFoundException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
+                    throw new VigemInvalidTargetException();
+            }
         }
 
         public override void Connect()
