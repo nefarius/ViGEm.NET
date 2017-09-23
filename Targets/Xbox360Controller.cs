@@ -1,4 +1,5 @@
-﻿using Nefarius.ViGEm.Client.Targets.Xbox360;
+﻿using Nefarius.ViGEm.Client.Exceptions;
+using Nefarius.ViGEm.Client.Targets.Xbox360;
 
 namespace Nefarius.ViGEm.Client.Targets
 {
@@ -25,6 +26,14 @@ namespace Nefarius.ViGEm.Client.Targets
             };
 
             var error = ViGEmClient.vigem_target_x360_update(Client.NativeHandle, NativeHandle, submit);
+
+            switch (error)
+            {
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
+                    throw new VigemBusNotFoundException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
+                    throw new VigemInvalidTargetException();
+            }
         }
 
         public override void Connect()
@@ -39,6 +48,16 @@ namespace Nefarius.ViGEm.Client.Targets
 
             var error = ViGEmClient.vigem_target_x360_register_notification(Client.NativeHandle, NativeHandle,
                 _notificationCallback);
+
+            switch (error)
+            {
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
+                    throw new VigemBusNotFoundException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
+                    throw new VigemInvalidTargetException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_CALLBACK_ALREADY_REGISTERED:
+                    throw new VigemCallbackAlreadyRegisteredException();
+            }
         }
 
         public override void Disconnect()
