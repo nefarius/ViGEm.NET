@@ -36,8 +36,27 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
         RightThumbY
     }
 
+    public enum DualShock4DPadValues
+    {
+        None = 0x8,
+        Northwest = 0x7,
+        West = 0x6,
+        Southwest = 0x5,
+        South = 0x4,
+        Southeast = 0x3,
+        East = 0x2,
+        Northeast = 0x1,
+        North = 0x0
+    }
+
     public class DualShock4Report
     {
+        public DualShock4Report()
+        {
+            Buttons &= unchecked((ushort)~0xF);
+            Buttons |= 0x08;
+        }
+
         public ushort Buttons { get; private set; }
 
         public byte SpecialButtons { get; private set; }
@@ -60,6 +79,12 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
             {
                 Buttons |= (ushort)button;
             }
+        }
+
+        public void SetDPad(DualShock4DPadValues value)
+        {
+            Buttons &= unchecked((ushort)~0xF);
+            Buttons |= (ushort)value;
         }
 
         public void SetSpecialButtons(params DualShock4SpecialButtons[] buttons)
