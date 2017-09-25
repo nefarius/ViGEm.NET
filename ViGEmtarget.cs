@@ -5,8 +5,13 @@ namespace Nefarius.ViGEm.Client
 {
     using PVIGEM_TARGET = IntPtr;
 
-    public abstract class ViGEmTarget
+    public abstract class ViGEmTarget : IDisposable
     {
+        protected ViGEmTarget(ViGEmClient client)
+        {
+            Client = client;
+        }
+
         protected ViGEmClient Client { get; }
 
         protected PVIGEM_TARGET NativeHandle { get; set; }
@@ -14,16 +19,6 @@ namespace Nefarius.ViGEm.Client
         public ushort VendorId { get; protected set; }
 
         public ushort ProductId { get; protected set; }
-
-        protected ViGEmTarget(ViGEmClient client)
-        {
-            Client = client;
-        }
-
-        ~ViGEmTarget()
-        {
-            ViGEmClient.vigem_target_free(NativeHandle);
-        }
 
         public virtual void Connect()
         {
@@ -64,5 +59,42 @@ namespace Nefarius.ViGEm.Client
                     throw new VigemRemovalFailedException();
             }
         }
+
+        #region IDisposable Support
+
+        private bool disposedValue; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                    Disconnect();
+
+                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
+                // TODO: set large fields to null.
+                ViGEmClient.vigem_target_free(NativeHandle);
+
+                disposedValue = true;
+            }
+        }
+
+        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
+        ~ViGEmTarget()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(false);
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            // TODO: uncomment the following line if the finalizer is overridden above.
+            GC.SuppressFinalize(this);
+        }
+
+        #endregion
     }
 }
