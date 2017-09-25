@@ -55,6 +55,18 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
             }
         }
 
+        public void SetButtonState(Xbox360Buttons button, bool state)
+        {
+            if (state)
+            {
+                Buttons |= (ushort)button;
+            }
+            else
+            {
+                Buttons &= (ushort)~button;
+            }
+        }
+
         public void SetAxis(Xbox360Axes axis, short value)
         {
             switch (axis)

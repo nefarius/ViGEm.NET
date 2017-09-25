@@ -81,6 +81,18 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
             }
         }
 
+        public void SetButtonState(DualShock4Buttons button, bool state)
+        {
+            if (state)
+            {
+                Buttons |= (ushort)button;
+            }
+            else
+            {
+                Buttons &= (ushort)~button;
+            }
+        }
+
         public void SetDPad(DualShock4DPadValues value)
         {
             Buttons &= unchecked((ushort)~0xF);
