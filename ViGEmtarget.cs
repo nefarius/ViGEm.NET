@@ -69,7 +69,7 @@ namespace Nefarius.ViGEm.Client
             if (!disposedValue)
             {
                 if (disposing)
-                    Disconnect();
+                    try { Disconnect(); } catch { }
 
                 // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
                 // TODO: set large fields to null.
