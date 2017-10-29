@@ -1,6 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net452</TargetFramework>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -13,6 +15,20 @@
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Version>1.13.1.0</Version>
+    <Description>Managed ViGEmClient library for interaction with the ViGEm Bus Driver.</Description>
+    <Product>Managed ViGEmClient library</Product>
+    <Authors>Benjamin Höglinger-Stelzer</Authors>
+    <Company>Benjamin Höglinger-Stelzer</Company>
+    <PackageTags>driver bus-driver windows-driver gamepad joypad joystick emulation framework xinput xusb xbone dualshock4 kmdf</PackageTags>
+    <PackageIconUrl>https://raw.githubusercontent.com/nefarius/ViGEm/master/Installer/favicon.png</PackageIconUrl>
+    <Copyright>Copyright © Benjamin "Nefarius" Höglinger 2017</Copyright>
+    <PackageProjectUrl>https://github.com/nefarius/ViGEm</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/nefarius/ViGEm</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/nefarius/ViGEm/blob/master/LICENSE</PackageLicenseUrl>
+    <AssemblyVersion>1.13.1.0</AssemblyVersion>
+    <FileVersion>1.13.1.0</FileVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,10 +49,6 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Costura, Version=1.6.2.0, Culture=neutral, PublicKeyToken=9919ef960d84173d, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Costura.Fody.1.6.2\lib\dotnet\Costura.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -45,30 +57,6 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Exceptions\VigemAlreadyConnectedException.cs" />
-    <Compile Include="Exceptions\VigemBusAccessFailedException.cs" />
-    <Compile Include="Exceptions\VigemBusNotFoundException.cs" />
-    <Compile Include="Exceptions\VigemBusVersionMismatchException.cs" />
-    <Compile Include="Exceptions\VigemCallbackAlreadyRegisteredException.cs" />
-    <Compile Include="Exceptions\VigemCallbackNotFoundException.cs" />
-    <Compile Include="Exceptions\VigemInvalidTargetException.cs" />
-    <Compile Include="Exceptions\VigemNoFreeSlotException.cs" />
-    <Compile Include="Exceptions\VigemRemovalFailedException.cs" />
-    <Compile Include="Exceptions\VigemTargetNotPluggedInException.cs" />
-    <Compile Include="Exceptions\VigemTargetUninitializedException.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Targets\DualShock4Controller.cs" />
-    <Compile Include="Targets\DualShock4\DualShock4FeedbackReceivedEventArgs.cs" />
-    <Compile Include="Targets\DualShock4\DualShock4Report.cs" />
-    <Compile Include="Targets\DualShock4\LightbarColor.cs" />
-    <Compile Include="Targets\Xbox360Controller.cs" />
-    <Compile Include="Targets\Xbox360\Xbox360FeedbackReceivedEventArgs.cs" />
-    <Compile Include="Targets\Xbox360\Xbox360Report.cs" />
-    <Compile Include="ViGEmClient.cs" />
-    <Compile Include="ViGEmClient.Native.cs" />
-    <Compile Include="ViGEmTarget.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="costura64\ViGEmClient.dll" />
@@ -82,21 +70,11 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets'))" />
-  </Target>
-  <Import Project="..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets" Condition="Exists('..\..\packages\Costura.Fody.1.6.2\build\dotnet\Costura.Fody.targets')" />
-  <Import Project="..\..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets" Condition="Exists('..\..\packages\Fody.2.1.2\build\netstandard1.0\Fody.targets')" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+  <ItemGroup>
+    <PackageReference Include="Costura.Fody" Version="1.6.2" />
+    <PackageReference Include="Fody" Version="2.2.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
 </Project>
