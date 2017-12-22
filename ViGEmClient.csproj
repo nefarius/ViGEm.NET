@@ -15,7 +15,7 @@
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <Version>1.13.1.0</Version>
+    <Version>1.14.2.0</Version>
     <Description>Managed ViGEmClient library for interaction with the ViGEm Bus Driver.</Description>
     <Product>Managed ViGEmClient library</Product>
     <Authors>Benjamin Höglinger-Stelzer</Authors>
@@ -26,8 +26,8 @@
     <PackageProjectUrl>https://github.com/nefarius/ViGEm</PackageProjectUrl>
     <RepositoryUrl>https://github.com/nefarius/ViGEm</RepositoryUrl>
     <PackageLicenseUrl>https://github.com/nefarius/ViGEm/blob/master/LICENSE</PackageLicenseUrl>
-    <AssemblyVersion>1.13.1.0</AssemblyVersion>
-    <FileVersion>1.13.1.0</FileVersion>
+    <AssemblyVersion>1.14.2.0</AssemblyVersion>
+    <FileVersion>1.14.2.0</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
