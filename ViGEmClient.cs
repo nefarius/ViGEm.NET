@@ -5,6 +5,9 @@ namespace Nefarius.ViGEm.Client
 {
     using PVIGEM_CLIENT = IntPtr;
 
+    /// <summary>
+    ///     Represents a managed gateway to a compatible emulation bus.
+    /// </summary>
     public partial class ViGEmClient : IDisposable
     {
         public ViGEmClient()
@@ -25,6 +28,9 @@ namespace Nefarius.ViGEm.Client
             }
         }
 
+        /// <summary>
+        ///     Gets the <see cref="PVIGEM_CLIENT"/> identifying the bus connection.
+        /// </summary>
         internal PVIGEM_CLIENT NativeHandle { get; }
 
         #region IDisposable Support
