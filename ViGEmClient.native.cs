@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Nefarius.ViGEm.Client
 {
@@ -7,6 +8,7 @@ namespace Nefarius.ViGEm.Client
     using PVIGEM_TARGET = IntPtr;
     using PVIGEM_TARGET_ADD_RESULT = IntPtr;
 
+    [SuppressUnmanagedCodeSecurity]
     partial class ViGEmClient
     {
         internal enum VIGEM_ERROR : UInt32
