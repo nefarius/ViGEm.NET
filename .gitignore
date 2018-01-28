@@ -3,3 +3,6 @@
 ################################################################################
 
 /.vs/ViGEm.NET/v15
+/build/obj/Release
+/ViGEmClient/obj
+/bin/Nefarius.ViGEmClient
