@@ -34,19 +34,19 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
 
     public class Xbox360Report
     {
-        public ushort Buttons { get; private set; }
+        public ushort Buttons { get; set; }
 
-        public byte LeftTrigger { get; private set; }
+        public byte LeftTrigger { get; set; }
 
-        public byte RightTrigger { get; private set; }
+        public byte RightTrigger { get; set; }
 
-        public short LeftThumbX { get; private set; }
+        public short LeftThumbX { get; set; }
 
-        public short LeftThumbY { get; private set; }
+        public short LeftThumbY { get; set; }
 
-        public short RightThumbX { get; private set; }
+        public short RightThumbX { get; set; }
 
-        public short RightThumbY { get; private set; }
+        public short RightThumbY { get; set; }
 
         public void SetButtons(params Xbox360Buttons[] buttons)
         {

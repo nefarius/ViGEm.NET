@@ -57,81 +57,20 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
             Buttons |= 0x08;
         }
 
-        public ushort Buttons { get; private set; }
+        public ushort Buttons { get; set; }
 
-        public byte SpecialButtons { get; private set; }
+        public byte SpecialButtons { get; set; }
 
-        public byte LeftTrigger { get; private set; }
+        public byte LeftTrigger { get; set; }
 
-        public byte RightTrigger { get; private set; }
+        public byte RightTrigger { get; set; }
 
-        public byte LeftThumbX { get; private set; }
+        public byte LeftThumbX { get; set; }
 
-        public byte LeftThumbY { get; private set; }
+        public byte LeftThumbY { get; set; }
 
-        public byte RightThumbX { get; private set; }
+        public byte RightThumbX { get; set; }
 
-        public byte RightThumbY { get; private set; }
-
-        public void SetButtons(params DualShock4Buttons[] buttons)
-        {
-            foreach (var button in buttons)
-            {
-                Buttons |= (ushort)button;
-            }
-        }
-
-        public void SetButtonState(DualShock4Buttons button, bool state)
-        {
-            if (state)
-            {
-                Buttons |= (ushort)button;
-            }
-            else
-            {
-                Buttons &= (ushort)~button;
-            }
-        }
-
-        public void SetDPad(DualShock4DPadValues value)
-        {
-            Buttons &= unchecked((ushort)~0xF);
-            Buttons |= (ushort)value;
-        }
-
-        public void SetSpecialButtons(params DualShock4SpecialButtons[] buttons)
-        {
-            foreach (var button in buttons)
-            {
-                SpecialButtons |= (byte)button;
-            }
-        }
-
-        public void SetAxis(DualShock4Axes axis, byte value)
-        {
-            switch (axis)
-            {
-                case DualShock4Axes.LeftTrigger:
-                    LeftTrigger = value;
-                    break;
-                case DualShock4Axes.RightTrigger:
-                    RightTrigger = value;
-                    break;
-                case DualShock4Axes.LeftThumbX:
-                    LeftThumbX = value;
-                    break;
-                case DualShock4Axes.LeftThumbY:
-                    LeftThumbY = value;
-                    break;
-                case DualShock4Axes.RightThumbX:
-                    RightThumbX = value;
-                    break;
-                case DualShock4Axes.RightThumbY:
-                    RightThumbY = value;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(axis), axis, null);
-            }
-        }
+        public byte RightThumbY { get; set; }
     }
 }
