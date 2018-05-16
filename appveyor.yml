@@ -3,6 +3,9 @@ image: Visual Studio 2017
 install:
 build_script:
 - ps: .\build.ps1 -configuration release
+artifacts:
+- path: bin
+  name: Nefarius.ViGEmClient
 deploy:
 - provider: Environment
   name: BUILDBOT
