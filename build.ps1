@@ -13,11 +13,11 @@ $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
 ###########################################################################
 
 $NuGetVersion = "latest"
-$SolutionDirectory = "$PSScriptRoot\..\ViGEm"
+$SolutionDirectory = "$PSScriptRoot\."
 $BuildProjectFile = "$PSScriptRoot\.\build\.build.csproj"
 $BuildExeFile = "$PSScriptRoot\.\build\bin\debug\.build.exe"
 
-$TempDirectory = "$PSScriptRoot\.tmp"
+$TempDirectory = "$PSScriptRoot\.\.tmp"
 
 $NuGetUrl = "https://dist.nuget.org/win-x86-commandline/$NuGetVersion/nuget.exe"
 $NuGetFile = "$TempDirectory\nuget.exe"
@@ -49,4 +49,5 @@ ExecSafe { & $MSBuildFile $BuildProjectFile }
 # EXECUTE BUILD
 ###########################################################################
 
-ExecSafe { & $BuildExeFile $BuildArguments }
+& $BuildExeFile $BuildArguments
+exit $LASTEXITCODE

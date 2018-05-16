@@ -7,3 +7,6 @@
 /ViGEmClient/obj
 /bin/Nefarius.ViGEmClient
 /build/obj
+/.tmp
+/build/bin
+*.DotSettings

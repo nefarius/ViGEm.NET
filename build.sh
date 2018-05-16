@@ -18,11 +18,11 @@ SCRIPT_DIR=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 ###########################################################################
 
 NUGET_VERSION="latest"
-SOLUTION_DIRECTORY="$SCRIPT_DIR/../ViGEm"
+SOLUTION_DIRECTORY="$SCRIPT_DIR/."
 BUILD_PROJECT_FILE="$SCRIPT_DIR/./build/.build.csproj"
 BUILD_EXE_FILE="$SCRIPT_DIR/./build/bin/Debug/.build.exe"
 
-TEMP_DIRECTORY="$SCRIPT_DIR/.tmp"
+TEMP_DIRECTORY="$SCRIPT_DIR/./.tmp"
 
 NUGET_URL="https://dist.nuget.org/win-x86-commandline/$NUGET_VERSION/nuget.exe"
 NUGET_FILE="$TEMP_DIRECTORY/nuget.exe"

@@ -22,10 +22,10 @@
     <Company>Benjamin Höglinger-Stelzer</Company>
     <PackageTags>driver bus-driver windows-driver gamepad joypad joystick emulation framework xinput xusb xbone dualshock4 kmdf</PackageTags>
     <PackageIconUrl>https://raw.githubusercontent.com/nefarius/ViGEm/master/Installer/favicon.png</PackageIconUrl>
-    <Copyright>Copyright © Benjamin "Nefarius" Höglinger 2017</Copyright>
-    <PackageProjectUrl>https://github.com/nefarius/ViGEm</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/nefarius/ViGEm</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/nefarius/ViGEm/blob/master/LICENSE</PackageLicenseUrl>
+    <Copyright>Copyright © Benjamin "Nefarius" Höglinger 2017-2018</Copyright>
+    <PackageProjectUrl>https://github.com/ViGEm/ViGEm.NET</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ViGEm/ViGEm.NET</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/ViGEm/ViGEm.NET/blob/master/LICENSE</PackageLicenseUrl>
     <AssemblyVersion>1.14.3.0</AssemblyVersion>
     <FileVersion>1.14.3.0</FileVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
