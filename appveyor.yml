@@ -9,4 +9,3 @@ deploy:
   api_key:
     secure: ECsEtLLrDKzTcBnJ9QWS1fe1Dmx0mbhsQyCQUCtIeoEzXr8LBMovLOafSJ57Vm92Y/T6ISmx3DRqpF1gp2WasDhhuQ14jysbycyUTsM0ugtEjhW91vllo9vF4P/yQPjwl2+Tc2/HHi6LeOxlPUEuQq/NFWPHM0OIeOLJ9m6lQDLwsQBWHrvhOOAfggv9D+4eXpyEVLpbGb0rsrU8X1hEXBYahspBJPlXGDnbb/xTY9u4nkdtx5FBe93P71tw/iDv7V16XsV+TH7Cop3bG3bAYA==
   skip_symbols: true
-  artifact: '**\*.nupkg'
