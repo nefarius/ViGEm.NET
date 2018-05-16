@@ -38,6 +38,18 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
             }
         }
 
+        public static void SetSpecialButtonState(this DualShock4Report report, DualShock4SpecialButtons button, bool state)
+        {
+            if (state)
+            {
+                report.SpecialButtons |= (byte)button;
+            }
+            else
+            {
+                report.SpecialButtons &= (byte)~button;
+            }
+        }
+
         public static void SetAxis(this DualShock4Report report, DualShock4Axes axis, byte value)
         {
             switch (axis)
