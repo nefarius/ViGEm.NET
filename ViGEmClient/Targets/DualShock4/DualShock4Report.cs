@@ -55,6 +55,10 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
         {
             Buttons &= unchecked((ushort)~0xF);
             Buttons |= 0x08;
+            LeftThumbX = 0x80;
+            LeftThumbY = 0x80;
+            RightThumbX = 0x80;
+            RightThumbY = 0x80;
         }
 
         public ushort Buttons { get; set; }
