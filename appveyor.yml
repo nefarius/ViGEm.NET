@@ -7,4 +7,4 @@ artifacts:
 - path: 'bin**\*.nupkg'
 deploy:
 - provider: Environment
-  name: nuget.vigem.org
+  name: nuget.org
