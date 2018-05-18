@@ -5,3 +5,6 @@ build_script:
 - ps: .\build.ps1 -configuration release
 artifacts:
 - path: 'bin**\*.nupkg'
+deploy:
+- provider: Environment
+  name: nuget.vigem.org
