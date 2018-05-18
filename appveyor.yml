@@ -4,4 +4,4 @@ install:
 build_script:
 - ps: .\build.ps1 -configuration release
 artifacts:
-- path: '**bin\*.nupkg'
+- path: 'bin**\*.nupkg'
