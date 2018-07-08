@@ -12,6 +12,11 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
             }
         }
 
+        public static void SetButtonsFull(this Xbox360Report report, Xbox360Buttons buttons)
+        {
+            report.Buttons = (ushort)buttons;
+        }
+
         public static void SetButtonState(this Xbox360Report report, Xbox360Buttons button, bool state)
         {
             if (state)
