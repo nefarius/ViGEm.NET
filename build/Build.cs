@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using System.Linq;
 using Nuke.Common;
 using Nuke.Common.Git;
@@ -42,7 +43,26 @@ class Build : NukeBuild
                 .SetTargets("Rebuild")
                 .SetConfiguration(Configuration)
                 .SetMaxCpuCount(Environment.ProcessorCount)
-                .SetNodeReuse(IsLocalBuild));
+                .SetNodeReuse(IsLocalBuild)
+                .SetTargetPlatform(MSBuildTargetPlatform.x64));
+
+            MSBuild(s => s
+                .SetTargetPath(SolutionFile)
+                .SetTargets("Rebuild")
+                .SetConfiguration(Configuration)
+                .SetMaxCpuCount(Environment.ProcessorCount)
+                .SetNodeReuse(IsLocalBuild)
+                .SetTargetPlatform(MSBuildTargetPlatform.x86));
+
+            File.Copy(
+                Path.Combine(WorkingDirectory, @"bin\x64\ViGEmClient.dll"),
+                Path.Combine(WorkingDirectory, @"ViGEmClient\costura64\ViGEmClient.dll")
+            );
+
+            File.Copy(
+                Path.Combine(WorkingDirectory, @"bin\Win32\ViGEmClient.dll"),
+                Path.Combine(WorkingDirectory, @"ViGEmClient\costura32\ViGEmClient.dll")
+            );
         });
 
     private Target Pack => _ => _
