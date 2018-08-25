@@ -2,13 +2,12 @@
 # This .gitignore file was automatically created by Microsoft(R) Visual Studio.
 ################################################################################
 
-/.vs/ViGEm.NET/v15
-/build/obj/Release
+/.vs
+/bin
+/artifacts
 /ViGEmClient/obj
-/bin/Nefarius.ViGEmClient
 /build/obj
 /.tmp
 /build/bin
 *.DotSettings
-/ViGEmClient/costura32/ViGEmClient.dll
-/ViGEmClient/costura64/ViGEmClient.dll
+*.dll
