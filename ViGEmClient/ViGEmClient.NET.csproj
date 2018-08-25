@@ -71,8 +71,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Costura.Fody" Version="1.6.2" />
-    <PackageReference Include="Fody" Version="2.2.0" />
+    <PackageReference Include="Costura.Fody" Version="3.1.0" />
+    <PackageReference Include="Fody" Version="3.1.4" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
