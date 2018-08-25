@@ -12,7 +12,7 @@ using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
 class Build : NukeBuild
 {
-    public static int Main () => Execute<Build>(x => x.Compile);
+    public static int Main() => Execute<Build>(x => x.Compile);
 
     [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
@@ -54,14 +54,23 @@ class Build : NukeBuild
                 .SetNodeReuse(IsLocalBuild)
                 .SetTargetPlatform(MSBuildTargetPlatform.x86));
 
+            var costura64 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura64");
+            var costura32 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura32");
+
+            if (!Directory.Exists(costura64))
+                Directory.CreateDirectory(costura64);
+
+            if (!Directory.Exists(costura32))
+                Directory.CreateDirectory(costura32);
+
             File.Copy(
                 Path.Combine(WorkingDirectory, @"bin\x64\ViGEmClient.dll"),
-                Path.Combine(WorkingDirectory, @"ViGEmClient\costura64\ViGEmClient.dll")
+                Path.Combine(WorkingDirectory, costura64, "ViGEmClient.dll")
             );
 
             File.Copy(
                 Path.Combine(WorkingDirectory, @"bin\Win32\ViGEmClient.dll"),
-                Path.Combine(WorkingDirectory, @"ViGEmClient\costura32\ViGEmClient.dll")
+                Path.Combine(WorkingDirectory, costura32, "ViGEmClient.dll")
             );
         });
 
