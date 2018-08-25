@@ -65,12 +65,14 @@ class Build : NukeBuild
 
             File.Copy(
                 Path.Combine(WorkingDirectory, @"bin\x64\ViGEmClient.dll"),
-                Path.Combine(WorkingDirectory, costura64, "ViGEmClient.dll")
+                Path.Combine(WorkingDirectory, costura64, "ViGEmClient.dll"),
+                true
             );
 
             File.Copy(
                 Path.Combine(WorkingDirectory, @"bin\Win32\ViGEmClient.dll"),
-                Path.Combine(WorkingDirectory, costura32, "ViGEmClient.dll")
+                Path.Combine(WorkingDirectory, costura32, "ViGEmClient.dll"),
+                true
             );
         });
 
