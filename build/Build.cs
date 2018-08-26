@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Nuke.Common;
+using Nuke.Common.BuildServers;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.MSBuild;
@@ -44,7 +45,10 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration)
                 .SetMaxCpuCount(Environment.ProcessorCount)
                 .SetNodeReuse(IsLocalBuild)
-                .SetTargetPlatform(MSBuildTargetPlatform.x64));
+                .SetTargetPlatform(MSBuildTargetPlatform.x64)
+                .SetAssemblyVersion(AppVeyor.Instance?.BuildVersion)
+                .SetFileVersion(AppVeyor.Instance?.BuildVersion)
+                .SetInformationalVersion(AppVeyor.Instance?.BuildVersion));
 
             MSBuild(s => s
                 .SetTargetPath(SolutionFile)
@@ -52,7 +56,10 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration)
                 .SetMaxCpuCount(Environment.ProcessorCount)
                 .SetNodeReuse(IsLocalBuild)
-                .SetTargetPlatform(MSBuildTargetPlatform.x86));
+                .SetTargetPlatform(MSBuildTargetPlatform.x86)
+                .SetAssemblyVersion(AppVeyor.Instance?.BuildVersion)
+                .SetFileVersion(AppVeyor.Instance?.BuildVersion)
+                .SetInformationalVersion(AppVeyor.Instance?.BuildVersion));
 
             var costura64 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura64");
             var costura32 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura32");
