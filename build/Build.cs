@@ -48,7 +48,8 @@ class Build : NukeBuild
                 .SetTargetPlatform(MSBuildTargetPlatform.x64)
                 .SetAssemblyVersion(AppVeyor.Instance?.BuildVersion)
                 .SetFileVersion(AppVeyor.Instance?.BuildVersion)
-                .SetInformationalVersion(AppVeyor.Instance?.BuildVersion));
+                .SetInformationalVersion(AppVeyor.Instance?.BuildVersion)
+                .SetPackageVersion(AppVeyor.Instance?.BuildVersion));
 
             MSBuild(s => s
                 .SetTargetPath(SolutionFile)
@@ -59,7 +60,8 @@ class Build : NukeBuild
                 .SetTargetPlatform(MSBuildTargetPlatform.x86)
                 .SetAssemblyVersion(AppVeyor.Instance?.BuildVersion)
                 .SetFileVersion(AppVeyor.Instance?.BuildVersion)
-                .SetInformationalVersion(AppVeyor.Instance?.BuildVersion));
+                .SetInformationalVersion(AppVeyor.Instance?.BuildVersion)
+                .SetPackageVersion(AppVeyor.Instance?.BuildVersion));
 
             var costura64 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura64");
             var costura32 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura32");
