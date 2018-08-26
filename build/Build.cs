@@ -78,7 +78,7 @@ class Build : NukeBuild
                 ProcessUtil.StartWithArguments(verpatchTool, $"{dll64} /pv {AppVeyor.Instance.BuildVersion}");
                 Console.WriteLine("Done");
 
-                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}");
+                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}...");
                 ProcessUtil.StartWithArguments(verpatchTool, $"{dll32} {AppVeyor.Instance.BuildVersion}");
                 ProcessUtil.StartWithArguments(verpatchTool, $"{dll32} /pv {AppVeyor.Instance.BuildVersion}");
                 Console.WriteLine("Done");
