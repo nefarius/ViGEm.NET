@@ -25,7 +25,9 @@ namespace Nefarius.ViGEm.Client
             VIGEM_ERROR_BUS_ACCESS_FAILED = 0xE0000009,
             VIGEM_ERROR_CALLBACK_ALREADY_REGISTERED = 0xE0000010,
             VIGEM_ERROR_CALLBACK_NOT_FOUND = 0xE0000011,
-            VIGEM_ERROR_BUS_ALREADY_CONNECTED = 0xE0000012
+            VIGEM_ERROR_BUS_ALREADY_CONNECTED = 0xE0000012,
+            VIGEM_ERROR_BUS_INVALID_HANDLE = 0xE0000013,
+            VIGEM_ERROR_XUSB_USERINDEX_OUT_OF_RANGE = 0xE0000014
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -62,7 +64,7 @@ namespace Nefarius.ViGEm.Client
             // 
             // Microsoft Xbox One Controller (wired)
             // 
-            XboxOneWired,
+            XboxOneWired, // TODO: not implemented
             //
             // Sony DualShock 4 (wired)
             // 
@@ -158,5 +160,8 @@ namespace Nefarius.ViGEm.Client
 
         [DllImport("vigemclient.dll", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         static extern bool vigem_target_is_attached(PVIGEM_TARGET target);
+
+        [DllImport("vigemclient.dll", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        static extern VIGEM_ERROR vigem_target_x360_get_user_index(PVIGEM_CLIENT vigem, PVIGEM_TARGET target, out UInt32 index);
     }
 }

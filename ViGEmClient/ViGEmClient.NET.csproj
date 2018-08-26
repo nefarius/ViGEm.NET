@@ -68,9 +68,6 @@
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Costura.Fody" Version="3.1.0" />
     <PackageReference Include="Fody" Version="3.1.4" />
   </ItemGroup>
