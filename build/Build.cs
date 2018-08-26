@@ -92,18 +92,21 @@ class Build : NukeBuild
                 true
             );
 
-            if (AppVeyor.Instance == null) return;
+            if (AppVeyor.Instance == null ||
+                !Configuration.Equals("Release", StringComparison.InvariantCultureIgnoreCase)) return;
+
+            Console.WriteLine("About to build .NET library, updating DLL version information...");
 
             using (var client = new WebClient())
             {
                 var verpatchZip = Path.Combine(
-                    WorkingDirectory, 
+                    WorkingDirectory,
                     "verpatch-1.0.15.1-x86-codeplex.zip"
                 );
 
                 Console.WriteLine("Downloading verpatch tool");
                 client.DownloadFile(
-                    VerpatchUrl, 
+                    VerpatchUrl,
                     verpatchZip);
 
                 Console.WriteLine("Extracting verpatch");
