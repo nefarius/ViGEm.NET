@@ -53,72 +53,77 @@ class Build : NukeBuild
             if (AppVeyor.Instance != null
                 && Configuration.Equals("Release", StringComparison.InvariantCultureIgnoreCase))
             {
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine("Going to build .NET library, updating native DLL version information...");
 
-                Console.WriteLine("About to build .NET library, updating DLL version information...");
-
-                using (var client = new WebClient())
-                {
-                    var verpatchZip = Path.Combine(
+                var verpatchZip = Path.Combine(
                         WorkingDirectory,
                         "verpatch-1.0.15.1-x86-codeplex.zip"
                     );
 
-                    Console.WriteLine("Downloading verpatch tool");
+                using (var client = new WebClient())
+                {
+                    Console.WriteLine("Downloading verpatch tool...");
                     client.DownloadFile(
                         VerpatchUrl,
                         verpatchZip);
+                }
 
-                    Console.WriteLine("Extracting verpatch");
-                    ZipFile.ExtractToDirectory(verpatchZip, WorkingDirectory);
+                Console.WriteLine("Extracting verpatch...");
+                ZipFile.ExtractToDirectory(verpatchZip, WorkingDirectory);
 
-                    var verpatchTool = Path.Combine(WorkingDirectory, "verpatch.exe");
+                var verpatchTool = Path.Combine(WorkingDirectory, "verpatch.exe");
 
-                    Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll64}");
-                    var proc64 = new Process
-                    {
-                        StartInfo =
+                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll64}...");
+                var proc64 = new Process
+                {
+                    StartInfo =
                         {
                             FileName = verpatchTool,
                             Arguments = $"{dll64} {AppVeyor.Instance.BuildVersion}"
                         }
-                    };
-                    proc64.Start();
-                    proc64.WaitForExit();
+                };
+                proc64.Start();
+                proc64.WaitForExit();
 
-                    proc64 = new Process
-                    {
-                        StartInfo =
+                proc64 = new Process
+                {
+                    StartInfo =
                         {
                             FileName = verpatchTool,
                             Arguments = $"{dll64} /pv {AppVeyor.Instance.BuildVersion}"
                         }
-                    };
-                    proc64.Start();
-                    proc64.WaitForExit();
+                };
+                proc64.Start();
+                proc64.WaitForExit();
+                Console.WriteLine("Done");
 
-                    Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}");
-                    var proc32 = new Process
-                    {
-                        StartInfo =
+                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}");
+                var proc32 = new Process
+                {
+                    StartInfo =
                         {
                             FileName = verpatchTool,
                             Arguments = $"{dll32} {AppVeyor.Instance.BuildVersion}"
                         }
-                    };
-                    proc32.Start();
-                    proc32.WaitForExit();
+                };
+                proc32.Start();
+                proc32.WaitForExit();
 
-                    proc32 = new Process
-                    {
-                        StartInfo =
+                proc32 = new Process
+                {
+                    StartInfo =
                         {
                             FileName = verpatchTool,
                             Arguments = $"{dll32} /pv {AppVeyor.Instance.BuildVersion}"
                         }
-                    };
-                    proc32.Start();
-                    proc32.WaitForExit();
-                }
+                };
+                proc32.Start();
+                proc32.WaitForExit();
+
+                Console.WriteLine("Done");
+
+                Console.ResetColor();
             }
 
             MSBuild(s => s
