@@ -1,6 +1,9 @@
 using System;
+using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Net;
 using Nuke.Common;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Git;
@@ -19,6 +22,9 @@ class Build : NukeBuild
     [GitRepository] readonly GitRepository GitRepository;
 
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
+
+    static string VerpatchUrl =>
+        "https://downloads.vigem.org/other/pavel-a/ddverpatch/verpatch-1.0.15.1-x86-codeplex.zip";
 
     Target Clean => _ => _
         .Executes(() =>
@@ -64,7 +70,9 @@ class Build : NukeBuild
                 .SetPackageVersion(AppVeyor.Instance?.BuildVersion));
 
             var costura64 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura64");
+            var dll64 = Path.Combine(costura64, "ViGEmClient.dll");
             var costura32 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura32");
+            var dll32 = Path.Combine(costura32, "ViGEmClient.dll");
 
             if (!Directory.Exists(costura64))
                 Directory.CreateDirectory(costura64);
@@ -74,15 +82,71 @@ class Build : NukeBuild
 
             File.Copy(
                 Path.Combine(WorkingDirectory, @"bin\x64\ViGEmClient.dll"),
-                Path.Combine(WorkingDirectory, costura64, "ViGEmClient.dll"),
+                dll64,
                 true
             );
 
             File.Copy(
                 Path.Combine(WorkingDirectory, @"bin\Win32\ViGEmClient.dll"),
-                Path.Combine(WorkingDirectory, costura32, "ViGEmClient.dll"),
+                dll32,
                 true
             );
+
+            if (AppVeyor.Instance == null) return;
+
+            using (var client = new WebClient())
+            {
+                var verpatchZip = Path.Combine(
+                    WorkingDirectory, 
+                    "verpatch-1.0.15.1-x86-codeplex.zip"
+                );
+
+                Console.WriteLine("Downloading verpatch tool");
+                client.DownloadFile(
+                    VerpatchUrl, 
+                    verpatchZip);
+
+                Console.WriteLine("Extracting verpatch");
+                ZipFile.ExtractToDirectory(verpatchZip, WorkingDirectory);
+
+                var verpatchTool = Path.Combine(WorkingDirectory, "verpatch.exe");
+
+                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll64}");
+                new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = verpatchTool,
+                        Arguments = $"{dll64} {AppVeyor.Instance.BuildVersion}"
+                    }
+                }.Start();
+                new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = verpatchTool,
+                        Arguments = $"{dll64} /pv {AppVeyor.Instance.BuildVersion}"
+                    }
+                }.Start();
+
+                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}");
+                new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = verpatchTool,
+                        Arguments = $"{dll32} {AppVeyor.Instance.BuildVersion}"
+                    }
+                }.Start();
+                new Process
+                {
+                    StartInfo =
+                    {
+                        FileName = verpatchTool,
+                        Arguments = $"{dll32} /pv {AppVeyor.Instance.BuildVersion}"
+                    }
+                }.Start();
+            }
         });
 
     private Target Pack => _ => _
