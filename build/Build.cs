@@ -45,6 +45,82 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
+            var costura64 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura64");
+            var dll64 = Path.Combine(costura64, "ViGEmClient.dll");
+            var costura32 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura32");
+            var dll32 = Path.Combine(costura32, "ViGEmClient.dll");
+
+            if (AppVeyor.Instance != null
+                && Configuration.Equals("Release", StringComparison.InvariantCultureIgnoreCase))
+            {
+
+                Console.WriteLine("About to build .NET library, updating DLL version information...");
+
+                using (var client = new WebClient())
+                {
+                    var verpatchZip = Path.Combine(
+                        WorkingDirectory,
+                        "verpatch-1.0.15.1-x86-codeplex.zip"
+                    );
+
+                    Console.WriteLine("Downloading verpatch tool");
+                    client.DownloadFile(
+                        VerpatchUrl,
+                        verpatchZip);
+
+                    Console.WriteLine("Extracting verpatch");
+                    ZipFile.ExtractToDirectory(verpatchZip, WorkingDirectory);
+
+                    var verpatchTool = Path.Combine(WorkingDirectory, "verpatch.exe");
+
+                    Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll64}");
+                    var proc64 = new Process
+                    {
+                        StartInfo =
+                        {
+                            FileName = verpatchTool,
+                            Arguments = $"{dll64} {AppVeyor.Instance.BuildVersion}"
+                        }
+                    };
+                    proc64.Start();
+                    proc64.WaitForExit();
+
+                    proc64 = new Process
+                    {
+                        StartInfo =
+                        {
+                            FileName = verpatchTool,
+                            Arguments = $"{dll64} /pv {AppVeyor.Instance.BuildVersion}"
+                        }
+                    };
+                    proc64.Start();
+                    proc64.WaitForExit();
+
+                    Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}");
+                    var proc32 = new Process
+                    {
+                        StartInfo =
+                        {
+                            FileName = verpatchTool,
+                            Arguments = $"{dll32} {AppVeyor.Instance.BuildVersion}"
+                        }
+                    };
+                    proc32.Start();
+                    proc32.WaitForExit();
+
+                    proc32 = new Process
+                    {
+                        StartInfo =
+                        {
+                            FileName = verpatchTool,
+                            Arguments = $"{dll32} /pv {AppVeyor.Instance.BuildVersion}"
+                        }
+                    };
+                    proc32.Start();
+                    proc32.WaitForExit();
+                }
+            }
+
             MSBuild(s => s
                 .SetTargetPath(SolutionFile)
                 .SetTargets("Rebuild")
@@ -69,11 +145,6 @@ class Build : NukeBuild
                 .SetInformationalVersion(AppVeyor.Instance?.BuildVersion)
                 .SetPackageVersion(AppVeyor.Instance?.BuildVersion));
 
-            var costura64 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura64");
-            var dll64 = Path.Combine(costura64, "ViGEmClient.dll");
-            var costura32 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura32");
-            var dll32 = Path.Combine(costura32, "ViGEmClient.dll");
-
             if (!Directory.Exists(costura64))
                 Directory.CreateDirectory(costura64);
 
@@ -91,65 +162,6 @@ class Build : NukeBuild
                 dll32,
                 true
             );
-
-            if (AppVeyor.Instance == null ||
-                !Configuration.Equals("Release", StringComparison.InvariantCultureIgnoreCase)) return;
-
-            Console.WriteLine("About to build .NET library, updating DLL version information...");
-
-            using (var client = new WebClient())
-            {
-                var verpatchZip = Path.Combine(
-                    WorkingDirectory,
-                    "verpatch-1.0.15.1-x86-codeplex.zip"
-                );
-
-                Console.WriteLine("Downloading verpatch tool");
-                client.DownloadFile(
-                    VerpatchUrl,
-                    verpatchZip);
-
-                Console.WriteLine("Extracting verpatch");
-                ZipFile.ExtractToDirectory(verpatchZip, WorkingDirectory);
-
-                var verpatchTool = Path.Combine(WorkingDirectory, "verpatch.exe");
-
-                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll64}");
-                new Process
-                {
-                    StartInfo =
-                    {
-                        FileName = verpatchTool,
-                        Arguments = $"{dll64} {AppVeyor.Instance.BuildVersion}"
-                    }
-                }.Start();
-                new Process
-                {
-                    StartInfo =
-                    {
-                        FileName = verpatchTool,
-                        Arguments = $"{dll64} /pv {AppVeyor.Instance.BuildVersion}"
-                    }
-                }.Start();
-
-                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}");
-                new Process
-                {
-                    StartInfo =
-                    {
-                        FileName = verpatchTool,
-                        Arguments = $"{dll32} {AppVeyor.Instance.BuildVersion}"
-                    }
-                }.Start();
-                new Process
-                {
-                    StartInfo =
-                    {
-                        FileName = verpatchTool,
-                        Arguments = $"{dll32} /pv {AppVeyor.Instance.BuildVersion}"
-                    }
-                }.Start();
-            }
         });
 
     private Target Pack => _ => _
