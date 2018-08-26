@@ -41,7 +41,7 @@ class Build : NukeBuild
                 .SetTargets("Restore"));
         });
 
-    Target Compile => _ => _
+    private Target Compile => _ => _
         .DependsOn(Restore)
         .Executes(() =>
         {
@@ -53,7 +53,6 @@ class Build : NukeBuild
             if (AppVeyor.Instance != null
                 && Configuration.Equals("Release", StringComparison.InvariantCultureIgnoreCase))
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine("Going to build .NET library, updating native DLL version information...");
 
                 var verpatchZip = Path.Combine(
@@ -75,55 +74,14 @@ class Build : NukeBuild
                 var verpatchTool = Path.Combine(WorkingDirectory, "verpatch.exe");
 
                 Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll64}...");
-                var proc64 = new Process
-                {
-                    StartInfo =
-                        {
-                            FileName = verpatchTool,
-                            Arguments = $"{dll64} {AppVeyor.Instance.BuildVersion}"
-                        }
-                };
-                proc64.Start();
-                proc64.WaitForExit();
-
-                proc64 = new Process
-                {
-                    StartInfo =
-                        {
-                            FileName = verpatchTool,
-                            Arguments = $"{dll64} /pv {AppVeyor.Instance.BuildVersion}"
-                        }
-                };
-                proc64.Start();
-                proc64.WaitForExit();
+                ProcessUtil.StartWithArguments(verpatchTool, $"{dll64} {AppVeyor.Instance.BuildVersion}");
+                ProcessUtil.StartWithArguments(verpatchTool, $"{dll64} /pv {AppVeyor.Instance.BuildVersion}");
                 Console.WriteLine("Done");
 
                 Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}");
-                var proc32 = new Process
-                {
-                    StartInfo =
-                        {
-                            FileName = verpatchTool,
-                            Arguments = $"{dll32} {AppVeyor.Instance.BuildVersion}"
-                        }
-                };
-                proc32.Start();
-                proc32.WaitForExit();
-
-                proc32 = new Process
-                {
-                    StartInfo =
-                        {
-                            FileName = verpatchTool,
-                            Arguments = $"{dll32} /pv {AppVeyor.Instance.BuildVersion}"
-                        }
-                };
-                proc32.Start();
-                proc32.WaitForExit();
-
+                ProcessUtil.StartWithArguments(verpatchTool, $"{dll32} {AppVeyor.Instance.BuildVersion}");
+                ProcessUtil.StartWithArguments(verpatchTool, $"{dll32} /pv {AppVeyor.Instance.BuildVersion}");
                 Console.WriteLine("Done");
-
-                Console.ResetColor();
             }
 
             MSBuild(s => s
