@@ -3,8 +3,7 @@ image: Visual Studio 2017
 install:
 - cmd: git submodule -q update --init
 build_script:
-- ps: .\build.ps1 -configuration Release_DLL
-- ps: .\build.ps1 -configuration Release
+- ps: .\build.ps1 -configuration release
 artifacts:
 - path: 'bin**\*.nupkg'
 deploy:

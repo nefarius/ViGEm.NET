@@ -1,14 +1,12 @@
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Net;
 using Nuke.Common;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.MSBuild;
+using System;
+using System.IO;
+using System.IO.Compression;
+using System.Net;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
@@ -50,15 +48,72 @@ class Build : NukeBuild
             var costura32 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura32");
             var dll32 = Path.Combine(costura32, "ViGEmClient.dll");
 
-            if (AppVeyor.Instance != null
-                && Configuration.Equals("Release", StringComparison.InvariantCultureIgnoreCase))
+            //
+            // Build native DLL (x64)
+            // 
+            MSBuild(s => s
+                .SetTargetPath(SolutionFile)
+                .SetTargets("Rebuild")
+                .SetMaxCpuCount(Environment.ProcessorCount)
+                .SetNodeReuse(IsLocalBuild)
+                .SetConfiguration($"{Configuration}_DLL")
+                .SetTargetPlatform(MSBuildTargetPlatform.x64));
+
+            //
+            // Create costura64 path (used to automatically embed DLL in assembly)
+            // 
+            if (!Directory.Exists(costura64))
+                Directory.CreateDirectory(costura64);
+
+            //
+            // Copy native DLL to embedder path
+            // 
+            File.Copy(
+                Path.Combine(WorkingDirectory, @"bin\x64\ViGEmClient.dll"),
+                dll64,
+                true
+            );
+
+            //
+            // Build native DLL (x86)
+            // 
+            MSBuild(s => s
+                .SetTargetPath(SolutionFile)
+                .SetTargets("Rebuild")
+                .SetMaxCpuCount(Environment.ProcessorCount)
+                .SetNodeReuse(IsLocalBuild)
+                .SetConfiguration($"{Configuration}_DLL")
+                .SetTargetPlatform(MSBuildTargetPlatform.x86));
+
+            //
+            // Create costura32 path (used to automatically embed DLL in assembly)
+            // 
+            if (!Directory.Exists(costura32))
+                Directory.CreateDirectory(costura32);
+
+            //
+            // Copy native DLL to embedder path
+            // 
+            File.Copy(
+                Path.Combine(WorkingDirectory, @"bin\Win32\ViGEmClient.dll"),
+                dll32,
+                true
+            );
+
+            //
+            // If we run on build server, stamp DLLs with build version
+            // 
+            if (AppVeyor.Instance != null)
             {
                 Console.WriteLine("Going to build .NET library, updating native DLL version information...");
 
+                //
+                // TODO: tidy up this section
+                // 
                 var verpatchZip = Path.Combine(
-                        WorkingDirectory,
-                        "verpatch-1.0.15.1-x86-codeplex.zip"
-                    );
+                    WorkingDirectory,
+                    "verpatch-1.0.15.1-x86-codeplex.zip"
+                );
 
                 using (var client = new WebClient())
                 {
@@ -84,47 +139,19 @@ class Build : NukeBuild
                 Console.WriteLine("Done");
             }
 
+            //
+            // Build .NET assembly
+            // 
             MSBuild(s => s
                 .SetTargetPath(SolutionFile)
                 .SetTargets("Rebuild")
-                .SetConfiguration(Configuration)
                 .SetMaxCpuCount(Environment.ProcessorCount)
                 .SetNodeReuse(IsLocalBuild)
-                .SetTargetPlatform(MSBuildTargetPlatform.x64)
+                .SetConfiguration(Configuration)
                 .SetAssemblyVersion(AppVeyor.Instance?.BuildVersion)
                 .SetFileVersion(AppVeyor.Instance?.BuildVersion)
                 .SetInformationalVersion(AppVeyor.Instance?.BuildVersion)
                 .SetPackageVersion(AppVeyor.Instance?.BuildVersion));
-
-            MSBuild(s => s
-                .SetTargetPath(SolutionFile)
-                .SetTargets("Rebuild")
-                .SetConfiguration(Configuration)
-                .SetMaxCpuCount(Environment.ProcessorCount)
-                .SetNodeReuse(IsLocalBuild)
-                .SetTargetPlatform(MSBuildTargetPlatform.x86)
-                .SetAssemblyVersion(AppVeyor.Instance?.BuildVersion)
-                .SetFileVersion(AppVeyor.Instance?.BuildVersion)
-                .SetInformationalVersion(AppVeyor.Instance?.BuildVersion)
-                .SetPackageVersion(AppVeyor.Instance?.BuildVersion));
-
-            if (!Directory.Exists(costura64))
-                Directory.CreateDirectory(costura64);
-
-            if (!Directory.Exists(costura32))
-                Directory.CreateDirectory(costura32);
-
-            File.Copy(
-                Path.Combine(WorkingDirectory, @"bin\x64\ViGEmClient.dll"),
-                dll64,
-                true
-            );
-
-            File.Copy(
-                Path.Combine(WorkingDirectory, @"bin\Win32\ViGEmClient.dll"),
-                dll32,
-                true
-            );
         });
 
     private Target Pack => _ => _
