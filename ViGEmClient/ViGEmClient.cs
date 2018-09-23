@@ -13,6 +13,10 @@ namespace Nefarius.ViGEm.Client
         public ViGEmClient()
         {
             NativeHandle = vigem_alloc();
+
+            if (NativeHandle == IntPtr.Zero)
+                throw new VigemAllocFailedException();
+
             var error = vigem_connect(NativeHandle);
 
             switch (error)
