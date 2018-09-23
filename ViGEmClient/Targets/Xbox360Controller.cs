@@ -3,11 +3,11 @@ using Nefarius.ViGEm.Client.Targets.Xbox360;
 
 namespace Nefarius.ViGEm.Client.Targets
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="ViGEmTarget" />
     /// <summary>
     ///     Represents an emulated wired Microsoft Xbox 360 Controller.
     /// </summary>
-    public class Xbox360Controller : ViGEmTarget
+    internal class Xbox360Controller : ViGEmTarget, IVirtualGamepad
     {
         private ViGEmClient.PVIGEM_X360_NOTIFICATION _notificationCallback;
 

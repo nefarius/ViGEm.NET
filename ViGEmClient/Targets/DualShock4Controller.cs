@@ -3,11 +3,11 @@ using Nefarius.ViGEm.Client.Targets.DualShock4;
 
 namespace Nefarius.ViGEm.Client.Targets
 {
-    /// <inheritdoc />
+    /// <inheritdoc cref="ViGEmTarget" />
     /// <summary>
     ///     Represents an emulated wired Sony DualShock 4 Controller.
     /// </summary>
-    public class DualShock4Controller : ViGEmTarget
+    internal class DualShock4Controller : ViGEmTarget, IVirtualGamepad
     {
         private ViGEmClient.PVIGEM_DS4_NOTIFICATION _notificationCallback;
 

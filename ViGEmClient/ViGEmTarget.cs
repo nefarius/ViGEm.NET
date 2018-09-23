@@ -8,7 +8,7 @@ namespace Nefarius.ViGEm.Client
     /// <summary>
     ///     Provides a managed wrapper around a generic emulation target.
     /// </summary>
-    public abstract class ViGEmTarget : IDisposable
+    internal abstract class ViGEmTarget : IDisposable, IViGEmTarget
     {
         /// <summary>
         ///     Initializes a new instance of the <see cref="ViGEmTarget"/> bound to a <see cref="ViGEmClient"/>.
