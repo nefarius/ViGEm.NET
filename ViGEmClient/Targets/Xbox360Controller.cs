@@ -1,5 +1,7 @@
 ﻿using Nefarius.ViGEm.Client.Exceptions;
 using Nefarius.ViGEm.Client.Targets.Xbox360;
+using System;
+using System.Collections.Generic;
 
 namespace Nefarius.ViGEm.Client.Targets
 {
@@ -9,6 +11,39 @@ namespace Nefarius.ViGEm.Client.Targets
     /// </summary>
     internal class Xbox360Controller : ViGEmTarget, IVirtualGamepad
     {
+        private static readonly List<Xbox360Button> ButtonMap = new List<Xbox360Button>
+        {
+            Xbox360Button.Up,
+            Xbox360Button.Down,
+            Xbox360Button.Left,
+            Xbox360Button.Right,
+            Xbox360Button.Start,
+            Xbox360Button.Back,
+            Xbox360Button.LeftThumb,
+            Xbox360Button.RightThumb,
+            Xbox360Button.LeftShoulder,
+            Xbox360Button.RightShoulder,
+            Xbox360Button.Guide,
+            Xbox360Button.A,
+            Xbox360Button.B,
+            Xbox360Button.X,
+            Xbox360Button.Y
+        };
+
+        private static readonly List<Xbox360Axis> AxisMap = new List<Xbox360Axis>
+        {
+            Xbox360Axis.LeftTrigger,
+            Xbox360Axis.RightTrigger,
+            Xbox360Axis.LeftThumbX,
+            Xbox360Axis.LeftThumbY,
+            Xbox360Axis.RightThumbX,
+            Xbox360Axis.RightThumbY
+        };
+
+        private readonly Xbox360Report _report = new Xbox360Report();
+
+        private ViGEmClient.XUSB_REPORT _nativeReport = new ViGEmClient.XUSB_REPORT();
+
         private ViGEmClient.PVIGEM_X360_NOTIFICATION _notificationCallback;
 
         /// <inheritdoc />
@@ -35,35 +70,6 @@ namespace Nefarius.ViGEm.Client.Targets
         {
             VendorId = vendorId;
             ProductId = productId;
-        }
-
-        /// <summary>
-        ///     Submits an <see cref="Xbox360Report"/> to this device which will update its state.
-        /// </summary>
-        /// <param name="report">The <see cref="Xbox360Report"/> to submit.</param>
-        public void SendReport(Xbox360Report report)
-        {
-            // Convert managed to unmanaged structure
-            var submit = new ViGEmClient.XUSB_REPORT
-            {
-                wButtons = report.Buttons,
-                bLeftTrigger = report.LeftTrigger,
-                bRightTrigger = report.RightTrigger,
-                sThumbLX = report.LeftThumbX,
-                sThumbLY = report.LeftThumbY,
-                sThumbRX = report.RightThumbX,
-                sThumbRY = report.RightThumbY
-            };
-
-            var error = ViGEmClient.vigem_target_x360_update(Client.NativeHandle, NativeHandle, submit);
-
-            switch (error)
-            {
-                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
-                    throw new VigemBusNotFoundException();
-                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
-                    throw new VigemInvalidTargetException();
-            }
         }
 
         public override void Connect()
@@ -95,6 +101,73 @@ namespace Nefarius.ViGEm.Client.Targets
             ViGEmClient.vigem_target_x360_unregister_notification(NativeHandle);
 
             base.Disconnect();
+        }
+
+        public int ButtonCount => ButtonMap.Count;
+
+        public int AxisCount => AxisMap.Count;
+
+        public void SetButtonState(int index, bool pressed)
+        {
+            if (pressed)
+            {
+                _nativeReport.wButtons |= (ushort)ButtonMap[index];
+            }
+            else
+            {
+                _nativeReport.wButtons &= (ushort)~ButtonMap[index];
+            }
+
+            SubmitNativeReport(_nativeReport);
+        }
+
+        private static short Scale(byte value, bool invert)
+        {
+            int intValue = (value - 0x80);
+            if (intValue == -128) intValue = -127;
+
+            var wtfValue = intValue * 258.00787401574803149606299212599f; // what the fuck?
+
+            return (short)(invert ? -wtfValue : wtfValue);
+        }
+
+        public void SetAxisValue(int index, short value)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        ///     Submits an <see cref="Xbox360Report" /> to this device which will update its state.
+        /// </summary>
+        /// <param name="report">The <see cref="Xbox360Report" /> to report.</param>
+        public void SendReport(Xbox360Report report)
+        {
+            // Convert managed to unmanaged structure
+            var submit = new ViGEmClient.XUSB_REPORT
+            {
+                wButtons = report.Buttons,
+                bLeftTrigger = report.LeftTrigger,
+                bRightTrigger = report.RightTrigger,
+                sThumbLX = report.LeftThumbX,
+                sThumbLY = report.LeftThumbY,
+                sThumbRX = report.RightThumbX,
+                sThumbRY = report.RightThumbY
+            };
+
+            SubmitNativeReport(submit);
+        }
+
+        private void SubmitNativeReport(ViGEmClient.XUSB_REPORT report)
+        {
+            var error = ViGEmClient.vigem_target_x360_update(Client.NativeHandle, NativeHandle, report);
+
+            switch (error)
+            {
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
+                    throw new VigemBusNotFoundException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
+                    throw new VigemInvalidTargetException();
+            }
         }
 
         public event Xbox360FeedbackReceivedEventHandler FeedbackReceived;

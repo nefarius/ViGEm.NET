@@ -99,6 +99,20 @@ namespace Nefarius.ViGEm.Client.Targets
             base.Disconnect();
         }
 
+        public int ButtonCount => throw new System.NotImplementedException();
+
+        public int AxisCount => throw new System.NotImplementedException();
+
+        public void SetButtonState(int index, bool pressed)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SetAxisValue(int index, short value)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public event DualShock4FeedbackReceivedEventHandler FeedbackReceived;
     }
 

@@ -4,7 +4,7 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
 {
     public static class Xbox360ReportExtensions
     {
-        public static void SetButtons(this Xbox360Report report, params Xbox360Buttons[] buttons)
+        public static void SetButtons(this Xbox360Report report, params Xbox360Button[] buttons)
         {
             foreach (var button in buttons)
             {
@@ -12,12 +12,12 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
             }
         }
 
-        public static void SetButtonsFull(this Xbox360Report report, Xbox360Buttons buttons)
+        public static void SetButtonsFull(this Xbox360Report report, Xbox360Button buttons)
         {
             report.Buttons = (ushort)buttons;
         }
 
-        public static void SetButtonState(this Xbox360Report report, Xbox360Buttons button, bool state)
+        public static void SetButtonState(this Xbox360Report report, Xbox360Button button, bool state)
         {
             if (state)
             {
@@ -29,26 +29,26 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
             }
         }
 
-        public static void SetAxis(this Xbox360Report report, Xbox360Axes axis, short value)
+        public static void SetAxis(this Xbox360Report report, Xbox360Axis axis, short value)
         {
             switch (axis)
             {
-                case Xbox360Axes.LeftTrigger:
+                case Xbox360Axis.LeftTrigger:
                     report.LeftTrigger = (byte)value;
                     break;
-                case Xbox360Axes.RightTrigger:
+                case Xbox360Axis.RightTrigger:
                     report.RightTrigger = (byte)value;
                     break;
-                case Xbox360Axes.LeftThumbX:
+                case Xbox360Axis.LeftThumbX:
                     report.LeftThumbX = value;
                     break;
-                case Xbox360Axes.LeftThumbY:
+                case Xbox360Axis.LeftThumbY:
                     report.LeftThumbY = value;
                     break;
-                case Xbox360Axes.RightThumbX:
+                case Xbox360Axis.RightThumbX:
                     report.RightThumbX = value;
                     break;
-                case Xbox360Axes.RightThumbY:
+                case Xbox360Axis.RightThumbY:
                     report.RightThumbY = value;
                     break;
                 default:

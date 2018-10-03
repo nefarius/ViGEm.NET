@@ -3,7 +3,7 @@
 namespace Nefarius.ViGEm.Client.Targets.Xbox360
 {
     [Flags]
-    public enum Xbox360Buttons : ushort
+    public enum Xbox360Button : ushort
     {
         Up = 0x0001,
         Down = 0x0002,
@@ -22,7 +22,7 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
         Y = 0x8000
     }
 
-    public enum Xbox360Axes
+    public enum Xbox360Axis
     {
         LeftTrigger,
         RightTrigger,
