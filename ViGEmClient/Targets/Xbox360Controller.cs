@@ -133,28 +133,31 @@ namespace Nefarius.ViGEm.Client.Targets
 
         public void SetAxisValue(int index, short value)
         {
-            throw new NotImplementedException();
-        }
+            var axis = AxisMap[index];
 
-        /// <summary>
-        ///     Submits an <see cref="Xbox360Report" /> to this device which will update its state.
-        /// </summary>
-        /// <param name="report">The <see cref="Xbox360Report" /> to report.</param>
-        public void SendReport(Xbox360Report report)
-        {
-            // Convert managed to unmanaged structure
-            var submit = new ViGEmClient.XUSB_REPORT
+            switch (axis)
             {
-                wButtons = report.Buttons,
-                bLeftTrigger = report.LeftTrigger,
-                bRightTrigger = report.RightTrigger,
-                sThumbLX = report.LeftThumbX,
-                sThumbLY = report.LeftThumbY,
-                sThumbRX = report.RightThumbX,
-                sThumbRY = report.RightThumbY
-            };
+                case Xbox360Axis.LeftTrigger:
+                    throw new NotImplementedException();
+                    break;
+                case Xbox360Axis.RightTrigger:
+                    throw new NotImplementedException();
+                    break;
+                case Xbox360Axis.LeftThumbX:
+                    _nativeReport.sThumbLX = value;
+                    break;
+                case Xbox360Axis.LeftThumbY:
+                    _nativeReport.sThumbLY = value;
+                    break;
+                case Xbox360Axis.RightThumbX:
+                    _nativeReport.sThumbRX = value;
+                    break;
+                case Xbox360Axis.RightThumbY:
+                    _nativeReport.sThumbRY = value;
+                    break;
+            }
 
-            SubmitNativeReport(submit);
+            SubmitNativeReport(_nativeReport);
         }
 
         private void SubmitNativeReport(ViGEmClient.XUSB_REPORT report)
