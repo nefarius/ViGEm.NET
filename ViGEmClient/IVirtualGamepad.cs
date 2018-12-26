@@ -13,5 +13,7 @@
         void SetButtonState(int index, bool pressed);
 
         void SetAxisValue(int index, short value);
+
+        void SetSliderValue(int index, byte value);
     }
 }
