@@ -74,7 +74,7 @@ class Build : NukeBuild
             // Copy native DLL to embedder path
             // 
             File.Copy(
-                Path.Combine(WorkingDirectory, @"bin\release\x64\ViGEmClient.dll"),
+                Path.Combine(WorkingDirectory, $@"bin\{Configuration}\x64\ViGEmClient.dll"),
                 dll64,
                 true
             );
@@ -100,7 +100,7 @@ class Build : NukeBuild
             // Copy native DLL to embedder path
             // 
             File.Copy(
-                Path.Combine(WorkingDirectory, @"bin\release\x86\ViGEmClient.dll"),
+                Path.Combine(WorkingDirectory, $@"bin\{Configuration}\x86\ViGEmClient.dll"),
                 dll32,
                 true
             );
