@@ -2,6 +2,7 @@ using Nuke.Common;
 using Nuke.Common.BuildServers;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
 using System;
 using System.IO;
@@ -16,8 +17,12 @@ class Build : NukeBuild
 {
     public static int Main() => Execute<Build>(x => x.Compile);
 
+    [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
+    readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
+
     [Solution("ViGEm.NET.sln")] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
+    [GitVersion] readonly GitVersion GitVersion;
 
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
@@ -69,7 +74,7 @@ class Build : NukeBuild
             // Copy native DLL to embedder path
             // 
             File.Copy(
-                Path.Combine(WorkingDirectory, @"bin\release\x64\ViGEmClient.dll"),
+                Path.Combine(WorkingDirectory, $@"bin\{Configuration}\x64\ViGEmClient.dll"),
                 dll64,
                 true
             );
@@ -95,7 +100,7 @@ class Build : NukeBuild
             // Copy native DLL to embedder path
             // 
             File.Copy(
-                Path.Combine(WorkingDirectory, @"bin\release\x86\ViGEmClient.dll"),
+                Path.Combine(WorkingDirectory, $@"bin\{Configuration}\x86\ViGEmClient.dll"),
                 dll32,
                 true
             );
