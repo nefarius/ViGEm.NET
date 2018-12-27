@@ -32,12 +32,16 @@ namespace Nefarius.ViGEm.Client.Targets
 
         private static readonly List<Xbox360Axis> AxisMap = new List<Xbox360Axis>
         {
-            Xbox360Axis.LeftTrigger,
-            Xbox360Axis.RightTrigger,
             Xbox360Axis.LeftThumbX,
             Xbox360Axis.LeftThumbY,
             Xbox360Axis.RightThumbX,
             Xbox360Axis.RightThumbY
+        };
+
+        private static readonly List<Xbox360Slider> SliderMap = new List<Xbox360Slider>
+        {
+            Xbox360Slider.LeftTrigger,
+            Xbox360Slider.RightTrigger
         };
 
         private readonly Xbox360Report _report = new Xbox360Report();
@@ -137,12 +141,6 @@ namespace Nefarius.ViGEm.Client.Targets
 
             switch (axis)
             {
-                case Xbox360Axis.LeftTrigger:
-                    throw new NotImplementedException();
-                    break;
-                case Xbox360Axis.RightTrigger:
-                    throw new NotImplementedException();
-                    break;
                 case Xbox360Axis.LeftThumbX:
                     _nativeReport.sThumbLX = value;
                     break;
@@ -154,6 +152,23 @@ namespace Nefarius.ViGEm.Client.Targets
                     break;
                 case Xbox360Axis.RightThumbY:
                     _nativeReport.sThumbRY = value;
+                    break;
+            }
+
+            SubmitNativeReport(_nativeReport);
+        }
+
+        public void SetSliderValue(int index, byte value)
+        {
+            var slider = SliderMap[index];
+
+            switch (slider)
+            {
+                case Xbox360Slider.LeftTrigger:
+                    _nativeReport.bLeftTrigger = value;
+                    break;
+                case Xbox360Slider.RightTrigger:
+                    _nativeReport.bRightTrigger = value;
                     break;
             }
 

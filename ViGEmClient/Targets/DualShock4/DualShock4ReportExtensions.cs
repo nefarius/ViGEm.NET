@@ -1,4 +1,6 @@
-﻿using System;
+﻿//Legacy Functions
+
+using System;
 
 namespace Nefarius.ViGEm.Client.Targets.DualShock4
 {

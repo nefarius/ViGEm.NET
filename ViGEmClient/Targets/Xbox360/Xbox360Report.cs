@@ -32,6 +32,12 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
         RightThumbY
     }
 
+    public enum Xbox360Slider
+    {
+        LeftTrigger,
+        RightTrigger
+    }
+
     public class Xbox360Report
     {
         /// <summary>
