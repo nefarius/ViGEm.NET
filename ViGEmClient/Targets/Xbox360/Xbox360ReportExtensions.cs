@@ -32,31 +32,6 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
             }
         }
 
-        public static void SetAxis(this Xbox360Report report, Xbox360Axis axis, short value)
-        {
-            switch (axis)
-            {
-                case Xbox360Axis.LeftTrigger:
-                    report.LeftTrigger = (byte)value;
-                    break;
-                case Xbox360Axis.RightTrigger:
-                    report.RightTrigger = (byte)value;
-                    break;
-                case Xbox360Axis.LeftThumbX:
-                    report.LeftThumbX = value;
-                    break;
-                case Xbox360Axis.LeftThumbY:
-                    report.LeftThumbY = value;
-                    break;
-                case Xbox360Axis.RightThumbX:
-                    report.RightThumbX = value;
-                    break;
-                case Xbox360Axis.RightThumbY:
-                    report.RightThumbY = value;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(axis), axis, null);
-            }
-        }
+        
     }
 }

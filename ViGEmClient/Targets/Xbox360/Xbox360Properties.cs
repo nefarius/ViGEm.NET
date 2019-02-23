@@ -37,8 +37,6 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
     /// </summary>
     public enum Xbox360Axis
     {
-        LeftTrigger,
-        RightTrigger,
         LeftThumbX,
         LeftThumbY,
         RightThumbX,

@@ -1,5 +1,4 @@
-﻿using JetBrains.Annotations;
-using Nefarius.ViGEm.Client.Targets.Xbox360;
+﻿using Nefarius.ViGEm.Client.Targets.Xbox360;
 
 namespace Nefarius.ViGEm.Client.Targets
 {
@@ -8,9 +7,9 @@ namespace Nefarius.ViGEm.Client.Targets
         public void SetButtonState(Xbox360Button button, bool pressed)
         {
             if (pressed)
-                _nativeReport.wButtons |= (ushort)button;
+                _nativeReport.wButtons |= (ushort) button;
             else
-                _nativeReport.wButtons &= (ushort)~button;
+                _nativeReport.wButtons &= (ushort) ~button;
 
             SubmitNativeReport(_nativeReport);
         }
