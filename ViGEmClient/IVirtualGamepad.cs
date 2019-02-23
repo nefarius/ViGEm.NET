@@ -3,7 +3,7 @@
 namespace Nefarius.ViGEm.Client
 {
     /// <summary>
-    ///     Describes a common set of properties and methods all emulated devices share.
+    ///     Describes a generic set of properties and methods all emulated devices share.
     /// </summary>
     public interface IVirtualGamepad
     {

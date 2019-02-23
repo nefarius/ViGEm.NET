@@ -8,7 +8,7 @@ namespace Nefarius.ViGEm.Client.Targets
     /// <summary>
     ///     Represents an emulated wired Microsoft Xbox 360 Controller.
     /// </summary>
-    internal class Xbox360Controller : ViGEmTarget, IVirtualGamepad
+    internal partial class Xbox360Controller : ViGEmTarget, IVirtualGamepad, IXbox360Controller
     {
         private static readonly List<Xbox360Button> ButtonMap = new List<Xbox360Button>
         {
@@ -112,52 +112,17 @@ namespace Nefarius.ViGEm.Client.Targets
 
         public void SetButtonState(int index, bool pressed)
         {
-            if (pressed)
-                _nativeReport.wButtons |= (ushort) ButtonMap[index];
-            else
-                _nativeReport.wButtons &= (ushort) ~ButtonMap[index];
-
-            SubmitNativeReport(_nativeReport);
+            SetButtonState(ButtonMap[index], pressed);
         }
 
         public void SetAxisValue(int index, short value)
         {
-            var axis = AxisMap[index];
-
-            switch (axis)
-            {
-                case Xbox360Axis.LeftThumbX:
-                    _nativeReport.sThumbLX = value;
-                    break;
-                case Xbox360Axis.LeftThumbY:
-                    _nativeReport.sThumbLY = value;
-                    break;
-                case Xbox360Axis.RightThumbX:
-                    _nativeReport.sThumbRX = value;
-                    break;
-                case Xbox360Axis.RightThumbY:
-                    _nativeReport.sThumbRY = value;
-                    break;
-            }
-
-            SubmitNativeReport(_nativeReport);
+            SetAxisValue(AxisMap[index], value);
         }
 
         public void SetSliderValue(int index, byte value)
         {
-            var slider = SliderMap[index];
-
-            switch (slider)
-            {
-                case Xbox360Slider.LeftTrigger:
-                    _nativeReport.bLeftTrigger = value;
-                    break;
-                case Xbox360Slider.RightTrigger:
-                    _nativeReport.bRightTrigger = value;
-                    break;
-            }
-
-            SubmitNativeReport(_nativeReport);
+            SetSliderValue(SliderMap[index], value);
         }
 
         private static short Scale(byte value, bool invert)
