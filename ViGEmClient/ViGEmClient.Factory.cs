@@ -1,4 +1,5 @@
-﻿using Nefarius.ViGEm.Client.Targets;
+﻿using JetBrains.Annotations;
+using Nefarius.ViGEm.Client.Targets;
 
 namespace Nefarius.ViGEm.Client
 {
@@ -8,6 +9,7 @@ namespace Nefarius.ViGEm.Client
         ///     Allocates a new virtual Xbox 360 Controller device on the bus.
         /// </summary>
         /// <returns>A new virtual Xbox 360 Controller device.</returns>
+        [UsedImplicitly]
         public IVirtualGamepad CreateXbox360Controller()
         {
             return new Xbox360Controller(this);
@@ -19,6 +21,7 @@ namespace Nefarius.ViGEm.Client
         /// <param name="vendorId">16-bit unsigned vendor ID.</param>
         /// <param name="productId">16-bit unsigned product ID.</param>
         /// <returns>A new virtual Xbox 360 Controller device.</returns>
+        [UsedImplicitly]
         public IVirtualGamepad CreateXbox360Controller(ushort vendorId, ushort productId)
         {
             return new Xbox360Controller(this, vendorId, productId);
@@ -28,6 +31,7 @@ namespace Nefarius.ViGEm.Client
         ///     Allocates a new virtual DualShock 4 device on the bus.
         /// </summary>
         /// <returns>A new virtual DualShock 4 Controller device.</returns>
+        [UsedImplicitly]
         public IVirtualGamepad CreateDualShock4Controller()
         {
             return new DualShock4Controller(this);
@@ -39,6 +43,7 @@ namespace Nefarius.ViGEm.Client
         /// <param name="vendorId">16-bit unsigned vendor ID.</param>
         /// <param name="productId">16-bit unsigned product ID.</param>
         /// <returns>A new virtual DualShock 4 Controller device.</returns>
+        [UsedImplicitly]
         public IVirtualGamepad CreateDualShock4Controller(ushort vendorId, ushort productId)
         {
             return new DualShock4Controller(this, vendorId, productId);

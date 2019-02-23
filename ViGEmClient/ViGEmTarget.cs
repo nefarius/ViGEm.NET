@@ -26,11 +26,13 @@ namespace Nefarius.ViGEm.Client
 
         protected PVIGEM_TARGET NativeHandle { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
         ///     Gets the Vendor ID this device will present to the system.
         /// </summary>
         public ushort VendorId { get; protected set; }
 
+        /// <inheritdoc />
         /// <summary>
         ///     Gets the Product ID this device will present to the system.
         /// </summary>

@@ -1,4 +1,6 @@
-﻿namespace Nefarius.ViGEm.Client
+﻿using JetBrains.Annotations;
+
+namespace Nefarius.ViGEm.Client
 {
     /// <summary>
     ///     Describes a common set of properties and methods all emulated devices share.
@@ -23,11 +25,13 @@
         /// <summary>
         ///     Connects (attaches) the virtual device to the system.
         /// </summary>
+        [UsedImplicitly]
         void Connect();
 
         /// <summary>
         ///     Disconnects (removes) the virtual device from the system.
         /// </summary>
+        [UsedImplicitly]
         void Disconnect();
 
         /// <summary>
@@ -36,6 +40,7 @@
         /// <remarks>Use <see cref="ButtonCount" /> to determine the upper limit of the index.</remarks>
         /// <param name="index">The index of the digital button.</param>
         /// <param name="pressed">True if pressed/down, false if released/up.</param>
+        [UsedImplicitly]
         void SetButtonState(int index, bool pressed);
 
         /// <summary>
@@ -47,6 +52,7 @@
         ///     The 16-bit signed value of the axis where 0 represents centered. The value is expected to stay
         ///     between -32768 and 32767.
         /// </param>
+        [UsedImplicitly]
         void SetAxisValue(int index, short value);
 
         /// <summary>
@@ -58,6 +64,7 @@
         ///     The 8-bit unsigned value of the slider. A value of 0 represents lowest (released) while 255
         ///     represents highest (engaged).
         /// </param>
+        [UsedImplicitly]
         void SetSliderValue(int index, byte value);
     }
 }
