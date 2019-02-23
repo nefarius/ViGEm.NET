@@ -10,5 +10,11 @@ namespace Nefarius.ViGEm.Client.Targets
     {
         [UsedImplicitly]
         void SetButtonState(Xbox360Button button, bool pressed);
+
+        [UsedImplicitly]
+        void SetAxisValue(Xbox360Axis axis, short value);
+
+        [UsedImplicitly]
+        void SetSliderValue(Xbox360Slider slider, byte value);
     }
 }
