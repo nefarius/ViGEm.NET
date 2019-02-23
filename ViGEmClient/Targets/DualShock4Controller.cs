@@ -103,6 +103,8 @@ namespace Nefarius.ViGEm.Client.Targets
 
         public int AxisCount => throw new System.NotImplementedException();
 
+        public int SliderCount => throw new System.NotImplementedException();
+
         public void SetButtonState(int index, bool pressed)
         {
             throw new System.NotImplementedException();

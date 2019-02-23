@@ -1,7 +1,6 @@
-﻿using Nefarius.ViGEm.Client.Exceptions;
+﻿using System.Collections.Generic;
+using Nefarius.ViGEm.Client.Exceptions;
 using Nefarius.ViGEm.Client.Targets.Xbox360;
-using System;
-using System.Collections.Generic;
 
 namespace Nefarius.ViGEm.Client.Targets
 {
@@ -44,9 +43,7 @@ namespace Nefarius.ViGEm.Client.Targets
             Xbox360Slider.RightTrigger
         };
 
-        private readonly Xbox360Report _report = new Xbox360Report();
-
-        private ViGEmClient.XUSB_REPORT _nativeReport = new ViGEmClient.XUSB_REPORT();
+        private ViGEmClient.XUSB_REPORT _nativeReport;
 
         private ViGEmClient.PVIGEM_X360_NOTIFICATION _notificationCallback;
 
@@ -111,28 +108,16 @@ namespace Nefarius.ViGEm.Client.Targets
 
         public int AxisCount => AxisMap.Count;
 
+        public int SliderCount => SliderMap.Count;
+
         public void SetButtonState(int index, bool pressed)
         {
             if (pressed)
-            {
-                _nativeReport.wButtons |= (ushort)ButtonMap[index];
-            }
+                _nativeReport.wButtons |= (ushort) ButtonMap[index];
             else
-            {
-                _nativeReport.wButtons &= (ushort)~ButtonMap[index];
-            }
+                _nativeReport.wButtons &= (ushort) ~ButtonMap[index];
 
             SubmitNativeReport(_nativeReport);
-        }
-
-        private static short Scale(byte value, bool invert)
-        {
-            int intValue = (value - 0x80);
-            if (intValue == -128) intValue = -127;
-
-            var wtfValue = intValue * 258.00787401574803149606299212599f; // what the fuck?
-
-            return (short)(invert ? -wtfValue : wtfValue);
         }
 
         public void SetAxisValue(int index, short value)
@@ -175,6 +160,20 @@ namespace Nefarius.ViGEm.Client.Targets
             SubmitNativeReport(_nativeReport);
         }
 
+        private static short Scale(byte value, bool invert)
+        {
+            var intValue = value - 0x80;
+            if (intValue == -128) intValue = -127;
+
+            var wtfValue = intValue * 258.00787401574803149606299212599f; // what the fuck?
+
+            return (short) (invert ? -wtfValue : wtfValue);
+        }
+
+        /// <summary>
+        ///     Submits a new (or modified) report to the emulation bus.
+        /// </summary>
+        /// <param name="report">The report to submit.</param>
         private void SubmitNativeReport(ViGEmClient.XUSB_REPORT report)
         {
             var error = ViGEmClient.vigem_target_x360_update(Client.NativeHandle, NativeHandle, report);
@@ -188,6 +187,9 @@ namespace Nefarius.ViGEm.Client.Targets
             }
         }
 
+        /// <summary>
+        ///     Gets invoked if vibration or LED states have changed.
+        /// </summary>
         public event Xbox360FeedbackReceivedEventHandler FeedbackReceived;
     }
 

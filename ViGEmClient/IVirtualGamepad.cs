@@ -1,19 +1,63 @@
 ﻿namespace Nefarius.ViGEm.Client
 {
+    /// <summary>
+    ///     Describes a common set of properties and methods all emulated devices share.
+    /// </summary>
     public interface IVirtualGamepad
     {
-        void Connect();
-
-        void Disconnect();
-
+        /// <summary>
+        ///     Returns the count of available digital buttons of this device.
+        /// </summary>
         int ButtonCount { get; }
 
+        /// <summary>
+        ///     Returns the count of available axes of this device.
+        /// </summary>
         int AxisCount { get; }
 
+        /// <summary>
+        ///     Returns the count of available sliders of this device.
+        /// </summary>
+        int SliderCount { get; }
+
+        /// <summary>
+        ///     Connects (attaches) the virtual device to the system.
+        /// </summary>
+        void Connect();
+
+        /// <summary>
+        ///     Disconnects (removes) the virtual device from the system.
+        /// </summary>
+        void Disconnect();
+
+        /// <summary>
+        ///     Changes the state of a digital button identified by index.
+        /// </summary>
+        /// <remarks>Use <see cref="ButtonCount" /> to determine the upper limit of the index.</remarks>
+        /// <param name="index">The index of the digital button.</param>
+        /// <param name="pressed">True if pressed/down, false if released/up.</param>
         void SetButtonState(int index, bool pressed);
 
+        /// <summary>
+        ///     Changes the value of an axis identified by index.
+        /// </summary>
+        /// <remarks>Use <see cref="AxisCount" /> to determine the upper limit of the index.</remarks>
+        /// <param name="index">The index of the axis.</param>
+        /// <param name="value">
+        ///     The 16-bit signed value of the axis where 0 represents centered. The value is expected to stay
+        ///     between -32768 and 32767.
+        /// </param>
         void SetAxisValue(int index, short value);
 
+        /// <summary>
+        ///     Changes the value of a slider identified by index.
+        /// </summary>
+        /// <remarks>Use <see cref="SliderCount" /> to determine the upper limit of the index.</remarks>
+        /// <param name="index">The index of the slider.</param>
+        /// <param name="value">
+        ///     The 8-bit unsigned value of the slider. A value of 0 represents lowest (released) while 255
+        ///     represents highest (engaged).
+        /// </param>
         void SetSliderValue(int index, byte value);
     }
 }
