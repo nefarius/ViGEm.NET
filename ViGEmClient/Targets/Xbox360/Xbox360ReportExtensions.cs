@@ -4,6 +4,7 @@ using System;
 
 namespace Nefarius.ViGEm.Client.Targets.Xbox360
 {
+    [Obsolete]
     public static class Xbox360ReportExtensions
     {
         public static void SetButtons(this Xbox360Report report, params Xbox360Button[] buttons)
