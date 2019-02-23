@@ -2,6 +2,15 @@
 
 namespace Nefarius.ViGEm.Client.Targets.Xbox360
 {
+    /// <summary>
+    ///     Possible identifiers for digital (two-state) buttons on an Xbox 360 gamepad surface. These can be combined as
+    ///     flags.
+    /// </summary>
+    /// <remarks>
+    ///     The directional pad button combinations are not validate and sent as received. The caller is responsible to
+    ///     make sure that no opposing values get submitted (e.g. on a physical pad pressing both up and down at the same time
+    ///     wouldn't be possible while a virtual pad would just pass them through).
+    /// </remarks>
     [Flags]
     public enum Xbox360Button : ushort
     {
@@ -22,6 +31,10 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
         Y = 0x8000
     }
 
+    /// <summary>
+    ///     Describes the axes of an Xbox 360 pad. The related valid value range is between -32768 and 32767 where 0 is the
+    ///     centered position.
+    /// </summary>
     public enum Xbox360Axis
     {
         LeftTrigger,
@@ -32,6 +45,10 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
         RightThumbY
     }
 
+    /// <summary>
+    ///     Describes the sliders of an Xbox 360 pad. A slider typically has a value of 0 when in its resting position and
+    ///     can report a maximum of 255 when fully engaged (e.g. pressed down).
+    /// </summary>
     public enum Xbox360Slider
     {
         LeftTrigger,
