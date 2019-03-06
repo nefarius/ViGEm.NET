@@ -2,62 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using JetBrains.Annotations;
 
 namespace Nefarius.ViGEm.Client.Targets.Xbox360
 {
-    /// <summary>
-    ///     Possible identifiers for digital (two-state) buttons on an Xbox 360 gamepad surface. These can be combined as
-    ///     flags.
-    /// </summary>
-    /// <remarks>
-    ///     The directional pad button combinations are not validate and sent as received. The caller is responsible to
-    ///     make sure that no opposing values get submitted (e.g. on a physical pad pressing both up and down at the same time
-    ///     wouldn't be possible while a virtual pad would just pass them through).
-    /// </remarks>
-    [Flags]
-    public enum Xbox360Button : ushort
-    {
-        Up = 0x0001,
-        Down = 0x0002,
-        Left = 0x0004,
-        Right = 0x0008,
-        Start = 0x0010,
-        Back = 0x0020,
-        LeftThumb = 0x0040,
-        RightThumb = 0x0080,
-        LeftShoulder = 0x0100,
-        RightShoulder = 0x0200,
-        Guide = 0x0400,
-        A = 0x1000,
-        B = 0x2000,
-        X = 0x4000,
-        Y = 0x8000
-    }
-
-    /// <summary>
-    ///     Describes the axes of an Xbox 360 pad. The related valid value range is between -32768 and 32767 where 0 is the
-    ///     centered position.
-    /// </summary>
-    public enum Xbox360Axis
-    {
-        LeftThumbX,
-        LeftThumbY,
-        RightThumbX,
-        RightThumbY
-    }
-
-    /// <summary>
-    ///     Describes the sliders of an Xbox 360 pad. A slider typically has a value of 0 when in its resting position and
-    ///     can report a maximum of 255 when fully engaged (e.g. pressed down).
-    /// </summary>
-    public enum Xbox360Slider
-    {
-        LeftTrigger,
-        RightTrigger
-    }
-
     public abstract class Xbox360Property : IComparable
     {
+        [UsedImplicitly]
         protected Xbox360Property()
         {
         }
@@ -105,25 +56,33 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
         }
     }
 
-    public abstract class Xbox360ButtonProp : Xbox360Property
+    /// <summary>
+    ///     Possible identifiers for digital (two-state) buttons on an Xbox 360 gamepad surface.
+    /// </summary>
+    /// <remarks>
+    ///     The directional pad button combinations are not validate and sent as received. The caller is responsible to
+    ///     make sure that no opposing values get submitted (e.g. on a physical pad pressing both up and down at the same time
+    ///     wouldn't be possible while a virtual pad would just pass them through).
+    /// </remarks>
+    public abstract class Xbox360Button : Xbox360Property
     {
-        public static Xbox360ButtonProp Up = new UpButton();
-        public static Xbox360ButtonProp Down = new DownButton();
-        public static Xbox360ButtonProp Left = new LeftButton();
-        public static Xbox360ButtonProp Right = new RightButton();
-        public static Xbox360ButtonProp Start = new StartButton();
-        public static Xbox360ButtonProp Back = new BackButton();
-        public static Xbox360ButtonProp LeftThumb = new LeftThumbButton();
-        public static Xbox360ButtonProp RightThumb = new RightThumbButton();
-        public static Xbox360ButtonProp LeftShoulder = new LeftShoulderButton();
-        public static Xbox360ButtonProp RightShoulder = new RightShoulderButton();
-        public static Xbox360ButtonProp Guide = new GuideButton();
-        public static Xbox360ButtonProp A = new AButton();
-        public static Xbox360ButtonProp B = new BButton();
-        public static Xbox360ButtonProp X = new XButton();
-        public static Xbox360ButtonProp Y = new YButton();
+        public static Xbox360Button Up = new UpButton();
+        public static Xbox360Button Down = new DownButton();
+        public static Xbox360Button Left = new LeftButton();
+        public static Xbox360Button Right = new RightButton();
+        public static Xbox360Button Start = new StartButton();
+        public static Xbox360Button Back = new BackButton();
+        public static Xbox360Button LeftThumb = new LeftThumbButton();
+        public static Xbox360Button RightThumb = new RightThumbButton();
+        public static Xbox360Button LeftShoulder = new LeftShoulderButton();
+        public static Xbox360Button RightShoulder = new RightShoulderButton();
+        public static Xbox360Button Guide = new GuideButton();
+        public static Xbox360Button A = new AButton();
+        public static Xbox360Button B = new BButton();
+        public static Xbox360Button X = new XButton();
+        public static Xbox360Button Y = new YButton();
 
-        protected Xbox360ButtonProp(int id, string name, ushort value)
+        protected Xbox360Button(int id, string name, ushort value)
             : base(id, name)
         {
             Value = value;
@@ -131,105 +90,105 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
 
         public ushort Value { get; }
 
-        private class UpButton : Xbox360ButtonProp
+        private class UpButton : Xbox360Button
         {
             public UpButton() : base(0, "Up", 0x0001)
             {
             }
         }
 
-        private class DownButton : Xbox360ButtonProp
+        private class DownButton : Xbox360Button
         {
             public DownButton() : base(1, "Down", 0x0002)
             {
             }
         }
 
-        private class LeftButton : Xbox360ButtonProp
+        private class LeftButton : Xbox360Button
         {
             public LeftButton() : base(2, "Left", 0x0004)
             {
             }
         }
 
-        private class RightButton : Xbox360ButtonProp
+        private class RightButton : Xbox360Button
         {
             public RightButton() : base(3, "Right", 0x0008)
             {
             }
         }
 
-        private class StartButton : Xbox360ButtonProp
+        private class StartButton : Xbox360Button
         {
             public StartButton() : base(4, "Start", 0x0010)
             {
             }
         }
 
-        private class BackButton : Xbox360ButtonProp
+        private class BackButton : Xbox360Button
         {
             public BackButton() : base(5, "Back", 0x0020)
             {
             }
         }
 
-        private class LeftThumbButton : Xbox360ButtonProp
+        private class LeftThumbButton : Xbox360Button
         {
             public LeftThumbButton() : base(6, "LeftThumb", 0x0040)
             {
             }
         }
 
-        private class RightThumbButton : Xbox360ButtonProp
+        private class RightThumbButton : Xbox360Button
         {
             public RightThumbButton() : base(7, "RightThumb", 0x0080)
             {
             }
         }
 
-        private class LeftShoulderButton : Xbox360ButtonProp
+        private class LeftShoulderButton : Xbox360Button
         {
             public LeftShoulderButton() : base(8, "LeftShoulder", 0x0100)
             {
             }
         }
 
-        private class RightShoulderButton : Xbox360ButtonProp
+        private class RightShoulderButton : Xbox360Button
         {
             public RightShoulderButton() : base(9, "RightShoulder", 0x0200)
             {
             }
         }
 
-        private class GuideButton : Xbox360ButtonProp
+        private class GuideButton : Xbox360Button
         {
             public GuideButton() : base(10, "Guide", 0x0400)
             {
             }
         }
 
-        private class AButton : Xbox360ButtonProp
+        private class AButton : Xbox360Button
         {
             public AButton() : base(11, "A", 0x1000)
             {
             }
         }
 
-        private class BButton : Xbox360ButtonProp
+        private class BButton : Xbox360Button
         {
             public BButton() : base(12, "B", 0x2000)
             {
             }
         }
 
-        private class XButton : Xbox360ButtonProp
+        private class XButton : Xbox360Button
         {
             public XButton() : base(13, "X", 0x4000)
             {
             }
         }
 
-        private class YButton : Xbox360ButtonProp
+        private class YButton : Xbox360Button
         {
             public YButton() : base(14, "Y", 0x8000)
             {
@@ -237,40 +196,44 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
         }
     }
 
-    public abstract class Xbox360AxisProp : Xbox360Property
+    /// <summary>
+    ///     Describes the axes of an Xbox 360 pad. The related valid value range is between -32768 and 32767 where 0 is the
+    ///     centered position.
+    /// </summary>
+    public abstract class Xbox360Axis : Xbox360Property
     {
-        public static Xbox360AxisProp LeftThumbX = new LeftThumbXAxis();
-        public static Xbox360AxisProp LeftThumbY = new LeftThumbYAxis();
-        public static Xbox360AxisProp RightThumbX = new RightThumbYAxis();
-        public static Xbox360AxisProp RightThumbY = new RightThumbYAxis();
+        public static Xbox360Axis LeftThumbX = new LeftThumbXAxis();
+        public static Xbox360Axis LeftThumbY = new LeftThumbYAxis();
+        public static Xbox360Axis RightThumbX = new RightThumbYAxis();
+        public static Xbox360Axis RightThumbY = new RightThumbYAxis();
 
-        protected Xbox360AxisProp(int id, string name)
+        protected Xbox360Axis(int id, string name)
             : base(id, name)
         {
         }
 
-        private class LeftThumbXAxis : Xbox360AxisProp
+        private class LeftThumbXAxis : Xbox360Axis
         {
             public LeftThumbXAxis() : base(0, "LeftThumbX")
             {
             }
         }
 
-        private class LeftThumbYAxis : Xbox360AxisProp
+        private class LeftThumbYAxis : Xbox360Axis
         {
             public LeftThumbYAxis() : base(1, "LeftThumbY")
             {
             }
         }
 
-        private class RightThumbXAxis : Xbox360AxisProp
+        private class RightThumbXAxis : Xbox360Axis
         {
             public RightThumbXAxis() : base(2, "RightThumbX")
             {
             }
         }
 
-        private class RightThumbYAxis : Xbox360AxisProp
+        private class RightThumbYAxis : Xbox360Axis
         {
             public RightThumbYAxis() : base(3, "RightThumbY")
             {
@@ -278,24 +241,28 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
         }
     }
 
-    public abstract class Xbox360SliderProp : Xbox360Property
+    /// <summary>
+    ///     Describes the sliders of an Xbox 360 pad. A slider typically has a value of 0 when in its resting position and
+    ///     can report a maximum of 255 when fully engaged (e.g. pressed down).
+    /// </summary>
+    public abstract class Xbox360Slider : Xbox360Property
     {
-        public static Xbox360SliderProp LeftThumbX = new LeftTriggerSlider();
-        public static Xbox360SliderProp LeftThumbY = new RightTriggerSlider();
+        public static Xbox360Slider LeftTrigger = new LeftTriggerSlider();
+        public static Xbox360Slider RightTrigger = new RightTriggerSlider();
 
-        protected Xbox360SliderProp(int id, string name)
+        protected Xbox360Slider(int id, string name)
             : base(id, name)
         {
         }
 
-        private class LeftTriggerSlider : Xbox360SliderProp
+        private class LeftTriggerSlider : Xbox360Slider
         {
             public LeftTriggerSlider() : base(0, "LeftTrigger")
             {
             }
         }
 
-        private class RightTriggerSlider : Xbox360SliderProp
+        private class RightTriggerSlider : Xbox360Slider
         {
             public RightTriggerSlider() : base(1, "RightTrigger")
             {
