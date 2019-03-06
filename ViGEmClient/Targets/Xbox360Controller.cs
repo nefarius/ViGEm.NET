@@ -8,7 +8,7 @@ namespace Nefarius.ViGEm.Client.Targets
     /// <summary>
     ///     Represents an emulated wired Microsoft Xbox 360 Controller.
     /// </summary>
-    internal partial class Xbox360Controller : ViGEmTarget, IVirtualGamepad, IXbox360Controller
+    internal partial class Xbox360Controller : ViGEmTarget, IXbox360Controller
     {
         private static readonly List<Xbox360Button> ButtonMap = new List<Xbox360Button>
         {

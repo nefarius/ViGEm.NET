@@ -10,7 +10,7 @@ namespace Nefarius.ViGEm.Client
         /// </summary>
         /// <returns>A new virtual Xbox 360 Controller device.</returns>
         [UsedImplicitly]
-        public IVirtualGamepad CreateXbox360Controller()
+        public IXbox360Controller CreateXbox360Controller()
         {
             return new Xbox360Controller(this);
         }
@@ -22,7 +22,7 @@ namespace Nefarius.ViGEm.Client
         /// <param name="productId">16-bit unsigned product ID.</param>
         /// <returns>A new virtual Xbox 360 Controller device.</returns>
         [UsedImplicitly]
-        public IVirtualGamepad CreateXbox360Controller(ushort vendorId, ushort productId)
+        public IXbox360Controller CreateXbox360Controller(ushort vendorId, ushort productId)
         {
             return new Xbox360Controller(this, vendorId, productId);
         }
