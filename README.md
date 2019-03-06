@@ -6,7 +6,7 @@
 
 ## About
 
-TBD
+**This branch is work-in-progress!** The API might break at any point, so keep that in mind 😉
 
 ## Contribute
 
