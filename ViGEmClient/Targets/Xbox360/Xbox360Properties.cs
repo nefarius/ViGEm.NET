@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using JetBrains.Annotations;
 
 namespace Nefarius.ViGEm.Client.Targets.Xbox360
@@ -91,6 +92,7 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
             Value = value;
         }
 
+        [IgnoreDataMember]
         public ushort Value { get; }
 
         private class UpButton : Xbox360Button
