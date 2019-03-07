@@ -27,8 +27,6 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
 
         public int Id { get; }
 
-        public string Type => this.GetType().FullName;
-
         public int CompareTo(object other)
         {
             return Id.CompareTo(((Xbox360Property) other).Id);
