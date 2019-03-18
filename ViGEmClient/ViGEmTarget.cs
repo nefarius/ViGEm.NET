@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 using Nefarius.ViGEm.Client.Exceptions;
 
 namespace Nefarius.ViGEm.Client
@@ -53,6 +55,8 @@ namespace Nefarius.ViGEm.Client
 
             switch (error)
             {
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NONE:
+                    break;
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
                     throw new VigemBusNotFoundException();
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_TARGET_UNINITIALIZED:
@@ -61,6 +65,8 @@ namespace Nefarius.ViGEm.Client
                     throw new VigemAlreadyConnectedException();
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NO_FREE_SLOT:
                     throw new VigemNoFreeSlotException();
+                default:
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
             }
         }
 
@@ -73,6 +79,8 @@ namespace Nefarius.ViGEm.Client
 
             switch (error)
             {
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NONE:
+                    break;
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
                     throw new VigemBusNotFoundException();
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_TARGET_UNINITIALIZED:
@@ -81,6 +89,8 @@ namespace Nefarius.ViGEm.Client
                     throw new VigemTargetNotPluggedInException();
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_REMOVAL_FAILED:
                     throw new VigemRemovalFailedException();
+                default:
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
             }
         }
 

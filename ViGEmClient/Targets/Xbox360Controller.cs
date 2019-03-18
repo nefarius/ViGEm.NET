@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 using Nefarius.ViGEm.Client.Exceptions;
 using Nefarius.ViGEm.Client.Targets.Xbox360;
 
@@ -88,12 +90,16 @@ namespace Nefarius.ViGEm.Client.Targets
 
             switch (error)
             {
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NONE:
+                    break;
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
                     throw new VigemBusNotFoundException();
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
                     throw new VigemInvalidTargetException();
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_CALLBACK_ALREADY_REGISTERED:
                     throw new VigemCallbackAlreadyRegisteredException();
+                default:
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
             }
         }
 
@@ -145,10 +151,16 @@ namespace Nefarius.ViGEm.Client.Targets
 
             switch (error)
             {
-                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
-                    throw new VigemBusNotFoundException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NONE:
+                    break;
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_INVALID_HANDLE:
+                    throw new VigemBusInvalidHandleException();
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
                     throw new VigemInvalidTargetException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
+                    throw new VigemBusNotFoundException();
+                default:
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
             }
         }
 
