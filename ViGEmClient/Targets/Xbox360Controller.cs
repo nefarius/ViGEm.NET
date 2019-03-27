@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using Nefarius.ViGEm.Client.Exceptions;
 using Nefarius.ViGEm.Client.Targets.Xbox360;
+using Nefarius.ViGEm.Client.Targets.Xbox360.Exceptions;
 
 namespace Nefarius.ViGEm.Client.Targets
 {
@@ -49,6 +50,8 @@ namespace Nefarius.ViGEm.Client.Targets
 
         private ViGEmClient.PVIGEM_X360_NOTIFICATION _notificationCallback;
 
+        private int _userIndex = -1;
+
         /// <inheritdoc />
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:Nefarius.ViGEm.Client.Targets.Xbox360Controller" /> class bound to a
@@ -82,8 +85,13 @@ namespace Nefarius.ViGEm.Client.Targets
             //
             // Callback to event
             // 
-            _notificationCallback = (client, target, largeMotor, smallMotor, number) => FeedbackReceived?.Invoke(this,
-                new Xbox360FeedbackReceivedEventArgs(largeMotor, smallMotor, number));
+            _notificationCallback = (client, target, largeMotor, smallMotor, number) =>
+            {
+                UserIndex = number;
+
+                FeedbackReceived?.Invoke(this,
+                    new Xbox360FeedbackReceivedEventArgs(largeMotor, smallMotor, number));
+            };
 
             var error = ViGEmClient.vigem_target_x360_register_notification(Client.NativeHandle, NativeHandle,
                 _notificationCallback);
@@ -131,6 +139,26 @@ namespace Nefarius.ViGEm.Client.Targets
             SetSliderValue(SliderMap[index], value);
         }
 
+        /// <summary>
+        ///     Gets invoked if vibration or LED states have changed.
+        /// </summary>
+        public event Xbox360FeedbackReceivedEventHandler FeedbackReceived;
+
+        /// <summary>
+        ///     Gets the assigned player index set by the XInput sub-system.
+        /// </summary>
+        public int UserIndex
+        {
+            get
+            {
+                if (_userIndex == -1)
+                    throw new Xbox360UserIndexNotReportedException();
+
+                return _userIndex;
+            }
+            private set => _userIndex = value;
+        }
+
         private static short Scale(byte value, bool invert)
         {
             var intValue = value - 0x80;
@@ -163,11 +191,6 @@ namespace Nefarius.ViGEm.Client.Targets
                     throw new Win32Exception(Marshal.GetLastWin32Error());
             }
         }
-
-        /// <summary>
-        ///     Gets invoked if vibration or LED states have changed.
-        /// </summary>
-        public event Xbox360FeedbackReceivedEventHandler FeedbackReceived;
     }
 
     public delegate void Xbox360FeedbackReceivedEventHandler(object sender, Xbox360FeedbackReceivedEventArgs e);

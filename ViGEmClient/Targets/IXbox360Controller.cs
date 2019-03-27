@@ -43,5 +43,11 @@ namespace Nefarius.ViGEm.Client.Targets
         /// </summary>
         [UsedImplicitly]
         event Xbox360FeedbackReceivedEventHandler FeedbackReceived;
+
+        /// <summary>
+        ///     Gets the assigned player index set by the XInput sub-system.
+        /// </summary>
+        [UsedImplicitly]
+        int UserIndex { get; }
     }
 }
