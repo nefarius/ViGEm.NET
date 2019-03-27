@@ -37,5 +37,11 @@ namespace Nefarius.ViGEm.Client.Targets
         /// </param>
         [UsedImplicitly]
         void SetSliderValue(Xbox360Slider slider, byte value);
+
+        /// <summary>
+        ///     Fires when LED index change or vibration requests were sent to this device.
+        /// </summary>
+        [UsedImplicitly]
+        event Xbox360FeedbackReceivedEventHandler FeedbackReceived;
     }
 }
