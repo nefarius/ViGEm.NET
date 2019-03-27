@@ -78,6 +78,7 @@ namespace Nefarius.ViGEm.Client
             public byte Blue;
         }
 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         internal delegate void PVIGEM_X360_NOTIFICATION(
             PVIGEM_CLIENT Client,
             PVIGEM_TARGET Target,
@@ -85,6 +86,7 @@ namespace Nefarius.ViGEm.Client
             byte SmallMotor,
             byte LedNumber);
 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         internal delegate void PVIGEM_DS4_NOTIFICATION(
             PVIGEM_CLIENT Client,
             PVIGEM_TARGET Target,
