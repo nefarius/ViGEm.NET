@@ -210,7 +210,7 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
     {
         public static Xbox360Axis LeftThumbX = new LeftThumbXAxis();
         public static Xbox360Axis LeftThumbY = new LeftThumbYAxis();
-        public static Xbox360Axis RightThumbX = new RightThumbYAxis();
+        public static Xbox360Axis RightThumbX = new RightThumbXAxis();
         public static Xbox360Axis RightThumbY = new RightThumbYAxis();
 
         protected Xbox360Axis(int id, string name)
