@@ -135,13 +135,17 @@ class Build : NukeBuild
                 var verpatchTool = Path.Combine(WorkingDirectory, "verpatch.exe");
 
                 Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll64}...");
-                ProcessUtil.StartWithArguments(verpatchTool, $"{dll64} {AppVeyor.Instance.BuildVersion}");
-                ProcessUtil.StartWithArguments(verpatchTool, $"{dll64} /pv {AppVeyor.Instance.BuildVersion}");
+                ProcessUtil.StartWithArguments(
+                    verpatchTool, 
+                    $"{dll64} /va {AppVeyor.Instance.BuildVersion} " + 
+                    $"/pv {AppVeyor.Instance.BuildVersion} /s product \"ViGEm client library\"");
                 Console.WriteLine($"Done, stamped version {FileVersionInfo.GetVersionInfo(dll64).ProductVersion}");
 
                 Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}...");
-                ProcessUtil.StartWithArguments(verpatchTool, $"{dll32} {AppVeyor.Instance.BuildVersion}");
-                ProcessUtil.StartWithArguments(verpatchTool, $"{dll32} /pv {AppVeyor.Instance.BuildVersion}");
+                ProcessUtil.StartWithArguments(
+                    verpatchTool,
+                    $"{dll32} /va {AppVeyor.Instance.BuildVersion} " +
+                    $"/pv {AppVeyor.Instance.BuildVersion} /s product \"ViGEm client library\"");
                 Console.WriteLine($"Done, stamped version {FileVersionInfo.GetVersionInfo(dll32).ProductVersion}");
             }
 
