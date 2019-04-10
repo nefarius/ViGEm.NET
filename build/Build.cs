@@ -5,6 +5,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
@@ -136,12 +137,12 @@ class Build : NukeBuild
                 Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll64}...");
                 ProcessUtil.StartWithArguments(verpatchTool, $"{dll64} {AppVeyor.Instance.BuildVersion}");
                 ProcessUtil.StartWithArguments(verpatchTool, $"{dll64} /pv {AppVeyor.Instance.BuildVersion}");
-                Console.WriteLine("Done");
+                Console.WriteLine($"Done, stamped version {FileVersionInfo.GetVersionInfo(dll64).ProductVersion}");
 
                 Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}...");
                 ProcessUtil.StartWithArguments(verpatchTool, $"{dll32} {AppVeyor.Instance.BuildVersion}");
                 ProcessUtil.StartWithArguments(verpatchTool, $"{dll32} /pv {AppVeyor.Instance.BuildVersion}");
-                Console.WriteLine("Done");
+                Console.WriteLine($"Done, stamped version {FileVersionInfo.GetVersionInfo(dll32).ProductVersion}");
             }
 
             //
