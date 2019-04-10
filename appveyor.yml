@@ -6,6 +6,7 @@ build_script:
 - ps: .\build.ps1 -configuration release
 artifacts:
 - path: 'bin**\*.nupkg'
+- path: 'ViGEmClient\costura**\*.dll'
 deploy:
 - provider: Environment
   name: nuget.org
