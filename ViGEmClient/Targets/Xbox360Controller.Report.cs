@@ -7,11 +7,12 @@ namespace Nefarius.ViGEm.Client.Targets
         public void SetButtonState(Xbox360Button button, bool pressed)
         {
             if (pressed)
-                _nativeReport.wButtons |= (ushort) button.Value;
+                _nativeReport.wButtons |= (ushort)button.Value;
             else
-                _nativeReport.wButtons &= (ushort) ~button.Value;
+                _nativeReport.wButtons &= (ushort)~button.Value;
 
-            SubmitNativeReport(_nativeReport);
+            if (AutoSubmitReport)
+                SubmitNativeReport(_nativeReport);
         }
 
         public void SetAxisValue(Xbox360Axis axis, short value)
@@ -32,7 +33,8 @@ namespace Nefarius.ViGEm.Client.Targets
                     break;
             }
 
-            SubmitNativeReport(_nativeReport);
+            if (AutoSubmitReport)
+                SubmitNativeReport(_nativeReport);
         }
 
         public void SetSliderValue(Xbox360Slider slider, byte value)
@@ -47,7 +49,8 @@ namespace Nefarius.ViGEm.Client.Targets
                     break;
             }
 
-            SubmitNativeReport(_nativeReport);
+            if (AutoSubmitReport)
+                SubmitNativeReport(_nativeReport);
         }
     }
 }

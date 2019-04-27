@@ -139,6 +139,18 @@ namespace Nefarius.ViGEm.Client.Targets
             SetSliderValue(SliderMap[index], value);
         }
 
+        public bool AutoSubmitReport { get; set; } = true;
+
+        public void ResetReport()
+        {
+            _nativeReport = default(ViGEmClient.XUSB_REPORT);
+        }
+
+        public void SubmitReport()
+        {
+            SubmitNativeReport(_nativeReport);
+        }
+
         /// <summary>
         ///     Gets invoked if vibration or LED states have changed.
         /// </summary>

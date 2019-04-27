@@ -66,5 +66,14 @@ namespace Nefarius.ViGEm.Client
         /// </param>
         [UsedImplicitly]
         void SetSliderValue(int index, byte value);
+
+        [UsedImplicitly]
+        bool AutoSubmitReport { get; set; }
+
+        [UsedImplicitly]
+        void ResetReport();
+
+        [UsedImplicitly]
+        void SubmitReport();
     }
 }

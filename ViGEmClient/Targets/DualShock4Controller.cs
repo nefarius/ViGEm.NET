@@ -120,6 +120,17 @@ namespace Nefarius.ViGEm.Client.Targets
             throw new System.NotImplementedException();
         }
 
+        public bool AutoSubmitReport { get; set; }
+        public void ResetReport()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void SubmitReport()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public event DualShock4FeedbackReceivedEventHandler FeedbackReceived;
     }
 
