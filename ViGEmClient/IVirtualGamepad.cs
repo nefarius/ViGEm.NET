@@ -23,6 +23,13 @@ namespace Nefarius.ViGEm.Client
         int SliderCount { get; }
 
         /// <summary>
+        ///     Gets or sets whether every change to a pad property should get submitted to the driver automatically. Default is
+        ///     true. Once set to false, <see cref="SubmitReport"/> has to be called explicitly to submit state changes.
+        /// </summary>
+        [UsedImplicitly]
+        bool AutoSubmitReport { get; set; }
+
+        /// <summary>
         ///     Connects (attaches) the virtual device to the system.
         /// </summary>
         [UsedImplicitly]
@@ -67,12 +74,15 @@ namespace Nefarius.ViGEm.Client
         [UsedImplicitly]
         void SetSliderValue(int index, byte value);
 
-        [UsedImplicitly]
-        bool AutoSubmitReport { get; set; }
-
+        /// <summary>
+        ///     Resets the internal report structure to its default values. 
+        /// </summary>
         [UsedImplicitly]
         void ResetReport();
 
+        /// <summary>
+        ///     Submits the current report to the driver. Not necessary if <see cref="AutoSubmitReport"/> is true.
+        /// </summary>
         [UsedImplicitly]
         void SubmitReport();
     }
