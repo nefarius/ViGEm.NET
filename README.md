@@ -8,6 +8,10 @@
 
 TBD
 
+## Dependencies (For submodule)
+* [Boost.Asio](https://www.boost.org/doc/libs/1_66_0/doc/html/boost_asio.html)
+* Check Native module ReadMe for more details
+
 ## Contribute
 
 ### Bugs & Features
