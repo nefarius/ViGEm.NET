@@ -8,6 +8,10 @@
 
 **This branch is work-in-progress!** The API might break at any point, so keep that in mind 😉
 
+## Dependencies (For submodule)
+* [Boost.Asio](https://www.boost.org/doc/libs/1_66_0/doc/html/boost_asio.html)
+* Check Native module ReadMe for more details
+
 ## Contribute
 
 ### Bugs & Features
