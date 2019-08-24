@@ -6,10 +6,6 @@ before_build:
 - cmd: vcpkg install boost-asio:x64-windows-static
 install:
 - cmd: git submodule -q update --init
-before_build:
-- cmd: vcpkg integrate install
-- cmd: vcpkg install boost-asio:x86-windows-static
-- cmd: vcpkg install boost-asio:x64-windows-static
 build_script:
 - ps: .\build.ps1 -configuration release
 artifacts:
