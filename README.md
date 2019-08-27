@@ -8,17 +8,11 @@
 
 **This branch is work-in-progress!** The API might break at any point, so keep that in mind 😉
 
-## Dependencies (For submodule)
-* [Boost.Asio](https://www.boost.org/doc/libs/1_66_0/doc/html/boost_asio.html)
-* Check Native module ReadMe for more details
-
 ## Contribute
 
 ### Bugs & Features
 
 Found a bug and want it fixed? Open a detailed issue on the [GitHub issue tracker](../../issues)!
-
-Have an idea for a new feature? [Check out the project board](https://projects.vigem.org/public/board/27281599595f5fbe5f915884fb9ca2de92726e74173f1ac434300b2d40af), maybe it's already on there! If not, let's have a chat about your request on [Discord](https://discord.vigem.org) or the [community forums](https://forums.vigem.org).
 
 ### Questions & Support
 
