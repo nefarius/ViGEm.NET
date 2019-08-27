@@ -72,7 +72,7 @@ class Build : NukeBuild
             MSBuild(s => s
                 .SetTargetPath(Solution)
                 .SetTargets("Rebuild")
-                .SetMaxCpuCount(Environment.ProcessorCount)
+                .SetMaxCpuCount(1)
                 .SetNodeReuse(IsLocalBuild)
                 .SetConfiguration(Configuration)
                 .SetAssemblyVersion(AppVeyor.Instance?.BuildVersion)
