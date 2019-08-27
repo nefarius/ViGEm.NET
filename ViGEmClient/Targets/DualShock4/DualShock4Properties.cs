@@ -181,4 +181,70 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
             }
         }
     }
+
+    public abstract class DualShock4Axis : DualShock4Property
+    {
+        public static DualShock4Axis LeftThumbX = new LeftThumbXAxis();
+        public static DualShock4Axis LeftThumbY = new LeftThumbYAxis();
+        public static DualShock4Axis RightThumbX = new RightThumbXAxis();
+        public static DualShock4Axis RightThumbY = new RightThumbYAxis();
+
+        protected DualShock4Axis(int id, string name)
+            : base(id, name)
+        {
+        }
+
+        private class LeftThumbXAxis : DualShock4Axis
+        {
+            public LeftThumbXAxis() : base(0, "LeftThumbX")
+            {
+            }
+        }
+
+        private class LeftThumbYAxis : DualShock4Axis
+        {
+            public LeftThumbYAxis() : base(1, "LeftThumbY")
+            {
+            }
+        }
+
+        private class RightThumbXAxis : DualShock4Axis
+        {
+            public RightThumbXAxis() : base(2, "RightThumbX")
+            {
+            }
+        }
+
+        private class RightThumbYAxis : DualShock4Axis
+        {
+            public RightThumbYAxis() : base(3, "RightThumbY")
+            {
+            }
+        }
+    }
+
+    public abstract class DualShock4Slider : DualShock4Property
+    {
+        public static DualShock4Slider LeftTrigger = new LeftTriggerSlider();
+        public static DualShock4Slider RightTrigger = new RightTriggerSlider();
+
+        protected DualShock4Slider(int id, string name)
+            : base(id, name)
+        {
+        }
+
+        private class LeftTriggerSlider : DualShock4Slider
+        {
+            public LeftTriggerSlider() : base(0, "LeftTrigger")
+            {
+            }
+        }
+
+        private class RightTriggerSlider : DualShock4Slider
+        {
+            public RightTriggerSlider() : base(1, "RightTrigger")
+            {
+            }
+        }
+    }
 }
