@@ -1,18 +1,13 @@
 version: 1.16.{build}
 image: Visual Studio 2017
-before_build:
-- cmd: vcpkg integrate install
-- cmd: vcpkg install boost-asio:x86-windows-static
-- cmd: vcpkg install boost-asio:x64-windows-static
 install:
 - cmd: git submodule -q update --init
 build_script:
-- ps: .\build.ps1 -configuration release
+- ps: .\native\build.ps1
+- ps: .\build.ps1
 artifacts:
 - path: 'bin**\*.nupkg'
 - path: 'ViGEmClient\costura**\*.dll'
-cache:
-- c:\tools\vcpkg\installed\
 deploy:
 - provider: Environment
   name: nuget.org

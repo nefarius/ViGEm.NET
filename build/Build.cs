@@ -5,10 +5,7 @@ using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitVersion;
 using Nuke.Common.Tools.MSBuild;
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
-using System.Net;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
@@ -26,9 +23,6 @@ class Build : NukeBuild
     [GitVersion] readonly GitVersion GitVersion;
 
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
-
-    static string VerpatchUrl =>
-        "https://downloads.vigem.org/other/pavel-a/ddverpatch/verpatch-1.0.15.1-x86-codeplex.zip";
 
     Target Clean => _ => _
         .Executes(() =>
@@ -55,17 +49,6 @@ class Build : NukeBuild
             var dll32 = Path.Combine(costura32, "ViGEmClient.dll");
 
             //
-            // Build native DLL (x64)
-            // 
-            MSBuild(s => s
-                .SetTargetPath(Solution)
-                .SetTargets("Rebuild")
-                .SetMaxCpuCount(Environment.ProcessorCount)
-                .SetNodeReuse(IsLocalBuild)
-                .SetConfiguration($"{Configuration}_DLL")
-                .SetTargetPlatform(MSBuildTargetPlatform.x64));
-
-            //
             // Create costura64 path (used to automatically embed DLL in assembly)
             // 
             if (!Directory.Exists(costura64))
@@ -81,17 +64,6 @@ class Build : NukeBuild
             );
 
             //
-            // Build native DLL (x86)
-            // 
-            MSBuild(s => s
-                .SetTargetPath(Solution)
-                .SetTargets("Rebuild")
-                .SetMaxCpuCount(Environment.ProcessorCount)
-                .SetNodeReuse(IsLocalBuild)
-                .SetConfiguration($"{Configuration}_DLL")
-                .SetTargetPlatform(MSBuildTargetPlatform.x86));
-
-            //
             // Create costura32 path (used to automatically embed DLL in assembly)
             // 
             if (!Directory.Exists(costura32))
@@ -105,49 +77,6 @@ class Build : NukeBuild
                 dll32,
                 true
             );
-
-            //
-            // If we run on build server, stamp DLLs with build version
-            // 
-            if (AppVeyor.Instance != null)
-            {
-                Console.WriteLine("Going to build .NET library, updating native DLL version information...");
-
-                //
-                // TODO: tidy up this section
-                // 
-                var verpatchZip = Path.Combine(
-                    WorkingDirectory,
-                    "verpatch-1.0.15.1-x86-codeplex.zip"
-                );
-
-                using (var client = new WebClient())
-                {
-                    Console.WriteLine("Downloading verpatch tool...");
-                    client.DownloadFile(
-                        VerpatchUrl,
-                        verpatchZip);
-                }
-
-                Console.WriteLine("Extracting verpatch...");
-                ZipFile.ExtractToDirectory(verpatchZip, WorkingDirectory);
-
-                var verpatchTool = Path.Combine(WorkingDirectory, "verpatch.exe");
-
-                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll64}...");
-                ProcessUtil.StartWithArguments(
-                    verpatchTool, 
-                    $"{dll64} /va {AppVeyor.Instance.BuildVersion} " + 
-                    $"/pv {AppVeyor.Instance.BuildVersion} /s product \"ViGEm client library\"");
-                Console.WriteLine($"Done, stamped version {FileVersionInfo.GetVersionInfo(dll64).ProductVersion}");
-
-                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}...");
-                ProcessUtil.StartWithArguments(
-                    verpatchTool,
-                    $"{dll32} /va {AppVeyor.Instance.BuildVersion} " +
-                    $"/pv {AppVeyor.Instance.BuildVersion} /s product \"ViGEm client library\"");
-                Console.WriteLine($"Done, stamped version {FileVersionInfo.GetVersionInfo(dll32).ProductVersion}");
-            }
 
             //
             // Build .NET assembly
