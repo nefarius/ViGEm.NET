@@ -1,12 +1,9 @@
 version: 1.16.{build}
 image: Visual Studio 2017
-install:
-- cmd: git submodule -q update --init
 build_script:
 - ps: .\build.ps1
 artifacts:
 - path: 'bin**\*.nupkg'
-- path: 'ViGEmClient\costura**\*.dll'
 deploy:
 - provider: Environment
   name: nuget.org
