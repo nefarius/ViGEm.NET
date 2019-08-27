@@ -27,9 +27,6 @@ class Build : NukeBuild
 
     AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
 
-    static string VerpatchUrl =>
-        "https://downloads.vigem.org/other/pavel-a/ddverpatch/verpatch-1.0.15.1-x86-codeplex.zip";
-
     Target Clean => _ => _
         .Executes(() =>
         {
@@ -49,104 +46,24 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
+            var url64 = "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x64/ViGEmClient.dll";
             var costura64 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura64");
             var dll64 = Path.Combine(costura64, "ViGEmClient.dll");
+            var url32 = "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x86/ViGEmClient.dll";
             var costura32 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura32");
             var dll32 = Path.Combine(costura32, "ViGEmClient.dll");
 
-            //
-            // Build native DLL (x64)
-            // 
-            MSBuild(s => s
-                .SetTargetPath(Solution)
-                .SetTargets("Rebuild")
-                .SetMaxCpuCount(Environment.ProcessorCount)
-                .SetNodeReuse(IsLocalBuild)
-                .SetConfiguration($"{Configuration}_DLL")
-                .SetTargetPlatform(MSBuildTargetPlatform.x64));
-
-            //
-            // Create costura64 path (used to automatically embed DLL in assembly)
-            // 
             if (!Directory.Exists(costura64))
                 Directory.CreateDirectory(costura64);
-
-            //
-            // Copy native DLL to embedder path
-            // 
-            File.Copy(
-                Path.Combine(WorkingDirectory, $@"bin\{Configuration}\x64\ViGEmClient.dll"),
-                dll64,
-                true
-            );
-
-            //
-            // Build native DLL (x86)
-            // 
-            MSBuild(s => s
-                .SetTargetPath(Solution)
-                .SetTargets("Rebuild")
-                .SetMaxCpuCount(Environment.ProcessorCount)
-                .SetNodeReuse(IsLocalBuild)
-                .SetConfiguration($"{Configuration}_DLL")
-                .SetTargetPlatform(MSBuildTargetPlatform.x86));
-
-            //
-            // Create costura32 path (used to automatically embed DLL in assembly)
-            // 
             if (!Directory.Exists(costura32))
                 Directory.CreateDirectory(costura32);
 
-            //
-            // Copy native DLL to embedder path
-            // 
-            File.Copy(
-                Path.Combine(WorkingDirectory, $@"bin\{Configuration}\x86\ViGEmClient.dll"),
-                dll32,
-                true
-            );
-
-            //
-            // If we run on build server, stamp DLLs with build version
-            // 
-            if (AppVeyor.Instance != null)
+            using (var wc = new WebClient())
             {
-                Console.WriteLine("Going to build .NET library, updating native DLL version information...");
-
-                //
-                // TODO: tidy up this section
-                // 
-                var verpatchZip = Path.Combine(
-                    WorkingDirectory,
-                    "verpatch-1.0.15.1-x86-codeplex.zip"
-                );
-
-                using (var client = new WebClient())
-                {
-                    Console.WriteLine("Downloading verpatch tool...");
-                    client.DownloadFile(
-                        VerpatchUrl,
-                        verpatchZip);
-                }
-
-                Console.WriteLine("Extracting verpatch...");
-                ZipFile.ExtractToDirectory(verpatchZip, WorkingDirectory);
-
-                var verpatchTool = Path.Combine(WorkingDirectory, "verpatch.exe");
-
-                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll64}...");
-                ProcessUtil.StartWithArguments(
-                    verpatchTool, 
-                    $"{dll64} /va {AppVeyor.Instance.BuildVersion} " + 
-                    $"/pv {AppVeyor.Instance.BuildVersion} /s product \"ViGEm client library\"");
-                Console.WriteLine($"Done, stamped version {FileVersionInfo.GetVersionInfo(dll64).ProductVersion}");
-
-                Console.WriteLine($"Stamping version {AppVeyor.Instance.BuildVersion} into {dll32}...");
-                ProcessUtil.StartWithArguments(
-                    verpatchTool,
-                    $"{dll32} /va {AppVeyor.Instance.BuildVersion} " +
-                    $"/pv {AppVeyor.Instance.BuildVersion} /s product \"ViGEm client library\"");
-                Console.WriteLine($"Done, stamped version {FileVersionInfo.GetVersionInfo(dll32).ProductVersion}");
+                Console.WriteLine("Downloading native x64 DLL");
+                wc.DownloadFile(url64, dll64);
+                Console.WriteLine("Downloading native x86 DLL");
+                wc.DownloadFile(url32, dll32);
             }
 
             //
