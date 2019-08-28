@@ -9,7 +9,10 @@ namespace Nefarius.ViGEm.Client.Targets
         void SetButtonState(DualShock4Button button, bool pressed);
 
         [UsedImplicitly]
-        void SetAxisValue(DualShock4Axis axis, short value);
+        void SetDPadDirection(DualShock4DPadDirection direction);
+
+        [UsedImplicitly]
+        void SetAxisValue(DualShock4Axis axis, byte value);
 
         [UsedImplicitly]
         void SetSliderValue(DualShock4Slider slider, byte value);

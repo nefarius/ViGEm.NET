@@ -1,4 +1,7 @@
-﻿using Nefarius.ViGEm.Client.Exceptions;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using Nefarius.ViGEm.Client.Exceptions;
 using Nefarius.ViGEm.Client.Targets.DualShock4;
 
 namespace Nefarius.ViGEm.Client.Targets
@@ -7,8 +10,42 @@ namespace Nefarius.ViGEm.Client.Targets
     /// <summary>
     ///     Represents an emulated wired Sony DualShock 4 Controller.
     /// </summary>
-    internal partial class DualShock4Controller : ViGEmTarget, IVirtualGamepad
+    internal partial class DualShock4Controller : ViGEmTarget, IDualShock4Controller
     {
+        private static readonly List<DualShock4Button> ButtonMap = new List<DualShock4Button>
+        {
+            DualShock4Button.ThumbRight,
+            DualShock4Button.ThumbLeft,
+            DualShock4Button.Options,
+            DualShock4Button.Share,
+            DualShock4Button.TriggerRight,
+            DualShock4Button.TriggerLeft,
+            DualShock4Button.ShoulderRight,
+            DualShock4Button.ShoulderLeft,
+            DualShock4Button.Triangle,
+            DualShock4Button.Circle,
+            DualShock4Button.Cross,
+            DualShock4Button.Square,
+            DualShock4Button.Ps,
+            DualShock4Button.Touchpad
+        };
+
+        private static readonly List<DualShock4Axis> AxisMap = new List<DualShock4Axis>
+        {
+            DualShock4Axis.LeftThumbX,
+            DualShock4Axis.LeftThumbY,
+            DualShock4Axis.RightThumbX,
+            DualShock4Axis.RightThumbY
+        };
+
+        private static readonly List<DualShock4Slider> SliderMap = new List<DualShock4Slider>
+        {
+            DualShock4Slider.LeftTrigger,
+            DualShock4Slider.RightTrigger
+        };
+
+        private ViGEmClient.DS4_REPORT _nativeReport;
+
         private ViGEmClient.PVIGEM_DS4_NOTIFICATION _notificationCallback;
 
         /// <inheritdoc />
@@ -20,6 +57,8 @@ namespace Nefarius.ViGEm.Client.Targets
         public DualShock4Controller(ViGEmClient client) : base(client)
         {
             NativeHandle = ViGEmClient.vigem_target_ds4_alloc();
+
+            ResetReport();
         }
 
         /// <inheritdoc />
@@ -35,36 +74,6 @@ namespace Nefarius.ViGEm.Client.Targets
         {
             VendorId = vendorId;
             ProductId = productId;
-        }
-
-        /// <summary>
-        ///     Submits an <see cref="DualShock4Report"/> to this device which will update its state.
-        /// </summary>
-        /// <param name="report">The <see cref="DualShock4Report"/> to submit.</param>
-        public void SendReport(DualShock4Report report)
-        {
-            // Convert managed to unmanaged structure
-            var submit = new ViGEmClient.DS4_REPORT
-            {
-                wButtons = report.Buttons,
-                bSpecial = report.SpecialButtons,
-                bThumbLX = report.LeftThumbX,
-                bThumbLY = report.LeftThumbY,
-                bThumbRX = report.RightThumbX,
-                bThumbRY = report.RightThumbY,
-                bTriggerL = report.LeftTrigger,
-                bTriggerR = report.RightTrigger
-            };
-
-            var error = ViGEmClient.vigem_target_ds4_update(Client.NativeHandle, NativeHandle, submit);
-
-            switch (error)
-            {
-                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
-                    throw new VigemBusNotFoundException();
-                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
-                    throw new VigemInvalidTargetException();
-            }
         }
 
         public override void Connect()
@@ -99,11 +108,11 @@ namespace Nefarius.ViGEm.Client.Targets
             base.Disconnect();
         }
 
-        public int ButtonCount => throw new System.NotImplementedException();
+        public int ButtonCount => ButtonMap.Count;
 
-        public int AxisCount => throw new System.NotImplementedException();
+        public int AxisCount => AxisMap.Count;
 
-        public int SliderCount => throw new System.NotImplementedException();
+        public int SliderCount => SliderMap.Count;
 
         public void SetButtonState(int index, bool pressed)
         {
@@ -121,14 +130,41 @@ namespace Nefarius.ViGEm.Client.Targets
         }
 
         public bool AutoSubmitReport { get; set; }
+
         public void ResetReport()
         {
-            throw new System.NotImplementedException();
+            _nativeReport = default(ViGEmClient.DS4_REPORT);
+
+            _nativeReport.wButtons &= unchecked((ushort)~0xF);
+            _nativeReport.wButtons |= 0x08; // resting HAT switch position
+            _nativeReport.bThumbLX = 0x80; // centered axis value
+            _nativeReport.bThumbLY = 0x80; // centered axis value
+            _nativeReport.bThumbRX = 0x80; // centered axis value
+            _nativeReport.bThumbRY = 0x80; // centered axis value
         }
 
         public void SubmitReport()
         {
-            throw new System.NotImplementedException();
+            SubmitNativeReport(_nativeReport);
+        }
+
+        private void SubmitNativeReport(ViGEmClient.DS4_REPORT report)
+        {
+            var error = ViGEmClient.vigem_target_ds4_update(Client.NativeHandle, NativeHandle, report);
+
+            switch (error)
+            {
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NONE:
+                    break;
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_INVALID_HANDLE:
+                    throw new VigemBusInvalidHandleException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
+                    throw new VigemInvalidTargetException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
+                    throw new VigemBusNotFoundException();
+                default:
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
+            }
         }
 
         public event DualShock4FeedbackReceivedEventHandler FeedbackReceived;
