@@ -14,7 +14,6 @@
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <Version>1.14.3.0</Version>
     <Description>Managed ViGEmClient library for interaction with the ViGEm Bus Driver.</Description>
     <Product>Managed ViGEmClient library</Product>
     <Authors>Benjamin Höglinger-Stelzer</Authors>
@@ -24,11 +23,12 @@
     <Copyright>Copyright © Nefarius Software Solutions e.U. 2017-2019</Copyright>
     <PackageProjectUrl>https://github.com/ViGEm/ViGEm.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ViGEm/ViGEm.NET</RepositoryUrl>
-    <PackageLicenseUrl>https://github.com/ViGEm/ViGEm.NET/blob/master/LICENSE</PackageLicenseUrl>
-    <AssemblyVersion>1.14.3.0</AssemblyVersion>
-    <FileVersion>1.14.3.0</FileVersion>
+	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(SolutionDir)\LICENSE" Pack="true" PackagePath="LICENSE.txt"/>
+  </ItemGroup>
   <PropertyGroup Condition="$(TargetFramework) == 'net452'">
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
