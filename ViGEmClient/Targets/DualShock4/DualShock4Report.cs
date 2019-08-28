@@ -2,6 +2,7 @@
 
 namespace Nefarius.ViGEm.Client.Targets.DualShock4
 {
+    [Obsolete]
     [Flags]
     public enum DualShock4Buttons : ushort
     {
@@ -19,6 +20,7 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
         Square = 1 << 4
     }
 
+    [Obsolete]
     [Flags]
     public enum DualShock4SpecialButtons : byte
     {
@@ -26,6 +28,7 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
         Touchpad = 1 << 1
     }
 
+    [Obsolete]
     public enum DualShock4Axes
     {
         LeftTrigger,
@@ -36,6 +39,7 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
         RightThumbY
     }
 
+    [Obsolete]
     public enum DualShock4DPadValues
     {
         None = 0x8,
@@ -49,6 +53,7 @@ namespace Nefarius.ViGEm.Client.Targets.DualShock4
         North = 0x0
     }
 
+    [Obsolete]
     public class DualShock4Report
     {
         public DualShock4Report()

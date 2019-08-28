@@ -4,6 +4,7 @@ using System;
 
 namespace Nefarius.ViGEm.Client.Targets.DualShock4
 {
+    [Obsolete]
     public static class DualShock4ReportExtensions
     {
         public static void SetButtons(this DualShock4Report report, params DualShock4Buttons[] buttons)
