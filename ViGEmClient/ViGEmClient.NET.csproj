@@ -23,12 +23,9 @@
     <Copyright>Copyright © Nefarius Software Solutions e.U. 2017-2019</Copyright>
     <PackageProjectUrl>https://github.com/ViGEm/ViGEm.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ViGEm/ViGEm.NET</RepositoryUrl>
-	<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+	<PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
-  <ItemGroup>
-    <None Include="$(SolutionDir)\LICENSE" Pack="true" PackagePath="LICENSE.txt"/>
-  </ItemGroup>
   <PropertyGroup Condition="$(TargetFramework) == 'net452'">
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
   </PropertyGroup>
