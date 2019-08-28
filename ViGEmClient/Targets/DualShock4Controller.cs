@@ -7,7 +7,7 @@ namespace Nefarius.ViGEm.Client.Targets
     /// <summary>
     ///     Represents an emulated wired Sony DualShock 4 Controller.
     /// </summary>
-    internal class DualShock4Controller : ViGEmTarget, IVirtualGamepad
+    internal partial class DualShock4Controller : ViGEmTarget, IVirtualGamepad
     {
         private ViGEmClient.PVIGEM_DS4_NOTIFICATION _notificationCallback;
 
