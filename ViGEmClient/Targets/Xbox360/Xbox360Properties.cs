@@ -53,10 +53,20 @@ namespace Nefarius.ViGEm.Client.Targets.Xbox360
             if (otherValue == null)
                 return false;
 
-            var typeMatches = GetType().Equals(obj.GetType());
+            var typeMatches = GetType() == obj.GetType();
             var valueMatches = Id.Equals(otherValue.Id);
 
             return typeMatches && valueMatches;
+        }
+
+        protected bool Equals(Xbox360Property other)
+        {
+            return Id == other.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id;
         }
     }
 
