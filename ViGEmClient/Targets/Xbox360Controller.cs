@@ -171,16 +171,6 @@ namespace Nefarius.ViGEm.Client.Targets
             private set => _userIndex = value;
         }
 
-        private static short Scale(byte value, bool invert)
-        {
-            var intValue = value - 0x80;
-            if (intValue == -128) intValue = -127;
-
-            var wtfValue = intValue * 258.00787401574803149606299212599f; // what the fuck?
-
-            return (short) (invert ? -wtfValue : wtfValue);
-        }
-
         /// <summary>
         ///     Submits a new (or modified) report to the emulation bus.
         /// </summary>

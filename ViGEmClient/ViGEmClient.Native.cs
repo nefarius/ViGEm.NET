@@ -71,6 +71,7 @@ namespace Nefarius.ViGEm.Client
             DualShock4Wired
         }
 
+        [StructLayout(LayoutKind.Sequential)]
         internal struct DS4_LIGHTBAR_COLOR
         {
             public byte Red;
