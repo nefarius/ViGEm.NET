@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Nefarius.ViGEm.Client.Exceptions;
+using Nefarius.ViGEm.Client.Targets.DualShock4;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using Nefarius.ViGEm.Client.Exceptions;
-using Nefarius.ViGEm.Client.Targets.DualShock4;
+using Nefarius.ViGEm.Client.Utilities;
 
 namespace Nefarius.ViGEm.Client.Targets
 {
@@ -116,17 +117,25 @@ namespace Nefarius.ViGEm.Client.Targets
 
         public void SetButtonState(int index, bool pressed)
         {
-            throw new System.NotImplementedException();
+            SetButtonState(ButtonMap[index], pressed);
         }
 
         public void SetAxisValue(int index, short value)
         {
-            throw new System.NotImplementedException();
+            SetAxisValue(AxisMap[index],
+                (byte)MathUtil.ConvertRange(
+                    short.MinValue,
+                    short.MaxValue,
+                    byte.MinValue,
+                    byte.MaxValue,
+                    value
+                )
+            );
         }
 
         public void SetSliderValue(int index, byte value)
         {
-            throw new System.NotImplementedException();
+            SetSliderValue(SliderMap[index], value);
         }
 
         public bool AutoSubmitReport { get; set; }
