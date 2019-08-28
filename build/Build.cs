@@ -25,7 +25,7 @@ class Build : NukeBuild
     [GitRepository] readonly GitRepository GitRepository;
     [GitVersion] readonly GitVersion GitVersion;
 
-    AbsolutePath ArtifactsDirectory => RootDirectory / "artifacts";
+    AbsolutePath ArtifactsDirectory => RootDirectory / "bin";
 
     Target Clean => _ => _
         .Executes(() =>
