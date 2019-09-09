@@ -17,6 +17,7 @@ namespace Nefarius.ViGEm.Client.Targets
 
         public void SetDPadDirection(DualShock4DPadDirection direction)
         {
+            _nativeReport.wButtons &= unchecked((ushort)~0xF);
             _nativeReport.wButtons |= direction.Value;
 
             if (AutoSubmitReport)
