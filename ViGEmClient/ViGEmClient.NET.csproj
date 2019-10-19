@@ -48,10 +48,12 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <EmbeddedResource Include="costura64\ViGEmClient.dll" />
+    <None Remove="costura32\ViGEmClient.dll" />
+    <None Remove="costura64\ViGEmClient.dll" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="costura32\ViGEmClient.dll" />
+    <EmbeddedResource Include="costura64\ViGEmClient.dll" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
