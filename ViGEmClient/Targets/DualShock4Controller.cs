@@ -27,8 +27,8 @@ namespace Nefarius.ViGEm.Client.Targets
             DualShock4Button.Circle,
             DualShock4Button.Cross,
             DualShock4Button.Square,
-            DualShock4Button.Ps,
-            DualShock4Button.Touchpad
+            DualShock4SpecialButton.Ps,
+            DualShock4SpecialButton.Touchpad
         };
 
         private static readonly List<DualShock4Axis> AxisMap = new List<DualShock4Axis>

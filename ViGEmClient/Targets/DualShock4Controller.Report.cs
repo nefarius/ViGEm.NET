@@ -6,10 +6,21 @@ namespace Nefarius.ViGEm.Client.Targets
     {
         public void SetButtonState(DualShock4Button button, bool pressed)
         {
-            if (pressed)
-                _nativeReport.wButtons |= (ushort)button.Value;
-            else
-                _nativeReport.wButtons &= (ushort)~button.Value;
+            switch (button)
+            {
+                case DualShock4SpecialButton specialButton:
+                    if (pressed)
+                        _nativeReport.bSpecial |= (byte)specialButton.Value;
+                    else
+                        _nativeReport.bSpecial &= (byte)~specialButton.Value;
+                    break;
+                case DualShock4Button normalButton:
+                    if (pressed)
+                        _nativeReport.wButtons |= (ushort)normalButton.Value;
+                    else
+                        _nativeReport.wButtons &= (ushort)~normalButton.Value;
+                    break;
+            }
 
             if (AutoSubmitReport)
                 SubmitNativeReport(_nativeReport);
