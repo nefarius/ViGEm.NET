@@ -138,7 +138,7 @@ namespace Nefarius.ViGEm.Client.Targets
             SetSliderValue(SliderMap[index], value);
         }
 
-        public bool AutoSubmitReport { get; set; }
+        public bool AutoSubmitReport { get; set; } = true;
 
         public void ResetReport()
         {
