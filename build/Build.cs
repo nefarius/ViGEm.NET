@@ -46,10 +46,10 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            var url64 = "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x64/ViGEmClient.dll";
+            var url64 = "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x64/ViGEmClient.dll?job=Platform%3A%20x64";
             var costura64 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura64");
             var dll64 = Path.Combine(costura64, "ViGEmClient.dll");
-            var url32 = "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x86/ViGEmClient.dll";
+            var url32 = "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x86/ViGEmClient.dll?job=Platform%3A%20x86";
             var costura32 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura32");
             var dll32 = Path.Combine(costura32, "ViGEmClient.dll");
 
