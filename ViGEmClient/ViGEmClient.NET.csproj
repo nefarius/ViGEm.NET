@@ -19,12 +19,13 @@
     <Authors>Benjamin Höglinger-Stelzer</Authors>
     <Company>Nefarius Software Solutions e.U.</Company>
     <PackageTags>driver bus-driver windows-driver gamepad joypad joystick emulation framework xinput xusb xbone dualshock4 kmdf</PackageTags>
-    <PackageIconUrl>https://raw.githubusercontent.com/nefarius/ViGEm/master/Installer/favicon.png</PackageIconUrl>
+    <PackageIconUrl></PackageIconUrl>
     <Copyright>Copyright © Nefarius Software Solutions e.U. 2017-2019</Copyright>
     <PackageProjectUrl>https://github.com/ViGEm/ViGEm.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ViGEm/ViGEm.NET</RepositoryUrl>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageIcon>ViGEm_Icon.png</PackageIcon>
   </PropertyGroup>
   <PropertyGroup Condition="$(TargetFramework) == 'net452'">
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
@@ -50,6 +51,10 @@
   <ItemGroup>
     <None Remove="costura32\ViGEmClient.dll" />
     <None Remove="costura64\ViGEmClient.dll" />
+    <None Include="..\ViGEm_Icon.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="costura32\ViGEmClient.dll" />
