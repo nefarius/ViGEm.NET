@@ -6,7 +6,15 @@
 
 ## About
 
-**This branch is work-in-progress!** The API might break at any point, so keep that in mind 😉
+.NET API to interact with features offered by [ViGEm Bus Driver](https://github.com/ViGEm/ViGEmBus).
+
+## Installation
+
+This library can be consumed via [pre-built NuGet](https://www.nuget.org/packages/Nefarius.ViGEm.Client/):
+
+```
+Install-Package Nefarius.ViGEm.Client
+```
 
 ## Contribute
 
