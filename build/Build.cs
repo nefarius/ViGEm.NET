@@ -1,5 +1,4 @@
 using Nuke.Common;
-using Nuke.Common.BuildServers;
 using Nuke.Common.Git;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.GitVersion;
@@ -9,6 +8,8 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Net;
+using Nuke.Common.CI.AppVeyor;
+using Nuke.Common.IO;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
