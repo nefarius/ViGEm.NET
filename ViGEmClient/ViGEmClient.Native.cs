@@ -187,6 +187,13 @@ namespace Nefarius.ViGEm.Client
             DS4_REPORT report);
 
         [DllImport("vigemclient.dll", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern VIGEM_ERROR vigem_target_ds4_update_ex(
+            PVIGEM_CLIENT vigem, 
+            PVIGEM_TARGET target, 
+            IntPtr buffer,
+            uint size);
+
+        [DllImport("vigemclient.dll", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         static extern uint vigem_target_get_index(
             PVIGEM_TARGET target);
 

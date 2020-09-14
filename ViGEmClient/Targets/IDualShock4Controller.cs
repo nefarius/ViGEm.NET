@@ -19,5 +19,8 @@ namespace Nefarius.ViGEm.Client.Targets
 
         [UsedImplicitly]
         event DualShock4FeedbackReceivedEventHandler FeedbackReceived;
+
+        [UsedImplicitly]
+        void SubmitRawReport(byte[] buffer);
     }
 }

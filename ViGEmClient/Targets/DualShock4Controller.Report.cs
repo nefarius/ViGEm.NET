@@ -1,4 +1,7 @@
-﻿using Nefarius.ViGEm.Client.Targets.DualShock4;
+﻿using System.ComponentModel;
+using System.Runtime.InteropServices;
+using Nefarius.ViGEm.Client.Exceptions;
+using Nefarius.ViGEm.Client.Targets.DualShock4;
 
 namespace Nefarius.ViGEm.Client.Targets
 {
@@ -71,6 +74,37 @@ namespace Nefarius.ViGEm.Client.Targets
 
             if (AutoSubmitReport)
                 SubmitNativeReport(_nativeReport);
+        }
+
+        public void SubmitRawReport(byte[] buffer)
+        {
+            var native = Marshal.AllocHGlobal(buffer.Length);
+
+            Marshal.Copy(buffer, 0, native, buffer.Length);
+
+            try
+            {
+                var error = ViGEmClient.vigem_target_ds4_update_ex(Client.NativeHandle, NativeHandle, native,
+                    (uint) buffer.Length);
+
+                switch (error)
+                {
+                    case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NONE:
+                        break;
+                    case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_INVALID_HANDLE:
+                        throw new VigemBusInvalidHandleException();
+                    case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
+                        throw new VigemInvalidTargetException();
+                    case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
+                        throw new VigemBusNotFoundException();
+                    default:
+                        throw new Win32Exception(Marshal.GetLastWin32Error());
+                }
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(native);
+            }
         }
     }
 }
