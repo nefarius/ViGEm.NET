@@ -1,5 +1,5 @@
-version: 1.16.{build}
-image: Visual Studio 2017
+version: 1.17.{build}
+image: Visual Studio 2019
 build_script:
 - ps: .\build.ps1
 artifacts:
