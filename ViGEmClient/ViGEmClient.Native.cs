@@ -55,6 +55,16 @@ namespace Nefarius.ViGEm.Client
             public byte bTriggerR;
         }
 
+        /// <summary>
+        ///     TODO: populate actual fields
+        /// </summary>
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct DS4_REPORT_EX
+        {
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 63)]
+            public byte[] Report;
+        }
+
         internal enum VIGEM_TARGET_TYPE : UInt32
         {
             // 
@@ -190,8 +200,7 @@ namespace Nefarius.ViGEm.Client
         internal static extern VIGEM_ERROR vigem_target_ds4_update_ex(
             PVIGEM_CLIENT vigem, 
             PVIGEM_TARGET target, 
-            IntPtr buffer,
-            uint size);
+            DS4_REPORT_EX report);
 
         [DllImport("vigemclient.dll", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         static extern uint vigem_target_get_index(

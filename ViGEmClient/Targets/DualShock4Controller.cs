@@ -47,6 +47,8 @@ namespace Nefarius.ViGEm.Client.Targets
 
         private ViGEmClient.DS4_REPORT _nativeReport;
 
+        private ViGEmClient.DS4_REPORT_EX _nativeReportEx;
+
         private ViGEmClient.PVIGEM_DS4_NOTIFICATION _notificationCallback;
 
         /// <inheritdoc />
