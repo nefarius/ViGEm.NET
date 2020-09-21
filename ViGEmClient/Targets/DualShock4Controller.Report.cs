@@ -96,6 +96,8 @@ namespace Nefarius.ViGEm.Client.Targets
                     throw new VigemInvalidTargetException();
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
                     throw new VigemBusNotFoundException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NOT_SUPPORTED:
+                    throw new VigemNotSupportedException();
                 default:
                     throw new Win32Exception(Marshal.GetLastWin32Error());
             }
