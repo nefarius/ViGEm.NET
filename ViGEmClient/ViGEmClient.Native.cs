@@ -60,7 +60,7 @@ namespace Nefarius.ViGEm.Client
         /// <summary>
         ///     TODO: populate actual fields
         /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         internal struct DS4_REPORT_EX
         {
             [MarshalAs(UnmanagedType.ByValArray, SizeConst = 63)]
