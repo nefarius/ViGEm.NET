@@ -1,40 +1,28 @@
-using Nuke.Common;
-using Nuke.Common.Git;
-using Nuke.Common.ProjectModel;
-using Nuke.Common.Tools.GitVersion;
-using Nuke.Common.Tools.MSBuild;
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.IO.Compression;
 using System.Net;
+using Nuke.Common;
 using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.IO;
+using Nuke.Common.ProjectModel;
+using Nuke.Common.Tools.MSBuild;
 using static Nuke.Common.EnvironmentInfo;
 using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
-class Build : NukeBuild
+internal class Build : NukeBuild
 {
-    public static int Main() => Execute<Build>(x => x.Compile);
-
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
-    readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
+    private readonly string Configuration = IsLocalBuild ? "Debug" : "Release";
 
-    [Solution("ViGEm.NET.sln")] readonly Solution Solution;
-    [GitRepository] readonly GitRepository GitRepository;
-    [GitVersion] readonly GitVersion GitVersion;
+    [Solution("ViGEm.NET.sln")] private readonly Solution Solution;
 
-    AbsolutePath ArtifactsDirectory => RootDirectory / "bin";
+    private AbsolutePath ArtifactsDirectory => RootDirectory / "bin";
 
-    Target Clean => _ => _
-        .Executes(() =>
-        {
-            EnsureCleanDirectory(ArtifactsDirectory);
-        });
+    private Target Clean => _ => _
+        .Executes(() => { EnsureCleanDirectory(ArtifactsDirectory); });
 
-    Target Restore => _ => _
+    private Target Restore => _ => _
         .DependsOn(Clean)
         .Executes(() =>
         {
@@ -47,10 +35,12 @@ class Build : NukeBuild
         .DependsOn(Restore)
         .Executes(() =>
         {
-            var url64 = "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x64/ViGEmClient.dll?job=Platform%3A%20x64";
+            var url64 =
+                "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x64/ViGEmClient.dll?job=Platform%3A%20x64";
             var costura64 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura64");
             var dll64 = Path.Combine(costura64, "ViGEmClient.dll");
-            var url32 = "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x86/ViGEmClient.dll?job=Platform%3A%20x86";
+            var url32 =
+                "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x86/ViGEmClient.dll?job=Platform%3A%20x86";
             var costura32 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura32");
             var dll32 = Path.Combine(costura32, "ViGEmClient.dll");
 
@@ -95,4 +85,9 @@ class Build : NukeBuild
                 .SetConfiguration(Configuration)
                 .EnableIncludeSymbols());
         });
+
+    public static int Main()
+    {
+        return Execute<Build>(x => x.Compile);
+    }
 }
