@@ -9,6 +9,7 @@ Write-Output "Windows PowerShell $($Host.Version)"
 
 Set-StrictMode -Version 2.0; $ErrorActionPreference = "Stop"; $ConfirmPreference = "None"; trap { $host.SetShouldExit(1) }
 $PSScriptRoot = Split-Path $MyInvocation.MyCommand.Path -Parent
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 ###########################################################################
 # CONFIGURATION
