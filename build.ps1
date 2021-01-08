@@ -1,5 +1,3 @@
-#Requires -Version 7
-
 [CmdletBinding()]
 Param(
     #[switch]$CustomParam,
