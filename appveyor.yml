@@ -1,7 +1,7 @@
 version: 1.17.{build}
 image: Visual Studio 2019
 build_script:
-- ps: .\build.ps1
+- cmd: .\build.cmd
 artifacts:
 - path: 'bin**\*.nupkg'
 deploy:
