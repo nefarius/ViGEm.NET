@@ -7,6 +7,7 @@ namespace Nefarius.ViGEm.Client
     using PVIGEM_CLIENT = IntPtr;
     using PVIGEM_TARGET = IntPtr;
     using PVIGEM_TARGET_ADD_RESULT = IntPtr;
+    using PVIGEM_USER_DATA = IntPtr;
 
     [SuppressUnmanagedCodeSecurity]
     partial class ViGEmClient
@@ -97,7 +98,8 @@ namespace Nefarius.ViGEm.Client
             PVIGEM_TARGET Target,
             byte LargeMotor,
             byte SmallMotor,
-            byte LedNumber);
+            byte LedNumber,
+            PVIGEM_USER_DATA UserData);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         internal delegate void PVIGEM_DS4_NOTIFICATION(
@@ -105,7 +107,8 @@ namespace Nefarius.ViGEm.Client
             PVIGEM_TARGET Target,
             byte LargeMotor,
             byte SmallMotor,
-            DS4_LIGHTBAR_COLOR LightbarColor);
+            DS4_LIGHTBAR_COLOR LightbarColor,
+            PVIGEM_USER_DATA UserData);
 
         [DllImport("vigemclient.dll", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         static extern PVIGEM_CLIENT vigem_alloc();

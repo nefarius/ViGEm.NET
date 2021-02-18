@@ -86,7 +86,7 @@ namespace Nefarius.ViGEm.Client.Targets
             //
             // Callback to event
             // 
-            _notificationCallback = (client, target, motor, smallMotor, color) => FeedbackReceived?.Invoke(this,
+            _notificationCallback = (client, target, motor, smallMotor, color, userData) => FeedbackReceived?.Invoke(this,
                 new DualShock4FeedbackReceivedEventArgs(motor, smallMotor,
                     new LightbarColor(color.Red, color.Green, color.Blue)));
 
