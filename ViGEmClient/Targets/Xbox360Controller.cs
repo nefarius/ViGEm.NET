@@ -85,7 +85,7 @@ namespace Nefarius.ViGEm.Client.Targets
             //
             // Callback to event
             // 
-            _notificationCallback = (client, target, largeMotor, smallMotor, number) =>
+            _notificationCallback = (client, target, largeMotor, smallMotor, number, userData) =>
             {
                 UserIndex = number;
 
