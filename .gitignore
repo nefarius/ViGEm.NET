@@ -24,3 +24,4 @@ bld/
 [Ll]og/
 [Dd]esignTimeBuild
 /*.user
+/.nuke/temp
