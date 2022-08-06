@@ -1,4 +1,5 @@
-﻿using JetBrains.Annotations;
+﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using Nefarius.ViGEm.Client.Targets.DualShock4;
 
 namespace Nefarius.ViGEm.Client.Targets
@@ -22,5 +23,8 @@ namespace Nefarius.ViGEm.Client.Targets
 
         [UsedImplicitly]
         void SubmitRawReport(byte[] buffer);
+
+        [UsedImplicitly]
+        IEnumerable<byte> AwaitRawOutputReport();
     }
 }
