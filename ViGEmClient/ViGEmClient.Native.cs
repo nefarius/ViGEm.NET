@@ -236,6 +236,6 @@ namespace Nefarius.ViGEm.Client
         internal static extern VIGEM_ERROR vigem_target_ds4_await_output_report(
             PVIGEM_CLIENT vigem, 
             PVIGEM_TARGET target, 
-            [In][Out] ref byte[] buffer);
+            ref DS4_AWAIT_OUTPUT_BUFFER buffer);
     }
 }
