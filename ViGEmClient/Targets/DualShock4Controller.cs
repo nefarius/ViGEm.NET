@@ -1,5 +1,4 @@
-﻿using System;
-using Nefarius.ViGEm.Client.Exceptions;
+﻿using Nefarius.ViGEm.Client.Exceptions;
 using Nefarius.ViGEm.Client.Targets.DualShock4;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -50,7 +49,7 @@ namespace Nefarius.ViGEm.Client.Targets
 
         private ViGEmClient.DS4_REPORT_EX _nativeReportEx;
         
-        private IntPtr _outputBuffer;
+        private ViGEmClient.DS4_AWAIT_OUTPUT_BUFFER _outputBuffer;
 
         private ViGEmClient.PVIGEM_DS4_NOTIFICATION _notificationCallback;
 
@@ -64,11 +63,9 @@ namespace Nefarius.ViGEm.Client.Targets
         {
             NativeHandle = ViGEmClient.vigem_target_ds4_alloc();
 
-            _outputBuffer = Marshal.AllocHGlobal(64);
-
             ResetReport();
         }
-        
+
         /// <inheritdoc />
         /// <summary>
         ///     Initializes a new instance of the <see cref="T:Nefarius.ViGEm.Client.Targets.DualShock4Controller" /> class bound
@@ -82,13 +79,6 @@ namespace Nefarius.ViGEm.Client.Targets
         {
             VendorId = vendorId;
             ProductId = productId;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            Marshal.FreeHGlobal(_outputBuffer);
-
-            base.Dispose(disposing);
         }
 
         public override void Connect()
