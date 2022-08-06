@@ -49,7 +49,7 @@ namespace Nefarius.ViGEm.Client.Targets
 
         private ViGEmClient.DS4_REPORT_EX _nativeReportEx;
         
-        private ViGEmClient.DS4_AWAIT_OUTPUT_BUFFER _outputBuffer;
+        private byte[] _outputBuffer = new byte[64];
 
         private ViGEmClient.PVIGEM_DS4_NOTIFICATION _notificationCallback;
 

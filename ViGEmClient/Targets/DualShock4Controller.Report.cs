@@ -125,7 +125,7 @@ namespace Nefarius.ViGEm.Client.Targets
                     throw new Win32Exception(Marshal.GetLastWin32Error());
             }
 
-            return _outputBuffer.Buffer;
+            return _outputBuffer;
         }
     }
 }
