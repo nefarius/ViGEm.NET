@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Nefarius.ViGEm.Client.Exceptions;
 using Nefarius.ViGEm.Client.Targets.DualShock4;
@@ -106,26 +107,39 @@ namespace Nefarius.ViGEm.Client.Targets
 
         public IEnumerable<byte> AwaitRawOutputReport()
         {
-            var error = ViGEmClient.vigem_target_ds4_await_output_report(Client.NativeHandle, NativeHandle,
-                ref _outputBuffer);
+            var buffer = Marshal.AllocHGlobal(64);
 
-            switch (error)
+            try
             {
-                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NONE:
-                    break;
-                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_INVALID_HANDLE:
-                    throw new VigemBusInvalidHandleException();
-                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
-                    throw new VigemInvalidTargetException();
-                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
-                    throw new VigemBusNotFoundException();
-                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NOT_SUPPORTED:
-                    throw new VigemNotSupportedException();
-                default:
-                    throw new Win32Exception(Marshal.GetLastWin32Error());
-            }
+                var error = ViGEmClient.vigem_target_ds4_await_output_report(Client.NativeHandle, NativeHandle,
+                    buffer);
 
-            return _outputBuffer.Buffer;
+                switch (error)
+                {
+                    case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NONE:
+                        break;
+                    case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_INVALID_HANDLE:
+                        throw new VigemBusInvalidHandleException();
+                    case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
+                        throw new VigemInvalidTargetException();
+                    case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
+                        throw new VigemBusNotFoundException();
+                    case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NOT_SUPPORTED:
+                        throw new VigemNotSupportedException();
+                    default:
+                        throw new Win32Exception(Marshal.GetLastWin32Error());
+                }
+
+                var buf = new byte[64];
+
+                Marshal.Copy(buffer, buf, 0, buf.Length);
+
+                return buf;
+            }
+            finally
+            {
+                Marshal.FreeHGlobal(buffer);
+            }
         }
     }
 }
