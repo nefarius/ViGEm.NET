@@ -12,7 +12,7 @@
 
 This library can be consumed via [pre-built NuGet](https://www.nuget.org/packages/Nefarius.ViGEm.Client/):
 
-```
+```PowerShell
 Install-Package Nefarius.ViGEm.Client
 ```
 
