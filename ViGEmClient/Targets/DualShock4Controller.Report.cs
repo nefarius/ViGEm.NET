@@ -107,7 +107,7 @@ namespace Nefarius.ViGEm.Client.Targets
         public IEnumerable<byte> AwaitRawOutputReport()
         {
             var error = ViGEmClient.vigem_target_ds4_await_output_report(Client.NativeHandle, NativeHandle,
-                ref _outputBuffer);
+                _outputBuffer);
 
             switch (error)
             {
@@ -125,7 +125,11 @@ namespace Nefarius.ViGEm.Client.Targets
                     throw new Win32Exception(Marshal.GetLastWin32Error());
             }
 
-            return _outputBuffer.Buffer;
+            var buffer = new byte[64];
+
+            Marshal.Copy(_outputBuffer, buffer,0 , 64);
+
+            return buffer;
         }
     }
 }

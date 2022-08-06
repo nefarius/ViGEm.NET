@@ -68,13 +68,6 @@ namespace Nefarius.ViGEm.Client
             public byte[] Report;
         }
 
-        [StructLayout(LayoutKind.Sequential, Pack = 1)]
-        internal struct DS4_AWAIT_OUTPUT_BUFFER
-        {
-            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-            public byte[] Buffer;
-        }
-
         internal enum VIGEM_TARGET_TYPE : UInt32
         {
             // 
@@ -236,6 +229,6 @@ namespace Nefarius.ViGEm.Client
         internal static extern VIGEM_ERROR vigem_target_ds4_await_output_report(
             PVIGEM_CLIENT vigem, 
             PVIGEM_TARGET target, 
-            ref DS4_AWAIT_OUTPUT_BUFFER buffer);
+            IntPtr buffer);
     }
 }
