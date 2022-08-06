@@ -237,11 +237,5 @@ namespace Nefarius.ViGEm.Client
             PVIGEM_CLIENT vigem, 
             PVIGEM_TARGET target, 
             ref DS4_AWAIT_OUTPUT_BUFFER buffer);
-
-        [DllImport("vigemclient.dll", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern VIGEM_ERROR vigem_target_ds4_await_output_report(
-            PVIGEM_CLIENT vigem, 
-            PVIGEM_TARGET target, 
-            IntPtr buffer);
     }
 }
