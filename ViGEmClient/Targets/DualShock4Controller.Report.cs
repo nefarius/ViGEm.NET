@@ -78,6 +78,7 @@ namespace Nefarius.ViGEm.Client.Targets
                 SubmitNativeReport(_nativeReport);
         }
 
+        /// <inheritdoc />
         public void SubmitRawReport(byte[] buffer)
         {
             if (buffer.Length != Marshal.SizeOf<ViGEmClient.DS4_REPORT_EX>())
@@ -104,6 +105,7 @@ namespace Nefarius.ViGEm.Client.Targets
             }
         }
 
+        /// <inheritdoc />
         public IEnumerable<byte> AwaitRawOutputReport()
         {
             var error = ViGEmClient.vigem_target_ds4_await_output_report(Client.NativeHandle, NativeHandle,
@@ -121,6 +123,8 @@ namespace Nefarius.ViGEm.Client.Targets
                     throw new VigemBusNotFoundException();
                 case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NOT_SUPPORTED:
                     throw new VigemNotSupportedException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_PARAMETER:
+                    throw new VigemInvalidParameterException();
                 default:
                     throw new Win32Exception(Marshal.GetLastWin32Error());
             }
