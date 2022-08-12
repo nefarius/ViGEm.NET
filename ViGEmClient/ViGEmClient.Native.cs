@@ -30,7 +30,9 @@ namespace Nefarius.ViGEm.Client
             VIGEM_ERROR_BUS_INVALID_HANDLE = 0xE0000013,
             VIGEM_ERROR_XUSB_USERINDEX_OUT_OF_RANGE = 0xE0000014,
             VIGEM_ERROR_INVALID_PARAMETER = 0xE0000015,
-            VIGEM_ERROR_NOT_SUPPORTED = 0xE0000016
+            VIGEM_ERROR_NOT_SUPPORTED = 0xE0000016,
+            VIGEM_ERROR_WINAPI = 0xE0000017,
+            VIGEM_ERROR_TIMED_OUT = 0xE0000018,
         }
 
         [StructLayout(LayoutKind.Sequential)]
@@ -236,6 +238,13 @@ namespace Nefarius.ViGEm.Client
         internal static extern VIGEM_ERROR vigem_target_ds4_await_output_report(
             PVIGEM_CLIENT vigem, 
             PVIGEM_TARGET target, 
+            ref DS4_AWAIT_OUTPUT_BUFFER buffer);
+
+        [DllImport("vigemclient.dll", ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern VIGEM_ERROR vigem_target_ds4_await_output_report_timeout(
+            PVIGEM_CLIENT vigem, 
+            PVIGEM_TARGET target, 
+            UInt32 milliseconds,
             ref DS4_AWAIT_OUTPUT_BUFFER buffer);
     }
 }

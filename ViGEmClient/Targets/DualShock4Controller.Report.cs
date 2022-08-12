@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Nefarius.ViGEm.Client.Exceptions;
 using Nefarius.ViGEm.Client.Targets.DualShock4;
@@ -128,6 +129,38 @@ namespace Nefarius.ViGEm.Client.Targets
                 default:
                     throw new Win32Exception(Marshal.GetLastWin32Error());
             }
+
+            return _outputBuffer.Buffer;
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<byte> AwaitRawOutputReport(int timeout, out bool timedOut)
+        {
+            var error = ViGEmClient.vigem_target_ds4_await_output_report_timeout(Client.NativeHandle, NativeHandle,
+                (uint)timeout, ref _outputBuffer);
+
+            switch (error)
+            {
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NONE:
+                    break;
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_INVALID_HANDLE:
+                    throw new VigemBusInvalidHandleException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_TARGET:
+                    throw new VigemInvalidTargetException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_BUS_NOT_FOUND:
+                    throw new VigemBusNotFoundException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_NOT_SUPPORTED:
+                    throw new VigemNotSupportedException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_PARAMETER:
+                    throw new VigemInvalidParameterException();
+                case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_TIMED_OUT:
+                    timedOut = true;
+                    return Enumerable.Empty<byte>();
+                default:
+                    throw new Win32Exception(Marshal.GetLastWin32Error());
+            }
+
+            timedOut = false;
 
             return _outputBuffer.Buffer;
         }
