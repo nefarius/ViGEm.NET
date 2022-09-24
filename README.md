@@ -67,7 +67,7 @@ while (true)
 
 Found a bug and want it fixed? Open a detailed issue on the [GitHub issue tracker](../../issues)!
 
-Have an idea for a new feature? Let's have a chat about your request on [Discord](https://discord.vigem.org) or the [community forums](https://forums.vigem.org).
+Have an idea for a new feature? Let's have a chat about your request on [our support channels](https://vigem.org/Community-Support/).
 
 ### Questions & Support
 
@@ -75,4 +75,4 @@ Please respect that the GitHub issue tracker isn't a helpdesk. We offer [support
 
 ## 3rd party credits
 
-This project uses [Fody Costura](https://github.com/Fody/Costura) to embed the native SDK DLLs into the resulting assembly for distribution convenience ❤️
+This project uses [Fody Costura](https://github.com/Fody/Costura) to embed the native SDK DLLs into the resulting assembly ❤️
