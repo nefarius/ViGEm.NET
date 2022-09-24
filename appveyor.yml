@@ -1,5 +1,9 @@
 version: 1.19.{build}
 image: Visual Studio 2022
+skip_commits:
+  files:
+    - assets/*
+    - '**/*.md'
 build_script:
 - cmd: .\build.cmd
 artifacts:

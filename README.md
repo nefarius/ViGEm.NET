@@ -1,3 +1,5 @@
+<img src="assets/NSS-128x128.png" align="right" />
+
 # ViGEm Client .NET SDK
 
 .NET bindings for the `ViGEmClient` native library.
