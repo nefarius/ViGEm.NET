@@ -16,6 +16,49 @@ This library can be consumed via [pre-built NuGet](https://www.nuget.org/package
 Install-Package Nefarius.ViGEm.Client
 ```
 
+## Examples
+
+### Get full output report of an emulated DS4
+
+> Requires ViGEmBus v1.19.418 or newer.
+
+```csharp
+using Nefarius.ViGEm.Client;
+
+// initializes the SDK instance
+var client = new ViGEmClient();
+
+// prepares a new DS4
+var ds4 = client.CreateDualShock4Controller();
+
+// brings the DS4 online
+ds4.Connect();
+
+// recommended: run this in its own thread
+while (true)
+    try
+    {
+        // blocks for 250ms to not burn CPU cycles if no report is available
+        // an overload is available that blocks indefinitely until the device is disposed, your choice!
+        var buffer = ds4.AwaitRawOutputReport(250, out var timedOut);
+
+        if (timedOut)
+        {
+            Console.WriteLine("Timed out");
+            continue;
+        }
+
+        // you got a new report, parse it and do whatever you need to do :)
+
+        Console.WriteLine($"[OUT] {string.Join(" ", buffer.Select(b => b.ToString("X2")))}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.ToString());
+        Thread.Sleep(1000);
+    }
+```
+
 ## Contribute
 
 ### Bugs & Features
