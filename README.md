@@ -49,7 +49,7 @@ while (true)
         }
 
         // you got a new report, parse it and do whatever you need to do :)
-
+        // here we simply hex-dump the contents
         Console.WriteLine($"[OUT] {string.Join(" ", buffer.Select(b => b.ToString("X2")))}");
     }
     catch (Exception ex)
