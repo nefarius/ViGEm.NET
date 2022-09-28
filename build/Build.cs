@@ -1,44 +1,27 @@
 using System;
 using System.IO;
-using System.Linq;
-using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+
 using Nuke.Common;
-using Nuke.Common.CI;
 using Nuke.Common.CI.AppVeyor;
-using Nuke.Common.Execution;
-using Nuke.Common.Git;
-using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
-using Nuke.Common.Tooling;
 using Nuke.Common.Tools.MSBuild;
-using Nuke.Common.Utilities.Collections;
+
+using Serilog;
+
 using static Nuke.Common.EnvironmentInfo;
-using static Nuke.Common.IO.FileSystemTasks;
-using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.MSBuild.MSBuildTasks;
 
-[CheckBuildProjectConfigurations]
 class Build : NukeBuild
 {
-    /// Support plugins are available for:
-    ///   - JetBrains ReSharper        https://nuke.build/resharper
-    ///   - JetBrains Rider            https://nuke.build/rider
-    ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
-    ///   - Microsoft VSCode           https://nuke.build/vscode
-
-    public static int Main () => Execute<Build>(x => x.Compile);
+    public static int Main() => Execute<Build>(x => x.Compile);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    [Solution] readonly Solution Solution;
-    [GitRepository] readonly GitRepository GitRepository;
-
-    Target Clean => _ => _
-        .Before(Restore)
-        .Executes(() =>
-        {
-        });
+    [Solution] 
+    readonly Solution Solution;
 
     Target Restore => _ => _
         .Executes(() =>
@@ -50,31 +33,39 @@ class Build : NukeBuild
 
     Target Compile => _ => _
         .DependsOn(Restore)
-        .Executes(() =>
+        .Executes(async () =>
         {
-            var url64 =
-                "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x64/ViGEmClient.dll?job=Platform%3A%20x64";
+            var artifactBaseUrl = "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/";
+
+            var url64 = "x64/ViGEmClient.dll?job=Platform%3A%20x64";
+            var url32 = "x86/ViGEmClient.dll?job=Platform%3A%20x86";
+            
             var costura64 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura64");
-            var dll64 = Path.Combine(costura64, "ViGEmClient.dll");
-            var url32 =
-                "https://ci.appveyor.com/api/projects/nefarius/vigemclient/artifacts/bin/release/x86/ViGEmClient.dll?job=Platform%3A%20x86";
             var costura32 = Path.Combine(WorkingDirectory, @"ViGEmClient\costura32");
-            var dll32 = Path.Combine(costura32, "ViGEmClient.dll");
+            var dll64Path = Path.Combine(costura64, "ViGEmClient.dll");
+            var dll32Path = Path.Combine(costura32, "ViGEmClient.dll");
 
-            if (!Directory.Exists(costura64))
-                Directory.CreateDirectory(costura64);
-            if (!Directory.Exists(costura32))
-                Directory.CreateDirectory(costura32);
+            Directory.CreateDirectory(costura64);
+            Directory.CreateDirectory(costura32);
 
-            using (var wc = new WebClient())
+            static async Task DownloadFileAsync(HttpClient httpClient, string url, string path)
             {
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine(">> Downloading native x64 DLL");
-                wc.DownloadFile(url64, dll64);
-                Console.WriteLine(">> Downloading native x86 DLL");
-                wc.DownloadFile(url32, dll32);
-                Console.ResetColor();
+                using var responseStream = await httpClient.GetStreamAsync(url);
+                using var fileStream = File.Create(path);
+
+                await responseStream.CopyToAsync(fileStream);
             }
+
+            using var httpClient = new HttpClient()
+            {
+                BaseAddress = new Uri(artifactBaseUrl)
+            };
+
+            Log.Information(">> Downloading native x64 DLL");
+            await DownloadFileAsync(httpClient, url64, dll64Path);
+            
+            Log.Information(">> Downloading native x86 DLL");
+            await DownloadFileAsync(httpClient, url32, dll32Path);
 
             //
             // Build .NET assembly
