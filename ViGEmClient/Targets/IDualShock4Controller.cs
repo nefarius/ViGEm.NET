@@ -21,6 +21,25 @@ namespace Nefarius.ViGEm.Client.Targets
         [UsedImplicitly]
         event DualShock4FeedbackReceivedEventHandler FeedbackReceived;
 
+        [UsedImplicitly]
+        void SetButtonsFull(ushort buttons);
+
+        [UsedImplicitly]
+        void SetSpecialButtonsFull(byte buttons);
+
+        [UsedImplicitly]
+        ref byte LeftTrigger { get; }
+        [UsedImplicitly]
+        ref byte RightTrigger { get; }
+        [UsedImplicitly]
+        ref byte LeftThumbX { get; }
+        [UsedImplicitly]
+        ref byte LeftThumbY { get; }
+        [UsedImplicitly]
+        ref byte RightThumbX { get; }
+        [UsedImplicitly]
+        ref byte RightThumbY { get; }
+
         /// <summary>
         ///     Submits the full input report to the device.
         /// </summary>

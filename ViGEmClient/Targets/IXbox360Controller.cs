@@ -49,5 +49,23 @@ namespace Nefarius.ViGEm.Client.Targets
         /// </summary>
         [UsedImplicitly]
         int UserIndex { get; }
+        
+        [UsedImplicitly]
+        void SetButtonsFull(ushort buttons);
+
+        [UsedImplicitly]
+        ref byte LeftTrigger { get; }
+        [UsedImplicitly]
+        ref byte RightTrigger { get; }
+        [UsedImplicitly]
+        ref short LeftThumbX { get; }
+        [UsedImplicitly]
+        ref short LeftThumbY { get; }
+        [UsedImplicitly]
+        ref short RightThumbX { get; }
+        [UsedImplicitly]
+        ref short RightThumbY { get; }
+        [UsedImplicitly]
+        ref ushort ButtonState { get; }
     }
 }
