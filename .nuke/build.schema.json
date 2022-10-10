@@ -72,7 +72,6 @@
           "items": {
             "type": "string",
             "enum": [
-              "Clean",
               "Compile",
               "Restore"
             ]
@@ -88,7 +87,6 @@
           "items": {
             "type": "string",
             "enum": [
-              "Clean",
               "Compile",
               "Restore"
             ]
