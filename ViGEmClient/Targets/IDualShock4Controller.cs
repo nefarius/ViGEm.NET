@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using JetBrains.Annotations;
 using Nefarius.ViGEm.Client.Targets.DualShock4;
 
@@ -19,6 +20,7 @@ namespace Nefarius.ViGEm.Client.Targets
         void SetSliderValue(DualShock4Slider slider, byte value);
 
         [UsedImplicitly]
+        [Obsolete("This event might not behave as expected and has been deprecated. Use AwaitRawOutputReport() instead.")]
         event DualShock4FeedbackReceivedEventHandler FeedbackReceived;
 
         [UsedImplicitly]

@@ -1,4 +1,5 @@
-﻿using Nefarius.ViGEm.Client.Exceptions;
+﻿using System;
+using Nefarius.ViGEm.Client.Exceptions;
 using Nefarius.ViGEm.Client.Targets.DualShock4;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -180,8 +181,10 @@ namespace Nefarius.ViGEm.Client.Targets
             }
         }
 
+        [Obsolete("This event might not behave as expected and has been deprecated. Use AwaitRawOutputReport() instead.")]
         public event DualShock4FeedbackReceivedEventHandler FeedbackReceived;
     }
 
+    [Obsolete("This event might not behave as expected and has been deprecated. Use AwaitRawOutputReport() instead.")]
     public delegate void DualShock4FeedbackReceivedEventHandler(object sender, DualShock4FeedbackReceivedEventArgs e);
 }
