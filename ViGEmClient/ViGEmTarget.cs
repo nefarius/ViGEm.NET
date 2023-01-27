@@ -114,41 +114,19 @@ internal abstract class ViGEmTarget : IDisposable, IViGEmTarget
         _isConnected = false;
     }
 
-    #region IDisposable Support
-
-    private bool _disposedValue; // To detect redundant calls
-
-    protected virtual void Dispose(bool disposing)
+    private void ReleaseUnmanagedResources()
     {
-        if (!_disposedValue)
-        {
-            if (disposing)
-            {
-                try
-                {
-                    Disconnect();
-                }
-                catch
-                {
-                }
-            }
-
-            ViGEmClient.vigem_target_free(NativeHandle);
-
-            _disposedValue = true;
-        }
-    }
-
-    ~ViGEmTarget()
-    {
-        Dispose(false);
+        ViGEmClient.vigem_target_free(NativeHandle);
     }
 
     public void Dispose()
     {
-        Dispose(true);
+        ReleaseUnmanagedResources();
         GC.SuppressFinalize(this);
     }
 
-    #endregion
+    ~ViGEmTarget()
+    {
+        ReleaseUnmanagedResources();
+    }
 }
