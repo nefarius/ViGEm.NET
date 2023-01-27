@@ -9,7 +9,7 @@ namespace Nefarius.ViGEm.Client.Targets;
 [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
 [SuppressMessage("ReSharper", "UnusedMember.Global")]
 [SuppressMessage("ReSharper", "EventNeverSubscribedTo.Global")]
-public interface IDualShock4Controller : IVirtualGamepad
+public interface IDualShock4Controller : IVirtualGamepad, IDisposable
 {
     ref byte LeftTrigger { get; }
 
