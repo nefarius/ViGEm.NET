@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Security;
 
@@ -10,6 +11,9 @@ namespace Nefarius.ViGEm.Client
     using PVIGEM_USER_DATA = IntPtr;
 
     [SuppressUnmanagedCodeSecurity]
+    [SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+    [SuppressMessage("ReSharper", "InconsistentNaming")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     partial class ViGEmClient
     {
         internal enum VIGEM_ERROR : UInt32

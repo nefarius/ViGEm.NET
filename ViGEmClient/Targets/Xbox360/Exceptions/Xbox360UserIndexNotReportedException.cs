@@ -1,10 +1,7 @@
 ﻿using System;
-using JetBrains.Annotations;
 
-namespace Nefarius.ViGEm.Client.Targets.Xbox360.Exceptions
+namespace Nefarius.ViGEm.Client.Targets.Xbox360.Exceptions;
+
+public sealed class Xbox360UserIndexNotReportedException : Exception
 {
-    [UsedImplicitly]
-    public class Xbox360UserIndexNotReportedException : Exception
-    {
-    }
 }
