@@ -14,6 +14,8 @@ using PVIGEM_TARGET = IntPtr;
 /// </summary>
 internal abstract class ViGEmTarget : IDisposable, IViGEmTarget
 {
+    private bool _isConnected;
+
     /// <summary>
     ///     Initializes a new instance of the <see cref="ViGEmTarget" /> bound to a <see cref="ViGEmClient" />.
     /// </summary>
@@ -48,6 +50,11 @@ internal abstract class ViGEmTarget : IDisposable, IViGEmTarget
     [SuppressMessage("ReSharper", "SwitchStatementHandlesSomeKnownEnumValuesWithDefault")]
     public virtual void Connect()
     {
+        if (_isConnected)
+        {
+            return;
+        }
+
         if (VendorId > 0 && ProductId > 0)
         {
             ViGEmClient.vigem_target_set_vid(NativeHandle, VendorId);
@@ -71,6 +78,8 @@ internal abstract class ViGEmTarget : IDisposable, IViGEmTarget
             default:
                 throw new Win32Exception(Marshal.GetLastWin32Error());
         }
+
+        _isConnected = true;
     }
 
     /// <summary>
@@ -79,6 +88,11 @@ internal abstract class ViGEmTarget : IDisposable, IViGEmTarget
     [SuppressMessage("ReSharper", "SwitchStatementHandlesSomeKnownEnumValuesWithDefault")]
     public virtual void Disconnect()
     {
+        if (!_isConnected)
+        {
+            return;
+        }
+
         ViGEmClient.VIGEM_ERROR error = ViGEmClient.vigem_target_remove(Client.NativeHandle, NativeHandle);
 
         switch (error)
@@ -96,6 +110,8 @@ internal abstract class ViGEmTarget : IDisposable, IViGEmTarget
             default:
                 throw new Win32Exception(Marshal.GetLastWin32Error());
         }
+
+        _isConnected = false;
     }
 
     #region IDisposable Support
