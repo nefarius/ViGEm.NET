@@ -8,6 +8,7 @@ build_script:
 - cmd: .\build.cmd
 artifacts:
 - path: 'bin**\*.nupkg'
+- path: 'bin**\*.snupkg'
 - path: 'bin**\*.dll'
 deploy:
 - provider: Environment
