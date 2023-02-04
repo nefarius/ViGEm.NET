@@ -23,7 +23,7 @@
     <Product>Managed ViGEmClient library</Product>
     <Authors>Benjamin Höglinger-Stelzer</Authors>
     <Company>Nefarius Software Solutions e.U.</Company>
-    <PackageTags>driver bus-driver windows-driver gamepad joypad joystick emulation framework xinput xusb xbone dualshock4 kmdf</PackageTags>
+    <PackageTags>driver bus-driver windows-driver gamepad joypad joystick emulation framework xinput xusb dualshock4 kmdf</PackageTags>
     <Copyright>Copyright © Nefarius Software Solutions e.U. 2017-2023</Copyright>
     <PackageProjectUrl>https://github.com/ViGEm/ViGEm.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ViGEm/ViGEm.NET</RepositoryUrl>
