@@ -1,34 +1,34 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{AA18EBCF-7E9D-4BC5-8760-E8C6E9A773E5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <OutputPath>$(SolutionDir)bin\</OutputPath>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Nefarius.ViGEm.Client</RootNamespace>
     <AssemblyName>Nefarius.ViGEm.Client</AssemblyName>
+    <LangVersion>latest</LangVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
+  <!-- Package properties -->
+  <PropertyGroup>
     <Description>Managed ViGEmClient library for interaction with the ViGEm Bus Driver.</Description>
     <Product>Managed ViGEmClient library</Product>
     <Authors>Benjamin Höglinger-Stelzer</Authors>
     <Company>Nefarius Software Solutions e.U.</Company>
-    <PackageTags>driver bus-driver windows-driver gamepad joypad joystick emulation framework xinput xusb xbone dualshock4 kmdf</PackageTags>
-    <PackageIconUrl></PackageIconUrl>
+    <PackageTags>driver bus-driver windows-driver gamepad joypad joystick emulation framework xinput xusb dualshock4 kmdf</PackageTags>
     <Copyright>Copyright © Nefarius Software Solutions e.U. 2017-2023</Copyright>
     <PackageProjectUrl>https://github.com/ViGEm/ViGEm.NET</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ViGEm/ViGEm.NET</RepositoryUrl>
-    <LangVersion>latest</LangVersion>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageIcon>ViGEm_Icon.png</PackageIcon>
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -39,13 +39,18 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
+
+  <!-- Embedded files -->
   <ItemGroup>
     <EmbeddedResource Include="costura32\ViGEmClient.dll" />
     <EmbeddedResource Include="costura64\ViGEmClient.dll" />
   </ItemGroup>
+
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
+
+  <!-- Packages -->
   <ItemGroup>
     <PackageReference Include="Costura.Fody" Version="5.7.0">
       <PrivateAssets>all</PrivateAssets>
