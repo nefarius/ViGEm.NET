@@ -152,6 +152,8 @@ internal partial class DualShock4Controller
                 throw new VigemNotSupportedException();
             case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_INVALID_PARAMETER:
                 throw new VigemInvalidParameterException();
+            case ViGEmClient.VIGEM_ERROR.VIGEM_ERROR_IS_DISPOSING:
+                throw new VigemIsDisposingException();
             default:
                 throw new Win32Exception(Marshal.GetLastWin32Error());
         }

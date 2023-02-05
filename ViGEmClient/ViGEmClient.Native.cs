@@ -165,7 +165,8 @@ public sealed partial class ViGEmClient
         VIGEM_ERROR_INVALID_PARAMETER = 0xE0000015,
         VIGEM_ERROR_NOT_SUPPORTED = 0xE0000016,
         VIGEM_ERROR_WINAPI = 0xE0000017,
-        VIGEM_ERROR_TIMED_OUT = 0xE0000018
+        VIGEM_ERROR_TIMED_OUT = 0xE0000018,
+        VIGEM_ERROR_IS_DISPOSING = 0xE0000019,
     }
 
     [StructLayout(LayoutKind.Sequential)]
