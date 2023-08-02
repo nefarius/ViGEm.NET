@@ -4,7 +4,7 @@
 
 .NET bindings for the `ViGEmClient` native library.
 
-[![Build status](https://ci.appveyor.com/api/projects/status/pxjf36etx8ro901s?svg=true)](https://ci.appveyor.com/project/nefarius/vigem-net) ![Nuget](https://img.shields.io/nuget/dt/Nefarius.ViGEm.Client) [![Discord](https://img.shields.io/discord/346756263763378176.svg)](https://discord.vigem.org/) [![Website](https://img.shields.io/website-up-down-green-red/https/vigem.org.svg?label=ViGEm.org)](https://vigem.org/) [![GitHub followers](https://img.shields.io/github/followers/nefarius.svg?style=social&label=Follow)](https://github.com/nefarius) [![Mastodon Follow](https://img.shields.io/mastodon/follow/109321120351128938?domain=https%3A%2F%2Ffosstodon.org%2F&style=social)](https://fosstodon.org/@Nefarius)
+[![Build status](https://ci.appveyor.com/api/projects/status/pxjf36etx8ro901s?svg=true)](https://ci.appveyor.com/project/nefarius/vigem-net) ![Nuget](https://img.shields.io/nuget/dt/Nefarius.ViGEm.Client) [![Discord](https://img.shields.io/discord/346756263763378176.svg)](https://discord.nefarius.at/) [![GitHub followers](https://img.shields.io/github/followers/nefarius.svg?style=social&label=Follow)](https://github.com/nefarius) [![Mastodon Follow](https://img.shields.io/mastodon/follow/109321120351128938?domain=https%3A%2F%2Ffosstodon.org%2F&style=social)](https://fosstodon.org/@Nefarius)
 
 ## About
 
