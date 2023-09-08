@@ -6,6 +6,14 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/pxjf36etx8ro901s?svg=true)](https://ci.appveyor.com/project/nefarius/vigem-net) ![Nuget](https://img.shields.io/nuget/dt/Nefarius.ViGEm.Client) [![Discord](https://img.shields.io/discord/346756263763378176.svg)](https://discord.nefarius.at/) [![GitHub followers](https://img.shields.io/github/followers/nefarius.svg?style=social&label=Follow)](https://github.com/nefarius) [![Mastodon Follow](https://img.shields.io/mastodon/follow/109321120351128938?domain=https%3A%2F%2Ffosstodon.org%2F&style=social)](https://fosstodon.org/@Nefarius)
 
+---
+
+## 🧟 THIS PROJECT HAS BEEN RETIRED 🧟
+
+Users of this software are encouraged to [read the end-of-life statement](https://docs.nefarius.at/projects/ViGEm/End-of-Life/). So long, cheers 🖖
+
+---
+
 ## About
 
 .NET API to interact with features offered by [ViGEm Bus Driver](https://github.com/nefarius/ViGEmBus).
