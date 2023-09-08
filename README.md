@@ -8,7 +8,7 @@
 
 ## About
 
-.NET API to interact with features offered by [ViGEm Bus Driver](https://github.com/ViGEm/ViGEmBus).
+.NET API to interact with features offered by [ViGEm Bus Driver](https://github.com/nefarius/ViGEmBus).
 
 ## Installation
 
